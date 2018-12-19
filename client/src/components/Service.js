@@ -21,7 +21,6 @@ const styles = theme => ({
     CardHeader: {
     },
     CardHeaderRoot: {
-        background: "cornflowerblue"
     },
     CardContent: {
 
