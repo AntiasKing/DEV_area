@@ -1,40 +1,49 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Card, CardHeader, CardContent } from '@material-ui/core';
+import { Button, Grid, Icon, Typography } from '@material-ui/core';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import classNames from 'classnames';
 
 const styles = theme => ({
-    Card: {
-        width: 'auto',
-        display: 'block', // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-        marginTop: theme.spacing.unit * 8,
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    service: {
+        height: "300px",
     },
-    CardHeader: {
+    icon: {
+        overflow: "visible",
+        color: "white",
+        position: "absolute"
     },
-    CardHeaderRoot: {
-    },
-    CardContent: {
-
+    name: {
+        position: "absolute",
+        bottom: "0px",
+        color: "white"
     }
 });
 
-function Service(props) {
-    const { classes } = props;
-    return (
-        <Card className={classes.Card}>
-            <CardHeader title={props.name} className={classes.CardHeader} classes={{ root: classes.CardHeaderRoot, }}></CardHeader>
-            <CardContent className={classes.CardContent}>Create a new Widget for {props.name} services</CardContent>
-        </Card>
-    );
+class Service extends React.Component {
+    componentDidMount() {
+        loadCSS(
+            "https://use.fontawesome.com/releases/v5.6.1/css/all.css",
+            document.querySelector('#insertion-point-jss'),
+        );
+    }
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <Grid item xs={3}>
+                <Button
+                    className={classes.service}
+                    size='large'
+                    fullWidth
+                    style={{ background: this.props.color }}
+                    onClick={this.props.onClick}>
+                    <Icon className={classNames(classes.icon, "fa-10x " + this.props.icon)} />
+                    <Typography className={classes.name} variant="title">{this.props.name}</Typography>
+                </Button>
+            </Grid>
+        );
+    }
 }
 
 export default withStyles(styles)(Service);

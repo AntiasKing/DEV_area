@@ -4,6 +4,7 @@ import Landing from './components/Landing';
 import SignIn from './components/SignIn';
 import Register from './components/Register';
 import Dashboard from "./components/Dashboard";
+import AppletDesigner from "./components/AppletDesigner";
 
 const AppRouter = () => (
     <Router>
@@ -12,6 +13,7 @@ const AppRouter = () => (
             <Route path='/sign-in' exact component={SignIn} />
             <Route path='/register' exact component={Register} />
             <Route path='/dashboard' exact component={Dashboard} />
+            <Route path='/createApplet' exact component={AppletDesigner} />
         </div>
     </Router>
 );

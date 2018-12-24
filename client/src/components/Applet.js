@@ -68,6 +68,6 @@ class Applet extends React.Component {
                 </CardContent>
             </Card >);
     }
-}
+};
 
-export default withStyles(styles)(Applet)
+export default withStyles(styles)(Applet);

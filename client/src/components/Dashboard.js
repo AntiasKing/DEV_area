@@ -4,27 +4,6 @@ import Applet from './Applet';
 import { AppBar, Typography, Toolbar, IconButton, Grid } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircle';
 
-// TODO in future will be send by server
-const config = {
-    "services": [
-        {
-            "name": "facebook",
-            "actions": [],
-            "reactions": []
-        },
-        {
-            "name": "twitter",
-            "actions": [],
-            "reactions": []
-        },
-        {
-            "name": "youtube",
-            "actions": [],
-            "reactions": []
-        }
-    ]
-};
-
 const user = {
     "username": "Test",
     "email": "test@test.test",
@@ -110,7 +89,6 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
-            services: config.services,
             applets: user.applets,
         }
     }
@@ -131,7 +109,7 @@ class Dashboard extends React.Component {
                 <AppBar color="primary" position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit">Area</Typography>
-                        <IconButton color="inherit" aria-label="Add Widget" className={classes.AddIcon}>
+                        <IconButton color="inherit" aria-label="Add Widget" className={classes.AddIcon} href="./createApplet">
                             <AddIcon />
                         </IconButton>
                     </Toolbar>
