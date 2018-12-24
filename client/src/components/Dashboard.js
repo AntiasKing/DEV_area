@@ -1,7 +1,8 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Applet from './Applet';
-import { AppBar, Typography, Toolbar, IconButton, Grid } from '@material-ui/core';
+import Service from './Service';
+import { AppBar, Typography, Toolbar, IconButton, Grid, Tabs, Tab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircle';
 
 const user = {
@@ -13,6 +14,7 @@ const user = {
             "service": "facebook",
             "action": "receive a message",
             "reaction": "send an email",
+            "color": "#3b5998",
             "icon": "fab fa-google", // Font Awesome icon name
             "on": true
         },
@@ -21,6 +23,7 @@ const user = {
             "service": "google",
             "action": "receive a message",
             "reaction": "send an email",
+            "color": "#00aced",
             "icon": "fab fa-facebook-f", // Font Awesome icon name
             "on": true
         },
@@ -29,45 +32,33 @@ const user = {
             "service": "google",
             "action": "receive a message",
             "reaction": "send an email",
-            "icon": "fab fa-facebook-f", // Font Awesome icon name
+            "color": "#ff0000",
+            "icon": "fab fa-youtube", // Font Awesome icon name
             "on": true
         },
-        {
-            "name": "Maman",
-            "service": "google",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "icon": "fab fa-facebook-f", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Maman1",
-            "service": "google",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "icon": "fab fa-facebook-f", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Maman2",
-            "service": "google",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "icon": "fab fa-facebook-f", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Maman3",
-            "service": "google",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "icon": "fab fa-facebook-f", // Font Awesome icon name
-            "on": true
-        }
-    ]
+    ],
+    "services": [{
+        "name": "facebook",
+        "color": "#3b5998",
+        "icon": "fab fa-facebook-f",
+    },
+    {
+        "name": "twitter",
+        "color": "#00aced",
+        "icon": "fab fa-twitter",
+    },
+    {
+        "name": "youtube",
+        "color": "#ff0000",
+        "icon": "fab fa-youtube",
+    },
+    ],
 }
 
 const styles = theme => ({
+    main: {
+        overflow: 'hidden',
+    },
     AddIcon: {
         position: "absolute",
         right: "0px"
@@ -87,35 +78,57 @@ const styles = theme => ({
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             applets: user.applets,
+            services: user.services,
+            tab: 0,
         }
+    }
+
+    handleTabChange = (event, tab) => {
+        this.setState({ tab });
     }
 
     render() {
         const { classes } = this.props;
         const applets = this.state.applets;
-        let nameArray = [];
+        const services = this.state.services;
+        let appletsArray = [];
+        let servicesArray = [];
 
         if (applets.length === 0) {
-            nameArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have no applets for now</Typography>
+            appletsArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have no applets for now</Typography>
+        } else {
+            for (let i = 0; i < applets.length; i++) {
+                appletsArray.push(<Grid item xs key={applets[i].name}><Applet className={classes.Applet} {...applets[i]} /></Grid>);
+            }
         }
-        for (let i = 0; i < applets.length; i++) {
-            nameArray.push(<Grid item xs key={applets[i].name}><Applet className={classes.Applet} name={applets[i].name} icon={applets[i].icon} action={applets[i].action} reaction={applets[i].reaction} on={applets[i].on} /></Grid>);
+
+        if (services.length === 0) {
+            servicesArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have register to zero services for now</Typography>
+        } else {
+            for (let i = 0; i < services.length; i++) {
+                servicesArray.push(<Grid item xs key={services[i].name}><Service {...services[i]} /></Grid>);
+            }
         }
         return (
-            <React.Fragment>
+            <div classes={classes.main}>
                 <AppBar color="primary" position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit">Area</Typography>
-                        <IconButton color="inherit" aria-label="Add Widget" className={classes.AddIcon} href="./createApplet">
+                        <IconButton color="inherit" aria-label="Add Applet" className={classes.AddIcon} href="./createApplet">
                             <AddIcon />
+                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px "}}> Create Applet</Typography>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <Grid container spacing={16} className={classes.grid}>{nameArray}</Grid>
-            </React.Fragment>
+                <Tabs fullWidth value={this.state.tab} onChange={this.handleTabChange}>
+                    <Tab label="Applets" />
+                    <Tab label="Services" />
+                </Tabs>
+                {this.state.tab === 0 && <Grid container spacing={16} className={classes.grid}>{appletsArray}</Grid>}
+                {this.state.tab === 1 && <Grid container spacing={0} className={classes.grid}>{servicesArray}</Grid>}
+            </div>
         );
     }
 }

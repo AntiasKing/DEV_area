@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Paper, Typography, Grid } from '@material-ui/core';
+import { withStyles, Grid, Paper, Typography } from '@material-ui/core';
 
 const styles = theme => ({
     main: {
@@ -23,7 +23,7 @@ const styles = theme => ({
     }
 });
 
-class Action extends React.Component {
+class Reaction extends React.Component {
     render() {
         const { classes } = this.props;
         return (
@@ -37,4 +37,4 @@ class Action extends React.Component {
     }
 }
 
-export default withStyles(styles)(Action);
+export default withStyles(styles)(Reaction);

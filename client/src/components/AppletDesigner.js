@@ -1,10 +1,11 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button } from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
 import Action from './Action';
+import Reaction from './Reaction';
 
 // TODO in future will be send by server
 const config = {
@@ -20,7 +21,10 @@ const config = {
                 "name": "new_message_inbox ",
                 "description": "Un nouveau message prive est recu par l’utilisateur"
             }],
-            "reactions": []
+            "reactions": [{
+                "name": "like_message",
+                "description": "L’utilisateur aime un message"
+            }]
         },
         {
             "name": "twitter",
@@ -53,7 +57,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-    return ['Select a service', 'Select an action', 'Select a reaction'];
+    return ['Select a service', 'Select an action', 'Select a reaction', 'Good Job'];
 }
 
 class AppletDesigner extends React.Component {
@@ -64,6 +68,7 @@ class AppletDesigner extends React.Component {
             activeStep: 0,
             serviceSelected: "",
             actionSelected: "",
+            reactionName: "",
             skipped: new Set(),
         }
     }
@@ -80,7 +85,11 @@ class AppletDesigner extends React.Component {
     }
 
     handleClickAction(actionName) {
-        this.setState({ activeStep: this.state.activeStep + 1, actionSelected: actionName});
+        this.setState({ activeStep: this.state.activeStep + 1, actionSelected: actionName });
+    }
+
+    handleClickReaction(reactionName) {
+        this.setState({ activeStep: this.state.activeStep + 1, reactionSelected: reactionName })
     }
 
     render() {
@@ -132,11 +141,31 @@ class AppletDesigner extends React.Component {
                                                 .find(s => s.name === this.state.serviceSelected)
                                                 .actions
                                                 .map((a, index) => {
-                                                    console.log(a);
                                                     return <Action key={index} {...a} onClick={() => this.handleClickAction(a.name)} color={config.services.find(s => s.name === this.state.serviceSelected).color} />
                                                 })
                                         }
                                     </Grid>
+                                )
+                            } else if (activeStep === 2) {
+                                return (
+                                    <Grid className={classes.grid} container spacing={8}>
+                                        {
+                                            config
+                                                .services
+                                                .find(s => s.name === this.state.serviceSelected)
+                                                .reactions
+                                                .map((r, index) => {
+                                                    return <Reaction key={index} {...r} onClick={() => this.handleClickReaction(r.name)} color={config.services.find(s => s.name === this.state.serviceSelected).color} />
+                                                })
+                                        }
+                                    </Grid>
+                                )
+                            } else {
+                                return (
+                                    <div>
+                                        <Typography variant="h1"> Good Job</Typography>
+                                        <Button color="primary" href="./dashboard"> Go back to your dashboard</Button>
+                                    </div>
                                 )
                             }
                         })(activeStep)}

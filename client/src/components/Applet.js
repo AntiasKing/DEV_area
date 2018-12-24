@@ -21,6 +21,7 @@ const styles = theme => ({
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
     },
     icon: {
+        overflow: 'visible'
     },
 });
 
@@ -48,7 +49,7 @@ class Applet extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card className={classes.Card} color="primary" >
+            <Card className={classes.Card} color="primary" style={{ background: this.props.color }}>
                 <CardHeader
                     title={this.props.name}
                     titleTypographyProps={{ variant: "h4", color: "textPrimary" }}
@@ -61,7 +62,7 @@ class Applet extends React.Component {
                 <CardContent>
                     <Typography variant="h3" align="right" paragraph>{this.props.action} when you {this.props.reaction}</Typography>
                     <Switch
-                        color="primary"
+                        color="secondary"
                         checked={this.state.on}
                         onChange={this.handleSwitchChange("on")}
                     />
