@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
             servicesArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have register to zero services for now</Typography>
         } else {
             for (let i = 0; i < services.length; i++) {
-                servicesArray.push(<Grid item xs key={services[i].name}><Service {...services[i]} /></Grid>);
+                servicesArray.push(<Service {...services[i]} key={services[i].name} />);
             }
         }
         return (
@@ -118,7 +118,7 @@ class Dashboard extends React.Component {
                         <Typography variant="h6" color="inherit">Area</Typography>
                         <IconButton color="inherit" aria-label="Add Applet" className={classes.AddIcon} href="./createApplet">
                             <AddIcon />
-                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px "}}> Create Applet</Typography>
+                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px " }}> Create Applet</Typography>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
