@@ -43,40 +43,89 @@ const styles = theme => ({
     },
 });
 
-function Register(props) {
-    const { classes } = props;
+class Register extends React.Component {
 
-    return (
-        <main className={classes.main}>
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Register
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            email: "",
+            password: ""
+        }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+
+        this.setState({ [name]: target.value });
+    }
+
+    handleSubmit(event) {
+        console.log(event);
+        let data = JSON.stringify({
+            "user": {
+                "email": this.state.email,
+                "password": this.state.password,
+                "name": this.state.name,
+                "thumbmailURL": ""
+            }
+        });
+
+        var xhr = new XMLHttpRequest();
+        // xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "http://localhost:8080/user/local");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.send(data);
+        window.location = "./dashboard";
+    }
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <main className={classes.main}>
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Register
                 </Typography>
-                <form className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor='username'>Username</InputLabel>
-                        <Input id='username' name='username' autoComplete='username'>Username</Input>
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
+                    <form className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor='username'>Username</InputLabel>
+                            <Input id='username' name='username' autoComplete='username' onChange={this.handleInputChange}>Username</Input>
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="email">Email Address</InputLabel>
+                            <Input id="email" name="email" autoComplete="email" onChange={this.handleInputChange} />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleInputChange} />
+                        </FormControl>
+                    </form>
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={this.handleSubmit}
                     >
                         Register
-                    </Button>
+                        </Button>
                     <Button
                         fullWidth
                         variant="contained"
@@ -86,10 +135,10 @@ function Register(props) {
                     >
                         Sign in
                     </Button>
-                </form>
-            </Paper>
-        </main>
-    );
+                </Paper>
+            </main>
+        );
+    }
 }
 
 Register.propTypes = {
