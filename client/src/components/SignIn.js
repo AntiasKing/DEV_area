@@ -12,6 +12,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import FacebookLogin from 'react-facebook-login';
+
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -45,53 +47,65 @@ const styles = theme => ({
     },
 });
 
-function SignIn(props) {
-    const { classes } = props;
+class SignIn extends React.Component {
 
-    return (
-        <main className={classes.main}>
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-        </Typography>
-                <form className={classes.form}>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <Input id="email" name="email" autoComplete="email" autoFocus />
-                    </FormControl>
-                    <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input name="password" type="password" id="password" autoComplete="current-password" />
-                    </FormControl>
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
+    handleFacebook(response) {
+        console.log(response);
+    }
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <main className={classes.main}>
+                <FacebookLogin
+                    appId="410435456195867"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    callback={this.handleFacebook} />
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         Sign in
+        </Typography>
+                    <form className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="email">Email Address</InputLabel>
+                            <Input id="email" name="email" autoComplete="email" autoFocus />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input name="password" type="password" id="password" autoComplete="current-password" />
+                        </FormControl>
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign in
                     </Button>
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        color="secondary"
-                        className={classes.register}
-                        href='./register'
-                    >
-                        Register
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.register}
+                            href='./register'
+                        >
+                            Register
                     </Button>
-                </form>
-            </Paper>
-        </main>
-    );
+                    </form>
+                </Paper>
+            </main>
+        );
+    }
 }
 
 SignIn.propTypes = {
