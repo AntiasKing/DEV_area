@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,6 +10,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import FacebookLogin from 'react-facebook-login';
 
 const styles = theme => ({
     main: {
@@ -64,8 +66,23 @@ class Register extends React.Component {
         this.setState({ [name]: target.value });
     }
 
+    handleFacebook(response) {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("http://localhost:8080/user/facebook/",
+            data,
+            { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    // TODO: Add Error message for bad register
     handleSubmit(event) {
-        console.log(event);
         let data = JSON.stringify({
             "user": {
                 "email": this.state.email,
@@ -75,20 +92,15 @@ class Register extends React.Component {
             }
         });
 
-        var xhr = new XMLHttpRequest();
-        // xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open("POST", "http://localhost:8080/user/local");
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.send(data);
-        window.location = "./dashboard";
+        Axios.post('http://localhost:8080/user/local',
+            data,
+            { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render() {
@@ -96,6 +108,11 @@ class Register extends React.Component {
 
         return (
             <main className={classes.main}>
+                <FacebookLogin
+                    appId="410435456195867"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    callback={this.handleFacebook} />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon />

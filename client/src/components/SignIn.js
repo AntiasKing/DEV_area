@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import FacebookLogin from 'react-facebook-login';
+import Axios from 'axios';
 
 const styles = theme => ({
     main: {
@@ -49,8 +50,55 @@ const styles = theme => ({
 
 class SignIn extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: ""
+        }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     handleFacebook(response) {
-        console.log(response);
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("http://localhost:8080/user/facebook/",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+
+        this.setState({ [name]: target.value });
+    }
+
+    handleSubmit(event) {
+        console.log(event);
+        let data = JSON.stringify({
+            "user": {
+                "email": this.state.email,
+                "password": this.state.password,
+            }
+        });
+
+        Axios.post("http://localhost:8080/user/local/login",
+            data,
+            { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                window.location = "./dashboard";
+            }).catch(function (error) {
+                console.log(error);
+            })
     }
 
     render() {
@@ -60,7 +108,7 @@ class SignIn extends React.Component {
             <main className={classes.main}>
                 <FacebookLogin
                     appId="410435456195867"
-                    autoLoad={true}
+                    autoLoad={false}
                     fields="name,email,picture"
                     callback={this.handleFacebook} />
                 <Paper className={classes.paper}>
@@ -73,35 +121,36 @@ class SignIn extends React.Component {
                     <form className={classes.form}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
-                            <Input id="email" name="email" autoComplete="email" autoFocus />
+                            <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleInputChange} />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input name="password" type="password" id="password" autoComplete="current-password" />
+                            <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleInputChange} />
                         </FormControl>
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign in
-                    </Button>
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            className={classes.register}
-                            href='./register'
-                        >
-                            Register
-                    </Button>
                     </form>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={this.handleSubmit}
+                    >
+                        Sign in
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="secondary"
+                        className={classes.register}
+                        href='./register'
+                    >
+                        Register
+                    </Button>
                 </Paper>
             </main>
         );
