@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import Axios from 'axios';
 
@@ -101,6 +102,24 @@ class SignIn extends React.Component {
             })
     }
 
+		handleTwitter = (response) => {
+			let data = JSON.stringify({
+					"user": response
+			});
+			Axios.post("http://localhost:8080/user/twitter/",
+					data, { headers: { "Content-Type": "application/json" } })
+					.then(function (response) {
+							window.location = "./dashboard";
+					})
+					.catch(function (error) {
+							console.log(error);
+					})
+		};
+
+		onFailed = (error) => {
+		  alert(error);
+		};
+
     render() {
         const { classes } = this.props;
 
@@ -111,13 +130,16 @@ class SignIn extends React.Component {
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.handleFacebook} />
+                <TwitterLogin loginUrl="http://localhost:4000/api/v1/auth/twitter"
+                    onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse" />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
-        </Typography>
+                    </Typography>
                     <form className={classes.form}>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
