@@ -1,4 +1,7 @@
-let oauth = [
+const utils = require('../../utils');
+const bcrypt = require('bcrypt');
+
+const oauth = [
     {
         "name": "facebook",
         "id": "userID"
@@ -12,11 +15,13 @@ module.exports = function (router, usersRef) {
         let newUsersRef = usersRef.push();
         let obj = {};
         if (req.params.type === "local") {
+            let hash = bcrypt.hashSync(user.password, 10);
+            user.password = hash;
             obj[req.params.type] = user;
             newUsersRef.set(obj)
                 .then(function () {
                     console.log("Successfully created new user:", user);
-                    res.status(201).send(newUsersRef.key);
+                    res.status(201).send(utils.generateToken({ id: newUsersRef.key, name: user.name, email: user.email, thumbmailURL: user.thumbmailURL }));
                 })
                 .catch(function (error) {
                     console.log("Error creating new user:", error);
@@ -30,11 +35,16 @@ module.exports = function (router, usersRef) {
                         snapShot.forEach(function (childSnapShot) {
                             childSnapShot.child(`${i.name}`).ref.update(user)
                                 .then(function () {
-                                    res.status(200).send();
+                                    return res.status(200).send(utils.generateToken({
+                                        id: childSnapShot.key,
+                                        name: childSnapShot.name,
+                                        email: childSnapShot.email,
+                                        thumbmailURL: childSnapShot.thumbmailURL
+                                    }));
                                 })
                                 .catch(function (error) {
                                     console.log(error);
-                                    res.status(500).send(error);
+                                    return res.status(500).send(error);
                                 });
                         });
                         return;
@@ -43,18 +53,18 @@ module.exports = function (router, usersRef) {
                     newUsersRef.set(obj)
                         .then(function () {
                             console.log("Successfully created new user:", user);
-                            res.status(201).send(newUsersRef.key);
+                            return res.status(201).send(utils.generateToken({ id: newUsersRef.key, name: user.name, email: user.email, thumbmailURL: user.picture.data.url }));
                         }).catch(function (error) {
                             console.log("Error creating new user:", error);
-                            res.status(500).send(error);
+                            return res.status(500).send(error);
                         })
                 })
                 .catch(function (error) {
                     console.log(error);
-                    res.status(500).send(error);
+                    return res.status(500).send(error);
                 });
             return;
         }
-        res.status(400).send("Invalid type");
+        return res.status(400).send("Invalid type");
     });
 }

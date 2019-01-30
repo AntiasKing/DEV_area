@@ -69,7 +69,8 @@ class SignIn extends React.Component {
         Axios.post("http://localhost:8080/user/facebook/",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
-                window.location = "./dashboard";
+                console.log(response);
+                // window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -84,7 +85,6 @@ class SignIn extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log(event);
         let data = JSON.stringify({
             "user": {
                 "email": this.state.email,
@@ -96,29 +96,30 @@ class SignIn extends React.Component {
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
-                window.location = "./dashboard";
+                console.log(response);
+                // window.location = "./dashboard";
             }).catch(function (error) {
                 console.log(error);
             })
     }
 
-		handleTwitter = (response) => {
-			let data = JSON.stringify({
-					"user": response
-			});
-			Axios.post("http://localhost:8080/user/twitter/",
-					data, { headers: { "Content-Type": "application/json" } })
-					.then(function (response) {
-							window.location = "./dashboard";
-					})
-					.catch(function (error) {
-							console.log(error);
-					})
-		};
+    handleTwitter = (response) => {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("http://localhost:8080/user/twitter/",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    };
 
-		onFailed = (error) => {
-		  alert(error);
-		};
+    onFailed = (error) => {
+        alert(error);
+    };
 
     render() {
         const { classes } = this.props;

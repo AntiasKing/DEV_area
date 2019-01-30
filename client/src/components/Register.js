@@ -74,7 +74,8 @@ class Register extends React.Component {
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
-                window.location = "./dashboard";
+                console.log(response);
+                // window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -96,7 +97,8 @@ class Register extends React.Component {
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
-                window.location = "./dashboard";
+                console.log(response);
+                // window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -122,8 +124,8 @@ class Register extends React.Component {
                 </Typography>
                     <form className={classes.form}>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor='username'>Username</InputLabel>
-                            <Input id='username' name='username' autoComplete='username' onChange={this.handleInputChange}>Username</Input>
+                            <InputLabel htmlFor='name'>Username</InputLabel>
+                            <Input id='name' name='name' autoComplete='username' onChange={this.handleInputChange}>Username</Input>
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
                             <InputLabel htmlFor="email">Email Address</InputLabel>
