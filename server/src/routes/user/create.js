@@ -1,70 +1,71 @@
-const utils = require('../../utils');
-const bcrypt = require('bcrypt');
-
-const oauth = [
-    {
-        "name": "facebook",
-        "id": "userID"
-    },
-]
 // TODO: Check user's params and send jw-token
+var passport = require('passport');
+
 module.exports = function (router, usersRef) {
-    router.post("/user/:type", function (req, res) {
-        let i;
+
+    // app.get('/auth/google', passport.authenticate('google', {
+    // 	scope: ['profile', 'email']
+    // }));
+    //
+    // app.get('/auth/google/callback', passport.authenticate('google', {
+    // 		successRedirect : '/profile',
+    // 		failureRedirect : '/'
+    // }));
+    //
+    // app.get('/auth/twitter', passport.authenticate('twitter'));
+    //
+    // app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    // 		successRedirect : '/profile',
+    // 		failureRedirect : '/'
+    // }));
+
+    router.post('/facebook', function (req, res, next) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
-        if (req.params.type === "local") {
-            let hash = bcrypt.hashSync(user.password, 10);
-            user.password = hash;
+        usersRef.orderByChild(`${i.name}/${i.id}`).equalTo(user.userID).once("value")
+            .then(function (snapShot) {
+                if (snapShot.val()) {
+                    snapShot.forEach(function (childSnapShot) {
+                        childSnapShot.child(`${i.name}`).ref.update(user)
+                            .then(function () {
+                                res.status(200).send();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                res.status(500).send(error);
+                            });
+                    });
+                    return;
+                }
+                obj[req.params.type] = user;
+                newUsersRef.set(obj)
+                    .then(function () {
+                        console.log("Successfully created new user:", user);
+                        res.status(201).send(newUsersRef.key);
+                    }).catch(function (error) {
+                        console.log("Error creating new user:", error);
+                        res.status(500).send(error);
+                    })
+            })
+    })
+
+    router.post('/signup', function (req, res, next) {
+        passport.authenticate('local-signup', function (err, lol, info) {
+            let user = req.body.user;
+            let newUsersRef = usersRef.push();
+            let obj = {};
             obj[req.params.type] = user;
             newUsersRef.set(obj)
                 .then(function () {
                     console.log("Successfully created new user:", user);
-                    res.status(201).send(utils.generateToken({ id: newUsersRef.key, name: user.name, email: user.email, thumbmailURL: user.thumbmailURL }));
+                    res.status(201).send(newUsersRef.key);
                 })
                 .catch(function (error) {
                     console.log("Error creating new user:", error);
                     res.status(500).send(error);
                 });
             return;
-        } else if ((i = oauth.find((n) => { return req.params.type === n.name }))) {
-            usersRef.orderByChild(`${i.name}/${i.id}`).equalTo(user.userID).once("value")
-                .then(function (snapShot) {
-                    if (snapShot.val()) {
-                        snapShot.forEach(function (childSnapShot) {
-                            childSnapShot.child(`${i.name}`).ref.update(user)
-                                .then(function () {
-                                    return res.status(200).send(utils.generateToken({
-                                        id: childSnapShot.key,
-                                        name: childSnapShot.name,
-                                        email: childSnapShot.email,
-                                        thumbmailURL: childSnapShot.thumbmailURL
-                                    }));
-                                })
-                                .catch(function (error) {
-                                    console.log(error);
-                                    return res.status(500).send(error);
-                                });
-                        });
-                        return;
-                    }
-                    obj[req.params.type] = user;
-                    newUsersRef.set(obj)
-                        .then(function () {
-                            console.log("Successfully created new user:", user);
-                            return res.status(201).send(utils.generateToken({ id: newUsersRef.key, name: user.name, email: user.email, thumbmailURL: user.picture.data.url }));
-                        }).catch(function (error) {
-                            console.log("Error creating new user:", error);
-                            return res.status(500).send(error);
-                        })
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return res.status(500).send(error);
-                });
-            return;
-        }
-        return res.status(400).send("Invalid type");
+        })(req, res, next);
     });
 }
