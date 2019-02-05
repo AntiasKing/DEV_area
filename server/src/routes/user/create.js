@@ -1,5 +1,6 @@
 // TODO: Check user's params and send jw-token
 var passport = require('passport');
+const request = require('request');
 
 module.exports = function (router, usersRef) {
 
@@ -19,15 +20,72 @@ module.exports = function (router, usersRef) {
     // 		failureRedirect : '/'
     // }));
 
+    router.route('/auth/twitter/reverse')
+        .post(function (req, res) {
+            request.post({
+                url: 'https://api.twitter.com/oauth/request_token',
+                oauth: {
+                    oauth_callback: "http%3A%2F%2Flocalhost%3A3000%2Ftwitter-callback",
+                    consumer_key: 'Vr3UJYSKvR4BNEcrwCMoUrbtX',
+                    consumer_secret: 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF'
+                }
+            }, function (err, r, body) {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).send(err);
+                }
+                var jsonStr = '{ "' + body.replace(/&/g, '", "').replace(/=/g, '": "') + '"}';
+                res.send(JSON.parse(jsonStr));
+            });
+        });
+
+
+    router.route('/auth/twitter')
+        .post((req, res, next) => {
+            request.post({
+                url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
+                oauth: {
+                    consumer_key: 'Vr3UJYSKvR4BNEcrwCMoUrbtX',
+                    consumer_secret: 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF',
+                    token: req.query.oauth_token
+                },
+                form: { oauth_verifier: req.query.oauth_verifier }
+            }, function (err, r, body) {
+                if (err) {
+                    return res.send(500, { message: err.message });
+                }
+
+                const bodyString = '{ "' + body.replace(/&/g, '", "').replace(/=/g, '": "') + '"}';
+                const parsedBody = JSON.parse(bodyString);
+
+                req.body['oauth_token'] = parsedBody.oauth_token;
+                req.body['oauth_token_secret'] = parsedBody.oauth_token_secret;
+                req.body['user_id'] = parsedBody.user_id;
+
+                next();
+            });
+        }, passport.authenticate('twitter-token', { session: false }), function (req, res, next) {
+            if (!req.user) {
+                return res.send(401, 'User Not Authenticated');
+            }
+
+            // prepare token for API
+            req.auth = {
+                id: req.user.id
+            };
+
+            return res.status(200).send();
+        });
+
     router.post('/facebook', function (req, res, next) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
-        usersRef.orderByChild(`${i.name}/${i.id}`).equalTo(user.userID).once("value")
+        usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
-                        childSnapShot.child(`${i.name}`).ref.update(user)
+                        childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
                                 res.status(200).send();
                             })
@@ -38,7 +96,7 @@ module.exports = function (router, usersRef) {
                     });
                     return;
                 }
-                obj[req.params.type] = user;
+                obj["facebook"] = user;
                 newUsersRef.set(obj)
                     .then(function () {
                         console.log("Successfully created new user:", user);
@@ -55,7 +113,7 @@ module.exports = function (router, usersRef) {
             let user = req.body.user;
             let newUsersRef = usersRef.push();
             let obj = {};
-            obj[req.params.type] = user;
+            obj["local"] = user;
             newUsersRef.set(obj)
                 .then(function () {
                     console.log("Successfully created new user:", user);

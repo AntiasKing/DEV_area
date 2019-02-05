@@ -66,7 +66,7 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/user/facebook/",
+        Axios.post("http://localhost:8080/facebook/",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
@@ -104,21 +104,11 @@ class SignIn extends React.Component {
     }
 
     handleTwitter = (response) => {
-        let data = JSON.stringify({
-            "user": response
-        });
-        Axios.post("http://localhost:8080/user/twitter/",
-            data, { headers: { "Content-Type": "application/json" } })
-            .then(function (response) {
-                window.location = "./dashboard";
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        console.log("Bonjour j'aime les zizis");
     };
 
     onFailed = (error) => {
-        alert(error);
+        console.log(error);
     };
 
     render() {
@@ -131,9 +121,9 @@ class SignIn extends React.Component {
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.handleFacebook} />
-                <TwitterLogin loginUrl="http://localhost:4000/api/v1/auth/twitter"
+                <TwitterLogin loginUrl="http://localhost:8080/auth/twitter"
                     onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse" />
+                    requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon />
