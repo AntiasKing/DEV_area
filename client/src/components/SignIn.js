@@ -14,6 +14,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
 const styles = theme => ({
@@ -61,6 +62,22 @@ class SignIn extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+		handleGoogle(response) {
+			console.log(response)
+				// let data = JSON.stringify({
+				// 		"user": response
+				// });
+				// Axios.post("http://localhost:8080/google/",
+				// 		data, { headers: { "Content-Type": "application/json" } })
+				// 		.then(function (response) {
+				// 				console.log(response);
+				// 				// window.location = "./dashboard";
+				// 		})
+				// 		.catch(function (error) {
+				// 				console.log(error);
+				// 		})
+		}
 
     handleFacebook(response) {
         let data = JSON.stringify({
@@ -124,6 +141,11 @@ class SignIn extends React.Component {
                 <TwitterLogin loginUrl="http://localhost:8080/auth/twitter"
                     onFailure={this.onFailed} onSuccess={this.handleTwitter}
                     requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                <GoogleLogin
+                    clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={this.handleGoogle}
+                    onFailure={this.handleGoogle} />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon />
