@@ -20,6 +20,10 @@ module.exports = function (router, usersRef) {
     // 		failureRedirect : '/'
     // }));
 
+		router.get('/test', function (req, res, next) {
+			res.status(201).send("Test succeed !!")
+		})
+
     router.route('/auth/twitter/reverse')
         .post(function (req, res) {
             request.post({
