@@ -20,8 +20,43 @@ module.exports = function (router, usersRef) {
     // 		failureRedirect : '/'
     // }));
 
+		router.get('/webhook/twitter', function(req, res, next) {
+			res.status(201).send("webhook twitter")
+		})
+
 		router.get('/test', function (req, res, next) {
 			res.status(201).send("Test succeed !!")
+		})
+
+		router.post('/google', function (req, res, next) {
+				let user = req.body.user;
+				let newUsersRef = usersRef.push();
+				let obj = {};
+				usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
+						.then(function (snapShot) {
+								if (snapShot.val()) {
+										snapShot.forEach(function (childSnapShot) {
+												childSnapShot.child("google").ref.update(user)
+														.then(function () {
+																res.status(200).send();
+														})
+														.catch(function (error) {
+																console.log(error);
+																res.status(500).send(error);
+														});
+										});
+										return;
+								}
+								obj["google"] = user;
+								newUsersRef.set(obj)
+										.then(function () {
+												console.log("Successfully created new user:", user);
+												res.status(201).send(newUsersRef.key);
+										}).catch(function (error) {
+												console.log("Error creating new user:", error);
+												res.status(500).send(error);
+										})
+						})
 		})
 
     router.route('/auth/twitter/reverse')

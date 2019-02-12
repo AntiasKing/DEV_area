@@ -70,7 +70,7 @@ class Register extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/facebook/",
+				Axios.post("https://prod-area-epitech.herokuapp.com/facebook/",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
@@ -93,7 +93,7 @@ class Register extends React.Component {
             }
         });
 
-        Axios.post('http://localhost:8080/signup',
+				Axios.post('https://prod-area-epitech.herokuapp.com/signup',
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
