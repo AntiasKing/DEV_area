@@ -17,7 +17,6 @@ admin.initializeApp({
     databaseURL: 'https://area-94f1b.firebaseio.com'
 })
 
-
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTION');
@@ -46,3 +45,16 @@ app.use('/', require('./src/routes/')(admin));
 
 app.listen(port);
 console.log("Server on " + port);
+
+function logEvery1Seconds(i) {
+	    setTimeout(() => {
+				// let db = admin.database();
+		    // var usersRef = db.ref('users');
+				// usersRef.once('value').then(function(snapshot){
+				// 	console.log(snapshot.val())
+				// });
+        // logEvery1Seconds(++i);
+	    }, 1000)
+	}
+
+logEvery1Seconds(0);
