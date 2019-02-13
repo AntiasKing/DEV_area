@@ -10,4 +10,9 @@ module.exports = function (router, usersRef) {
         }
         return res.status(401).send();
     });
+
+    router.post('/webhook/facebook', function (req, res) {
+        console.log(req.body);
+        return res.status(200).send();
+    })
 }
