@@ -2,7 +2,7 @@
 var passport = require('passport');
 const request = require('request');
 
-const crypto = require('crypto')
+var security = require('../../security')
 
 module.exports = function (router, usersRef) {
 
@@ -22,10 +22,23 @@ module.exports = function (router, usersRef) {
     // 		failureRedirect : '/'
     // }));
 
-		router.get('/webhook/twitter', function(req, res, next) {
-			console.log(req.query)
-			hmac = crypto.createHmac('sha256', 'Vr3UJYSKvR4BNEcrwCMoUrbtX').update(req.query.crc_token).digest('base64')
-			res.status(201).send(hmac)
+		router.get('/webhooks/twitter', function(request, response) {
+		  var crc_token = request.query.crc_token
+		  if (crc_token) {
+		    var hash = security.get_challenge_response(crc_token, 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF')
+		    response.status(200);
+		    response.send({
+		      response_token: 'sha256=' + hash
+		    })
+		  } else {
+		    response.status(400);
+		    response.send('Error: crc_token missing from request.')
+		  }
+		})
+
+		router.post('/webhooks/twitter', function(request, response) {
+		  message_processor.process(request.body)
+		  response.send('200 OK')
 		})
 
 		router.get('/test', function (req, res, next) {
