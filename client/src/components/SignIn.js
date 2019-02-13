@@ -19,7 +19,7 @@ import Axios from 'axios';
 import classNames from 'classnames';
 import Icon from '@material-ui/core/Icon';
 
-import './../index.css';
+import './../Ext-Login.css';
 
 const styles = theme => ({
     main: {
