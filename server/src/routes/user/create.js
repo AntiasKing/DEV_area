@@ -1,17 +1,14 @@
 var passport = require('passport');
 const request = require('request');
 
-var security = require('../../security')
+crypto = require('crypto')
 
 module.exports = function (router, usersRef) {
 
 		router.get('/webhooks/twitter', function(req, res) {
-			console.log("==========================")
 		  var crc_token = req.query.crc_token
-			console.log("crc_token: ", crc_token)
 		  if (crc_token) {
-				var hash = security.get_challenge_response(crc_token, 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF')
-				console.log("hash: ", hash)
+				var hash = crypto.createHmac('sha256', 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF').update(crc_token).digest('base64')
 		    res.status(200);
 		    res.send({
 		      response_token: 'sha256=' + hash
@@ -23,7 +20,7 @@ module.exports = function (router, usersRef) {
 		})
 
 		router.get('/test', function (req, res, next) {
-			res.status(201).send("Test succeed !!")
+			res.status(201).send("test succeed !!")
 		})
 
 		router.post('/google', function (req, res, next) {
