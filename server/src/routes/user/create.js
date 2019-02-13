@@ -5,20 +5,20 @@ var security = require('../../security')
 
 module.exports = function (router, usersRef) {
 
-		router.get('/webhooks/twitter', function(request, response) {
+		router.get('/webhooks/twitter', function(req, res) {
 			console.log("==========================")
-		  var crc_token = request.query.crc_token
-			console.log(crc_token)
+		  var crc_token = req.query.crc_token
+			console.log("crc_token: ", crc_token)
 		  if (crc_token) {
 				var hash = security.get_challenge_response(crc_token, 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF')
-				console.log(hash)
-		    response.status(200);
-		    response.send({
+				console.log("hash: ", hash)
+		    res.status(200);
+		    res.send({
 		      response_token: 'sha256=' + hash
 		    })
 		  } else {
-		    response.status(400);
-		    response.send('Error: crc_token missing from request.')
+		    res.status(400);
+		    res.send('Error: crc_token missing from request.')
 		  }
 		})
 
