@@ -5,8 +5,8 @@ module.exports = function (router, usersRef) {
         console.log(req.query['hub.mode']);
         console.log(req.query['hub.challenge']);
         console.log(req.query['hub.verify_token']);
-        if (req.query['hub.verify_token']) {
-            return res.status(200).send(req.query['hub.verify_token']);
+        if (req.query['hub.verify_token'] === verifyToken) {
+            return res.status(200).send(req.query['hub.challenge']);
         }
         return res.status(401).send();
     });
