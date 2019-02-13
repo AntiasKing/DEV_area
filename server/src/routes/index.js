@@ -6,6 +6,6 @@ module.exports = function (admin) {
   var usersRef = db.ref('users');
   require('../../config/passport.js')(router, usersRef);
   require('./user')(router, usersRef);
-  require('./webhook')(router, user);
+  require('./webhook')(router, usersRef);
   return router;
 };
