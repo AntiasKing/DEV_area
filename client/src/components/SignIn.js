@@ -16,6 +16,11 @@ import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import Axios from 'axios';
 
+import classNames from 'classnames';
+import Icon from '@material-ui/core/Icon';
+
+import './../index.css';
+
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -116,14 +121,6 @@ class SignIn extends React.Component {
 
         return (
             <main className={classes.main}>
-                <FacebookLogin
-                    appId="410435456195867"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    callback={this.handleFacebook} />
-                <TwitterLogin loginUrl="http://localhost:8080/auth/twitter"
-                    onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                    requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon />
@@ -145,6 +142,58 @@ class SignIn extends React.Component {
                             label="Remember me"
                         />
                     </form>
+
+                    <ul class="Ext-Login-Select">
+                        <li>
+                            <FacebookLogin
+                                appId="410435456195867"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                cssClass="Ext-Login btn-Facebook"
+                                textButton={<Icon className={classNames(classes.icon, 'fa fa-facebook')} />}
+                                icon=""
+                                callback={this.handleFacebook} />
+                        </li>
+                        <li>
+                            <TwitterLogin 
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Twitter"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                    {/* Changer en dessous par les autres services de login */}
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Google"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Twitch"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-twitch')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Spotify"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                    {/* FIN des services à changer */}
+                    </ul>
+
                     <Button
                         type="submit"
                         fullWidth
