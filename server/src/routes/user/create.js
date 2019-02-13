@@ -1,4 +1,3 @@
-// TODO: Check user's params and send jw-token
 var passport = require('passport');
 const request = require('request');
 
@@ -6,26 +5,13 @@ var security = require('../../security')
 
 module.exports = function (router, usersRef) {
 
-    // app.get('/auth/google', passport.authenticate('google', {
-    // 	scope: ['profile', 'email']
-    // }));
-    //
-    // app.get('/auth/google/callback', passport.authenticate('google', {
-    // 		successRedirect : '/profile',
-    // 		failureRedirect : '/'
-    // }));
-    //
-    // app.get('/auth/twitter', passport.authenticate('twitter'));
-    //
-    // app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-    // 		successRedirect : '/profile',
-    // 		failureRedirect : '/'
-    // }));
-
 		router.get('/webhooks/twitter', function(request, response) {
+			console.log("==========================")
 		  var crc_token = request.query.crc_token
+			console.log(crc_token)
 		  if (crc_token) {
-		    var hash = security.get_challenge_response(crc_token, 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF')
+				var hash = security.get_challenge_response(crc_token, 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF')
+				console.log(hash)
 		    response.status(200);
 		    response.send({
 		      response_token: 'sha256=' + hash
@@ -34,11 +20,6 @@ module.exports = function (router, usersRef) {
 		    response.status(400);
 		    response.send('Error: crc_token missing from request.')
 		  }
-		})
-
-		router.post('/webhooks/twitter', function(request, response) {
-		  message_processor.process(request.body)
-		  response.send('200 OK')
 		})
 
 		router.get('/test', function (req, res, next) {
@@ -125,7 +106,6 @@ module.exports = function (router, usersRef) {
                 return res.send(401, 'User Not Authenticated');
             }
 
-            // prepare token for API
             req.auth = {
                 id: req.user.id
             };
