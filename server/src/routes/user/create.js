@@ -24,7 +24,7 @@ module.exports = function (router, usersRef) {
 
 		router.get('/webhook/twitter', function(req, res, next) {
 			console.log(req.query)
-			hmac = crypto.createHmac('sha256', consumer_secret).update(crc_token).digest('base64')
+			hmac = crypto.createHmac('sha256', 'Vr3UJYSKvR4BNEcrwCMoUrbtX').update(req.query.crc_token).digest('base64')
 			return hmac
 		})
 
