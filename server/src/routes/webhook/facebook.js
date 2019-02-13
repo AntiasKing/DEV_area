@@ -15,6 +15,7 @@ module.exports = function (router, usersRef) {
         console.log('===============================');
         console.log(req.body);
         console.log(req.body.entry);
+        console.log(req.body.entry.changes);
         console.log('===============================');
         return res.status(200).send();
     })
