@@ -14,10 +14,7 @@ module.exports = function (router, usersRef) {
     router.post('/webhook/facebook', function (req, res) {
         console.log('===============================');
         console.log(req.body);
-        console.log(req.body.entry.foreach(n => {
-            console.log(n);
-            console.log(n.changes);
-        }));
+        console.log(req.body.entry);
         console.log('===============================');
         return res.status(200).send();
     })
