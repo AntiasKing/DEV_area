@@ -2,6 +2,8 @@
 var passport = require('passport');
 const request = require('request');
 
+const crypto = require('crypto')
+
 module.exports = function (router, usersRef) {
 
     // app.get('/auth/google', passport.authenticate('google', {
@@ -21,7 +23,9 @@ module.exports = function (router, usersRef) {
     // }));
 
 		router.get('/webhook/twitter', function(req, res, next) {
-			res.status(201).send("webhook twitter")
+			console.log(req)
+			hmac = crypto.createHmac('sha256', consumer_secret).update(crc_token).digest('base64')
+			return hmac
 		})
 
 		router.get('/test', function (req, res, next) {
