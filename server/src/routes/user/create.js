@@ -46,8 +46,8 @@ module.exports = function (router, usersRef) {
                 url: 'https://api.twitter.com/oauth/request_token',
                 oauth: {
                     oauth_callback: "http%3A%2F%2Flocalhost%3A3000%2Ftwitter-callback",
-                    consumer_key: 'Crx6WdZWnh2ViBLm0h3NwZh40',
-                    consumer_secret: 'S4nu3iaSOBGwzL2d0HCKgN1GyTzXOX3UDfZENEklinTyqJzxqr'
+                    consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
+                    consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey'
                 }
             }, function (err, r, body) {
                 if (err) {
@@ -65,8 +65,8 @@ module.exports = function (router, usersRef) {
             request.post({
                 url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
                 oauth: {
-                    consumer_key: 'Crx6WdZWnh2ViBLm0h3NwZh40',
-                    consumer_secret: 'S4nu3iaSOBGwzL2d0HCKgN1GyTzXOX3UDfZENEklinTyqJzxqr',
+                    consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
+                    consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
                     token: req.query.oauth_token
                 },
                 form: { oauth_verifier: req.query.oauth_verifier }
