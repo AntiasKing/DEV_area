@@ -63,22 +63,22 @@ class SignIn extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-		handleGoogle(response) {
-				let data = JSON.stringify({
-						"user": response
-				});
-				Axios.post("http://localhost:8080/google",
-						data, { headers: { "Content-Type": "application/json" } })
-						.then(function (response) {
-								console.log(response);
-								// window.location = "./dashboard";
-						})
-						.catch(function (error) {
-								console.log(error);
-						})
-		}
+    handleGoogle(response) {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("http://localhost:8080/google",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response);
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
-		// Axios.post("http://localhost:8080/facebook/",
+    // Axios.post("http://localhost:8080/facebook/",
     handleFacebook(response) {
         let data = JSON.stringify({
             "user": response
@@ -87,7 +87,7 @@ class SignIn extends React.Component {
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -101,7 +101,7 @@ class SignIn extends React.Component {
         this.setState({ [name]: target.value });
     }
 
-		// Axios.post("http://localhost:8080/user/local/login",
+    // Axios.post("http://localhost:8080/user/local/login",
     handleSubmit(event) {
         let data = JSON.stringify({
             "user": {
@@ -114,7 +114,7 @@ class SignIn extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             }).catch(function (error) {
                 console.log(error);
             })
@@ -122,14 +122,15 @@ class SignIn extends React.Component {
 
     handleTwitter = (response) => {
         console.log("Twitter handled !!");
+        window.location = './dashboard';
     };
 
     onFailed = (error) => {
         console.log(error);
     };
 
-		// <TwitterLogin loginUrl="http://localhost:8080/auth/twitter"
-		// requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+    // <TwitterLogin loginUrl="http://localhost:8080/auth/twitter"
+    // requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
     render() {
         const { classes } = this.props;
 
@@ -142,7 +143,7 @@ class SignIn extends React.Component {
                     callback={this.handleFacebook} />
                 <TwitterLogin loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
                     onFailure={this.onFailed} onSuccess={this.handleTwitter}
-										requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                    requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                 <GoogleLogin
                     clientId="9362814247-n8l28l8hmmrc8ebqps2nf4bktjb93pg6.apps.googleusercontent.com"
                     buttonText="Login"
