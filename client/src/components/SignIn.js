@@ -78,7 +78,6 @@ class SignIn extends React.Component {
 						})
 		}
 
-		// Axios.post("http://localhost:8080/facebook/",
     handleFacebook(response) {
         let data = JSON.stringify({
             "user": response
@@ -101,7 +100,6 @@ class SignIn extends React.Component {
         this.setState({ [name]: target.value });
     }
 
-		// Axios.post("http://localhost:8080/user/local/login",
     handleSubmit(event) {
         let data = JSON.stringify({
             "user": {
@@ -128,8 +126,6 @@ class SignIn extends React.Component {
         console.log(error);
     };
 
-		// <TwitterLogin loginUrl="http://localhost:8080/auth/twitter"
-		// requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
     render() {
         const { classes } = this.props;
 
