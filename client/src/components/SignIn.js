@@ -17,6 +17,11 @@ import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
+import classNames from 'classnames';
+import Icon from '@material-ui/core/Icon';
+
+import './../Ext-Login.css';
+
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -63,21 +68,22 @@ class SignIn extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-		handleGoogle(response) {
-				let data = JSON.stringify({
-						"user": response
-				});
-				Axios.post("http://localhost:8080/google",
-						data, { headers: { "Content-Type": "application/json" } })
-						.then(function (response) {
-								console.log(response);
-								// window.location = "./dashboard";
-						})
-						.catch(function (error) {
-								console.log(error);
-						})
-		}
+    handleGoogle(response) {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("http://localhost:8080/google",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response);
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
+    // Axios.post("http://localhost:8080/facebook/",
     handleFacebook(response) {
         let data = JSON.stringify({
             "user": response
@@ -86,7 +92,7 @@ class SignIn extends React.Component {
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -112,7 +118,7 @@ class SignIn extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             }).catch(function (error) {
                 console.log(error);
             })
@@ -120,6 +126,7 @@ class SignIn extends React.Component {
 
     handleTwitter = (response) => {
         console.log("Twitter handled !!");
+        window.location = './dashboard';
     };
 
     onFailed = (error) => {
@@ -131,19 +138,6 @@ class SignIn extends React.Component {
 
         return (
             <main className={classes.main}>
-                <FacebookLogin
-                    appId="410435456195867"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    callback={this.handleFacebook} />
-                <TwitterLogin loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                    onFailure={this.onFailed} onSuccess={this.handleTwitter}
-										requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
-                <GoogleLogin
-                    clientId="9362814247-n8l28l8hmmrc8ebqps2nf4bktjb93pg6.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={this.handleGoogle}
-                    onFailure={this.handleGoogle} />
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon />
@@ -165,6 +159,58 @@ class SignIn extends React.Component {
                             label="Remember me"
                         />
                     </form>
+
+                    <ul class="Ext-Login-Select">
+                        <li>
+                            <FacebookLogin
+                                appId="410435456195867"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                cssClass="Ext-Login btn-Facebook"
+                                textButton={<Icon className={classNames(classes.icon, 'fa fa-facebook')} />}
+                                icon=""
+                                callback={this.handleFacebook} />
+                        </li>
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Twitter"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                        {/* Changer en dessous par les autres services de login */}
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Google"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Twitch"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-twitch')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                        <li>
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Spotify"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        </li>
+                        {/* FIN des services à changer */}
+                    </ul>
+
                     <Button
                         type="submit"
                         fullWidth
