@@ -5,20 +5,6 @@ crypto = require('crypto')
 
 module.exports = function (router, usersRef) {
 
-		router.get('/webhooks/twitter', function(req, res) {
-		  var crc_token = req.query.crc_token
-		  if (crc_token) {
-				var hash = crypto.createHmac('sha256', 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF').update(crc_token).digest('base64')
-		    res.status(200);
-		    res.send({
-		      response_token: 'sha256=' + hash
-		    })
-		  } else {
-		    res.status(400);
-		    res.send('Error: crc_token missing from request.')
-		  }
-		})
-
 		router.get('/test', function (req, res, next) {
 			res.status(201).send("test succeed !!")
 		})
@@ -60,8 +46,8 @@ module.exports = function (router, usersRef) {
                 url: 'https://api.twitter.com/oauth/request_token',
                 oauth: {
                     oauth_callback: "http%3A%2F%2Flocalhost%3A3000%2Ftwitter-callback",
-                    consumer_key: 'Vr3UJYSKvR4BNEcrwCMoUrbtX',
-                    consumer_secret: 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF'
+                    consumer_key: 'Crx6WdZWnh2ViBLm0h3NwZh40',
+                    consumer_secret: 'S4nu3iaSOBGwzL2d0HCKgN1GyTzXOX3UDfZENEklinTyqJzxqr'
                 }
             }, function (err, r, body) {
                 if (err) {
@@ -79,8 +65,8 @@ module.exports = function (router, usersRef) {
             request.post({
                 url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
                 oauth: {
-                    consumer_key: 'Vr3UJYSKvR4BNEcrwCMoUrbtX',
-                    consumer_secret: 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF',
+                    consumer_key: 'Crx6WdZWnh2ViBLm0h3NwZh40',
+                    consumer_secret: 'S4nu3iaSOBGwzL2d0HCKgN1GyTzXOX3UDfZENEklinTyqJzxqr',
                     token: req.query.oauth_token
                 },
                 form: { oauth_verifier: req.query.oauth_verifier }
