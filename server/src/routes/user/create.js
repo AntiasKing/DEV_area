@@ -5,40 +5,46 @@ crypto = require('crypto')
 
 module.exports = function (router, usersRef) {
 
-		router.get('/test', function (req, res, next) {
-			res.status(201).send("test succeed !!")
-		})
+    router.get('/test', function (req, res, next) {
+        res.status(201).send("test succeed !!")
+    })
 
-		router.post('/google', function (req, res, next) {
-				let user = req.body.user;
-				let newUsersRef = usersRef.push();
-				let obj = {};
-				usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
-						.then(function (snapShot) {
-								if (snapShot.val()) {
-										snapShot.forEach(function (childSnapShot) {
-												childSnapShot.child("google").ref.update(user)
-														.then(function () {
-																res.status(200).send();
-														})
-														.catch(function (error) {
-																console.log(error);
-																res.status(500).send(error);
-														});
-										});
-										return;
-								}
-								obj["google"] = user;
-								newUsersRef.set(obj)
-										.then(function () {
-												console.log("Successfully created new user:", user);
-												res.status(201).send(newUsersRef.key);
-										}).catch(function (error) {
-												console.log("Error creating new user:", error);
-												res.status(500).send(error);
-										})
-						})
-		})
+    router.get('/auth/twitch', function (req, res) {
+        console.log(req.body);
+        console.log(req.query)
+        return res.status(200).send();
+    });
+
+    router.post('/google', function (req, res, next) {
+        let user = req.body.user;
+        let newUsersRef = usersRef.push();
+        let obj = {};
+        usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
+            .then(function (snapShot) {
+                if (snapShot.val()) {
+                    snapShot.forEach(function (childSnapShot) {
+                        childSnapShot.child("google").ref.update(user)
+                            .then(function () {
+                                res.status(200).send();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                res.status(500).send(error);
+                            });
+                    });
+                    return;
+                }
+                obj["google"] = user;
+                newUsersRef.set(obj)
+                    .then(function () {
+                        console.log("Successfully created new user:", user);
+                        res.status(201).send(newUsersRef.key);
+                    }).catch(function (error) {
+                        console.log("Error creating new user:", error);
+                        res.status(500).send(error);
+                    })
+            })
+    })
 
     router.route('/auth/twitter/reverse')
         .post(function (req, res) {
@@ -127,30 +133,30 @@ module.exports = function (router, usersRef) {
             })
     })
 
-		router.post('/user/local/login', function(req, res, next) {
-			passport.authenticate('local-signin', function (err, lol, info) {
-				let user = req.body.user;
-				let obj = {};
-				obj["local"] = user;
-				usersRef.orderByChild("local/email").equalTo(user.email).once("value")
-						.then(function (snapShot) {
-							if (snapShot.val()) {
-									snapShot.forEach(function (childSnapShot) {
-											childSnapShot.child("local").ref.update(user)
-													.then(function () {
-															res.status(200).send("User Already exist");
-													})
-													.catch(function (error) {
-															console.log(error);
-															res.status(500).send(error);
-													});
-									});
-						} else {
-							res.status(200).send("No User Found");
-						}
-					})
-			})(req, res, next);
-		});
+    router.post('/user/local/login', function (req, res, next) {
+        passport.authenticate('local-signin', function (err, lol, info) {
+            let user = req.body.user;
+            let obj = {};
+            obj["local"] = user;
+            usersRef.orderByChild("local/email").equalTo(user.email).once("value")
+                .then(function (snapShot) {
+                    if (snapShot.val()) {
+                        snapShot.forEach(function (childSnapShot) {
+                            childSnapShot.child("local").ref.update(user)
+                                .then(function () {
+                                    res.status(200).send("User Already exist");
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                    res.status(500).send(error);
+                                });
+                        });
+                    } else {
+                        res.status(200).send("No User Found");
+                    }
+                })
+        })(req, res, next);
+    });
 
     router.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, lol, info) {
