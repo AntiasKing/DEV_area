@@ -25,7 +25,7 @@ module.exports = function (router, usersRef) {
                 return res.status(500).send(err);
             }
             console.log(body);
-            return res.status(200).send(body);
+            return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
     });
 

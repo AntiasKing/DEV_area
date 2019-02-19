@@ -14,6 +14,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
+import TwitchButton from './TwitchButton';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
@@ -129,6 +130,11 @@ class SignIn extends React.Component {
         window.location = './dashboard';
     };
 
+    onTwitchSucess = (document) => {
+        console.log(document);
+        window.location = './dashboard';
+    }
+
     onFailed = (error) => {
         console.log(error);
     };
@@ -160,7 +166,7 @@ class SignIn extends React.Component {
                         />
                     </form>
 
-                    <ul class="Ext-Login-Select">
+                    <ul className="Ext-Login-Select">
                         <li>
                             <FacebookLogin
                                 appId="410435456195867"
@@ -191,13 +197,14 @@ class SignIn extends React.Component {
                                 requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         <li>
-                            <TwitterLogin
+                            <TwitchButton onFailure={this.onFailed} onSuccess={this.onTwitchSucess}></TwitchButton>
+                            {/* <TwitterLogin
                                 loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Twitch"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitch')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" /> */}
                         </li>
                         <li>
                             <TwitterLogin
