@@ -132,7 +132,7 @@ class SignIn extends React.Component {
 
     onTwitchSucess = (document) => {
         console.log(document);
-        window.location = './dashboard';
+        // window.location = './dashboard';
     }
 
     onFailed = (error) => {
