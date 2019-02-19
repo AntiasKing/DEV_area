@@ -10,9 +10,23 @@ module.exports = function (router, usersRef) {
     })
 
     router.get('/auth/twitch', function (req, res) {
-        console.log(req.body);
-        console.log(req.query)
-        return res.status(200).send();
+        request.post({
+            url: 'https://id.twitch.tv/oauth2/token',
+            form: {
+                client_id: 'gh2sbdqqplvq5qa89ze2h6e6zb4tur',
+                client_secret: 'wazp2kxihypam497ik8umppckev9aq',
+                code: req.query.code,
+                grant_type: 'authorization_code',
+                redirect_uri: 'https://staging-area-epitech.herokuapp.com/auth/twitch'
+            }
+        }, function (err, r, body) {
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            console.log(body);
+            return res.status(200).send(body);
+        })
     });
 
     router.post('/google', function (req, res, next) {
