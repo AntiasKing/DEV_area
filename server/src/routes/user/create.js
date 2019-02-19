@@ -128,14 +128,29 @@ module.exports = function (router, usersRef) {
     })
 
 		router.post('/user/local/login', function(req, res, next) {
-			passport.authenticate('local-signin'), function (err, lol, info) {
+			passport.authenticate('local-signin', function (err, lol, info) {
 				let user = req.body.user;
-				console.log(user);
-				// let obj = {};
-				// obj["local"] = user;
-				// usersRef.orderByChild("local/userID").equalTo(user.user.email)
-			}
-		})
+				let obj = {};
+				obj["local"] = user;
+				usersRef.orderByChild("local/email").equalTo(user.email).once("value")
+						.then(function (snapShot) {
+							if (snapShot.val()) {
+									snapShot.forEach(function (childSnapShot) {
+											childSnapShot.child("local").ref.update(user)
+													.then(function () {
+															res.status(200).send("User Already exist");
+													})
+													.catch(function (error) {
+															console.log(error);
+															res.status(500).send(error);
+													});
+									});
+						} else {
+							res.status(200).send("No User Found");
+						}
+					})
+			})(req, res, next);
+		});
 
     router.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, lol, info) {
