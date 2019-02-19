@@ -127,6 +127,16 @@ module.exports = function (router, usersRef) {
             })
     })
 
+		router.post('/user/local/login', function(req, res, next) {
+			passport.authenticate('local-signin'), function (err, lol, info) {
+				let user = req.body.user;
+				console.log(user);
+				// let obj = {};
+				// obj["local"] = user;
+				// usersRef.orderByChild("local/userID").equalTo(user.user.email)
+			}
+		})
+
     router.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, lol, info) {
             let user = req.body.user;
