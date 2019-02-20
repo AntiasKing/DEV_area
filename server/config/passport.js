@@ -19,7 +19,7 @@ module.exports = function (router, usersRef) {
         // });
     });
 
-    passport.use('local-login', new LocalStrategy({
+    passport.use('local-signin', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true

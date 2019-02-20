@@ -14,6 +14,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
+import TwitchButton from './TwitchButton';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
@@ -113,7 +114,7 @@ class SignIn extends React.Component {
                 "password": this.state.password,
             }
         });
-        Axios.post("https://prod-area-epitech.herokuapp.com/user/local/login",
+        Axios.post("http://localhost:8080/user/local/login",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
@@ -128,6 +129,11 @@ class SignIn extends React.Component {
         console.log("Twitter handled !!");
         window.location = './dashboard';
     };
+
+    onTwitchSucess = (document) => {
+        console.log(document);
+        // window.location = './dashboard';
+    }
 
     onFailed = (error) => {
         console.log(error);
@@ -160,7 +166,7 @@ class SignIn extends React.Component {
                         />
                     </form>
 
-                    <ul class="Ext-Login-Select">
+                    <ul className="Ext-Login-Select">
                         <li>
                             <FacebookLogin
                                 appId="410435456195867"
@@ -173,40 +179,36 @@ class SignIn extends React.Component {
                         </li>
                         <li>
                             <TwitterLogin
-                                loginUrl="http://localhost:8080/auth/twitter"
+                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Twitter"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
-                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         {/* Changer en dessous par les autres services de login */}
                         <li>
                             <TwitterLogin
-                                loginUrl="http://localhost:8080/auth/twitter"
+                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Google"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
-                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                        </li>
+                        <li>
+                            <TwitchButton
+                                onFailure={this.onFailed}
+                                onSuccess={this.onTwitchSucess} />
                         </li>
                         <li>
                             <TwitterLogin
-                                loginUrl="http://localhost:8080/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Twitch"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-twitch')} />}
-                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
-                        </li>
-                        <li>
-                            <TwitterLogin
-                                loginUrl="http://localhost:8080/auth/twitter"
+                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Spotify"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
-                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         {/* FIN des services à changer */}
                     </ul>

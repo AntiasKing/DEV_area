@@ -5,66 +5,86 @@ crypto = require('crypto')
 
 module.exports = function (router, usersRef) {
 
-		router.get('/test', function (req, res, next) {
-			res.status(201).send("test succeed !!")
-		})
+    router.get('/test', function (req, res, next) {
+        res.status(201).send("test succeed !!")
+    })
 
-		router.get('/auth/spotify/', function (req, res) {
-			console.log(req.query);
-			let code = req.query.code || null
-			console.log(req.body);
-			let authOptions = {
-				url: 'https://accounts.spotify.com/api/token',
-				form: {
-					code: code,
-					redirect_uri: 'http://localhost:8080/auth/spotify',
-					grant_type: 'authorization_code'
-			  	},
-			  	headers: {
-					'Authorization': 'Basic ' + (new Buffer(
-					'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
-					).toString('base64'))
-			  	},
-			  	json: true
-			}
-			request.post(authOptions, function(error, response, body) {
-			console.log(body);
-			var access_token = body.access_token
-			let uri = 'http://localhost:3000/';
-			res.redirect(uri + '?access_token=' + access_token)
-		  })
-		});
+    router.get('/auth/twitch', function (req, res) {
+        request.post({
+            url: 'https://id.twitch.tv/oauth2/token',
+            form: {
+                client_id: 'gh2sbdqqplvq5qa89ze2h6e6zb4tur',
+                client_secret: 'wazp2kxihypam497ik8umppckev9aq',
+                code: req.query.code,
+                grant_type: 'authorization_code',
+                redirect_uri: 'https://staging-area-epitech.herokuapp.com/auth/twitch'
+            }
+        }, function (err, r, body) {
+            if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+            console.log(body);
+            return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
+        })
+    });
 
-		router.post('/google', function (req, res, next) {
-				let user = req.body.user;
-				let newUsersRef = usersRef.push();
-				let obj = {};
-				usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
-						.then(function (snapShot) {
-								if (snapShot.val()) {
-										snapShot.forEach(function (childSnapShot) {
-												childSnapShot.child("google").ref.update(user)
-														.then(function () {
-																res.status(200).send();
-														})
-														.catch(function (error) {
-																console.log(error);
-																res.status(500).send(error);
-														});
-										});
-										return;
-								}
-								obj["google"] = user;
-								newUsersRef.set(obj)
-										.then(function () {
-												console.log("Successfully created new user:", user);
-												res.status(201).send(newUsersRef.key);
-										}).catch(function (error) {
-												console.log("Error creating new user:", error);
-												res.status(500).send(error);
-										})
-						})
-		})
+    router.post('/google', function (req, res, next) {
+        let user = req.body.user;
+        let newUsersRef = usersRef.push();
+        let obj = {};
+        usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
+            .then(function (snapShot) {
+                if (snapShot.val()) {
+                    snapShot.forEach(function (childSnapShot) {
+                        childSnapShot.child("google").ref.update(user)
+                            .then(function () {
+                                res.status(200).send();
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                                res.status(500).send(error);
+                            });
+                    });
+                    return;
+                }
+                obj["google"] = user;
+                newUsersRef.set(obj)
+                    .then(function () {
+                        console.log("Successfully created new user:", user);
+                        res.status(201).send(newUsersRef.key);
+                    }).catch(function (error) {
+                        console.log("Error creating new user:", error);
+                        res.status(500).send(error);
+                    })
+            })
+	})
+	
+	router.get('/auth/spotify/', function (req, res) {
+		console.log(req.query);
+		let code = req.query.code || null
+		console.log(req.body);
+		let authOptions = {
+			url: 'https://accounts.spotify.com/api/token',
+			form: {
+				code: code,
+				redirect_uri: 'http://localhost:8080/auth/spotify',
+				grant_type: 'authorization_code'
+			  },
+			  headers: {
+				'Authorization': 'Basic ' + (new Buffer(
+				'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
+				).toString('base64'))
+			  },
+			  json: true
+		}
+		request.post(authOptions, function(error, response, body) {
+		console.log(body);
+		var access_token = body.access_token
+		let uri = 'http://localhost:3000/';
+		res.redirect(uri + '?access_token=' + access_token)
+	  })
+	});
 
     router.route('/auth/twitter/reverse')
         .post(function (req, res) {
@@ -152,6 +172,31 @@ module.exports = function (router, usersRef) {
                     })
             })
     })
+
+    router.post('/user/local/login', function (req, res, next) {
+        passport.authenticate('local-signin', function (err, lol, info) {
+            let user = req.body.user;
+            let obj = {};
+            obj["local"] = user;
+            usersRef.orderByChild("local/email").equalTo(user.email).once("value")
+                .then(function (snapShot) {
+                    if (snapShot.val()) {
+                        snapShot.forEach(function (childSnapShot) {
+                            childSnapShot.child("local").ref.update(user)
+                                .then(function () {
+                                    res.status(200).send("User Already exist");
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                    res.status(500).send(error);
+                                });
+                        });
+                    } else {
+                        res.status(200).send("No User Found");
+                    }
+                })
+        })(req, res, next);
+    });
 
     router.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, lol, info) {
