@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
+import SpotifyLogin from 'react-spotify-login';
 import Axios from 'axios';
 
 import classNames from 'classnames';
@@ -71,7 +72,14 @@ class Register extends React.Component {
         const name = target.name;
 
         this.setState({ [name]: target.value });
-    }
+	}
+	
+	onSuccessSpotify(response) {
+		console.log("Bite");
+		let data = JSON.stringify({
+
+		})
+	}
 
     handleFacebook(response) {
         let data = JSON.stringify({
@@ -87,7 +95,23 @@ class Register extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
-    }
+	}
+	
+	LoginSpotify() {
+		let popup = window.open('', '', 'toolbar=no, location=no');
+		popup.location = 'https://accounts.spotify.com/authorize'+'?response_type=code'+'&client_id=d6606813f1904768bb612bf21e76d04f'+'&scope='+'user-read-private user-read-email'+'&redirect_uri='+'http://localhost:8080/auth/spotify';
+
+		// Axios.get('https://accounts.spotify.com/authorize'+
+		// 	'?response_type=code'+
+		// 	'&client_id=d6606813f1904768bb612bf21e76d04f'+
+		// 	'&scope='+encodeURIComponent('user-read-private user-read-email')+
+		// 	'&redirect_uri='+encodeURIComponent('http://localhost:8080/auth/spotify')).
+		// then(function (response) {
+		//    console.log(response)
+		// }).catch(function (error) {
+		// 	console.log(error)
+		// });
+	}
 
     // TODO: Add Error message for bad register
     handleSubmit(event) {
@@ -187,10 +211,15 @@ class Register extends React.Component {
                                 text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
                                 requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                         </li>
+						<li>
+							<button
+								onClick={this.LoginSpotify} 
+								className="Ext-Login btn-Spotify"
+								text={
+									<Icon class={classNames(classes.icon, 'fa fa-spotify')} />} />
+						</li>
                         {/* FIN des services à changer */}
                     </ul>
-
-
                     <Button
                         fullWidth
                         variant="contained"
