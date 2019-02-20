@@ -38,8 +38,8 @@ class TwitchButton extends React.Component {
         const { classes } = this.props;
 
         return (
-            <button onClick={this.onClick}>
-                <Icon className={classNames(classes.icon, 'fa fa-twitch')} />
+            <button onClick={this.onClick} className="Ext-Login btn-Twitch">
+                <Icon showIcon={false} className={classNames(classes.icon, 'fa fa-twitch')} />
             </button>
         );
     }

@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
+import TwitchButton from './TwitchButton';
 import Axios from 'axios';
 
 import classNames from 'classnames';
@@ -112,6 +113,11 @@ class Register extends React.Component {
             });
     }
 
+    onTwitchSucess = (document) => {
+        console.log(document);
+        // window.location = './dashboard';
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -170,13 +176,9 @@ class Register extends React.Component {
                                 requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Twitch"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-twitch')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                            <TwitchButton
+                                onFailure={this.onFailed}
+                                onSuccess={this.onTwitchSucess} />
                         </li>
                         <li>
                             <TwitterLogin

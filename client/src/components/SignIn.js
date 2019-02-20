@@ -197,14 +197,9 @@ class SignIn extends React.Component {
                                 requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         <li>
-                            <TwitchButton onFailure={this.onFailed} onSuccess={this.onTwitchSucess}></TwitchButton>
-                            {/* <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Twitch"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-twitch')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" /> */}
+                            <TwitchButton
+                                onFailure={this.onFailed}
+                                onSuccess={this.onTwitchSucess} />
                         </li>
                         <li>
                             <TwitterLogin
