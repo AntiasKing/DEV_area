@@ -72,20 +72,20 @@ class Register extends React.Component {
         const name = target.name;
 
         this.setState({ [name]: target.value });
-	}
-	
-	onSuccessSpotify(response) {
-		console.log("Bite");
-		let data = JSON.stringify({
+    }
 
-		})
-	}
+    onSuccessSpotify(response) {
+        console.log("Bite");
+        let data = JSON.stringify({
+
+        })
+    }
 
     handleFacebook(response) {
         let data = JSON.stringify({
             "user": response
         });
-				Axios.post("https://prod-area-epitech.herokuapp.com/facebook/",
+        Axios.post("https://staging-area-epitech.herokuapp.com/facebook/",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
@@ -95,23 +95,23 @@ class Register extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
-	}
-	
-	LoginSpotify() {
-		let popup = window.open('', '', 'toolbar=no, location=no');
-		popup.location = 'https://accounts.spotify.com/authorize'+'?response_type=code'+'&client_id=d6606813f1904768bb612bf21e76d04f'+'&scope='+'user-read-private user-read-email'+'&redirect_uri='+'http://localhost:8080/auth/spotify';
+    }
 
-		// Axios.get('https://accounts.spotify.com/authorize'+
-		// 	'?response_type=code'+
-		// 	'&client_id=d6606813f1904768bb612bf21e76d04f'+
-		// 	'&scope='+encodeURIComponent('user-read-private user-read-email')+
-		// 	'&redirect_uri='+encodeURIComponent('http://localhost:8080/auth/spotify')).
-		// then(function (response) {
-		//    console.log(response)
-		// }).catch(function (error) {
-		// 	console.log(error)
-		// });
-	}
+    LoginSpotify() {
+        let popup = window.open('', '', 'toolbar=no, location=no');
+        popup.location = 'https://accounts.spotify.com/authorize' + '?response_type=code' + '&client_id=d6606813f1904768bb612bf21e76d04f' + '&scope=' + 'user-read-private user-read-email' + '&redirect_uri=' + 'http://localhost:8080/auth/spotify';
+
+        // Axios.get('https://accounts.spotify.com/authorize'+
+        // 	'?response_type=code'+
+        // 	'&client_id=d6606813f1904768bb612bf21e76d04f'+
+        // 	'&scope='+encodeURIComponent('user-read-private user-read-email')+
+        // 	'&redirect_uri='+encodeURIComponent('http://localhost:8080/auth/spotify')).
+        // then(function (response) {
+        //    console.log(response)
+        // }).catch(function (error) {
+        // 	console.log(error)
+        // });
+    }
 
     // TODO: Add Error message for bad register
     handleSubmit(event) {
@@ -124,7 +124,7 @@ class Register extends React.Component {
             }
         });
 
-				Axios.post('https://prod-area-epitech.herokuapp.com/signup',
+        Axios.post('https://staging-area-epitech.herokuapp.com/signup',
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
@@ -212,13 +212,13 @@ class Register extends React.Component {
                                 text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
                                 requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
-						<li>
-							<button
-								onClick={this.LoginSpotify} 
-								className="Ext-Login btn-Spotify"
-								text={
-									<Icon class={classNames(classes.icon, 'fa fa-spotify')} />} />
-						</li>
+                        <li>
+                            <button
+                                onClick={this.LoginSpotify}
+                                className="Ext-Login btn-Spotify"
+                                text={
+                                    <Icon class={classNames(classes.icon, 'fa fa-spotify')} />} />
+                        </li>
                         {/* FIN des services à changer */}
                     </ul>
                     <Button

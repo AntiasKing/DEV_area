@@ -32,7 +32,7 @@ module.exports = function (router, usersRef) {
             }, function (err, r, body) {
                 if (err) {
                     console.log(err);
-                    return res.status(500).send();
+                    return res.status(500).send(err);
                 }
                 console.log("========================================");
                 console.log(body);
@@ -159,6 +159,7 @@ module.exports = function (router, usersRef) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
+        console.log(user);
         usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
