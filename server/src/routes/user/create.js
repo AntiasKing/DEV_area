@@ -24,7 +24,18 @@ module.exports = function (router, usersRef) {
                 console.log(err);
                 return res.status(500).send(err);
             }
-            console.log(body);
+            request.get('https://api.twitch.tv/helix/users', {
+                'auth': {
+
+                    'bearer': body.access_token
+                }
+            }, function (err, r, body) {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).send();
+                }
+                console.log(body);
+            })
             return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
     });
@@ -58,33 +69,33 @@ module.exports = function (router, usersRef) {
                         res.status(500).send(error);
                     })
             })
-	})
-	
-	router.get('/auth/spotify/', function (req, res) {
-		console.log(req.query);
-		let code = req.query.code || null
-		console.log(req.body);
-		let authOptions = {
-			url: 'https://accounts.spotify.com/api/token',
-			form: {
-				code: code,
-				redirect_uri: 'http://localhost:8080/auth/spotify',
-				grant_type: 'authorization_code'
-			  },
-			  headers: {
-				'Authorization': 'Basic ' + (new Buffer(
-				'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
-				).toString('base64'))
-			  },
-			  json: true
-		}
-		request.post(authOptions, function(error, response, body) {
-		console.log(body);
-		var access_token = body.access_token
-		let uri = 'http://localhost:3000/';
-		res.redirect(uri + '?access_token=' + access_token)
-	  })
-	});
+    })
+
+    router.get('/auth/spotify/', function (req, res) {
+        console.log(req.query);
+        let code = req.query.code || null
+        console.log(req.body);
+        let authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: code,
+                redirect_uri: 'http://localhost:8080/auth/spotify',
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (new Buffer(
+                    'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
+                ).toString('base64'))
+            },
+            json: true
+        }
+        request.post(authOptions, function (error, response, body) {
+            console.log(body);
+            var access_token = body.access_token
+            let uri = 'http://localhost:3000/';
+            res.redirect(uri + '?access_token=' + access_token)
+        })
+    });
 
     router.route('/auth/twitter/reverse')
         .post(function (req, res) {
