@@ -34,7 +34,9 @@ module.exports = function (router, usersRef) {
                     console.log(err);
                     return res.status(500).send();
                 }
+                console.log("========================================");
                 console.log(body);
+                console.log("========================================");
             })
             return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
