@@ -6,16 +6,17 @@ import classNames from 'classnames';
 
 const styles = theme => ({
     service: {
+        top: "100px",
         height: "300px",
     },
     icon: {
         overflow: "visible",
         color: "white",
-        position: "absolute"
+        position: "absolute",
     },
     name: {
         position: "absolute",
-        bottom: "0px",
+        bottom: "10px",
         color: "white"
     }
 });
@@ -31,7 +32,7 @@ class Service extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Grid item xs={3}>
+            <Grid item xs={2}>
                 <Button
                     className={classes.service}
                     size='large'

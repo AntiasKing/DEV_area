@@ -34,16 +34,30 @@ const config = {
             "reactions": []
         },
         {
-            "name": "youtube",
-            "color": "#ff0000",
-            "icon": "fab fa-youtube",
+            "name": "google",
+            "color": "#dd4b39",
+            "icon": "fab fa-google",
             "actions": [],
             "reactions": []
         },
         {
-            "name": "google",
-            "color": "#518ff5",
-            "icon": "fab fa-google",
+            "name": "Twitch",
+            "color": "#6441a5",
+            "icon": "fab fa-twitch",
+            "actions": [],
+            "reactions": []
+        },
+        {
+            "name": "spotify",
+            "color": "#1DB954",
+            "icon": "fab fa-spotify",
+            "actions": [],
+            "reactions": []
+        },
+        {
+            "name": "Weather",
+            "color": "#333",
+            "icon": "fas fa-cloud-sun",
             "actions": [],
             "reactions": []
         },
@@ -99,10 +113,10 @@ class AppletDesigner extends React.Component {
         return (
             <div>
                 <header>
-                    <AppBar color="primary" position="static">
+                    <AppBar style={{ background: "#f5f5f5", color: "#0f0f0f" }} position="static">
                         <Toolbar>
-                            <Typography variant="h6" color="inherit">Area</Typography>
-                            <IconButton color="inherit" aria-label="Add Widget" className={classes.AddIcon} href="./dashboard">
+                            <Typography variant="h4" color="inherit">Area</Typography>
+                            <IconButton color="inherit" aria-label="Add Widget" className={classes.AddIcon} style={{ marginLeft: "10px" }} href="./dashboard">
                                 <BackIcon />
                             </IconButton>
                         </Toolbar>
