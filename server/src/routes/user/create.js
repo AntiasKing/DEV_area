@@ -78,11 +78,25 @@ module.exports = function (router, usersRef) {
 			  },
 			  json: true
 		}
-		request.post(authOptions, function(error, response, body) {
-		console.log(body);
-		var access_token = body.access_token
-		let uri = 'http://localhost:3000/';
-		res.redirect(uri + '?access_token=' + access_token)
+		request.post(authOptions, function(err, response, body) {
+			if (err) {
+                console.log(err);
+                return res.status(500).send(err);
+            }
+			console.log(body);
+			request.post({
+				url: 'https://api.spotify.com/v1/me',
+				headers: {
+					Authorization: 'Bearer ' + body.access_token
+				}
+
+			}, function(err, response, body) {
+				if (err) {
+					console.log(err);
+					return res.status(500).send(err);
+				}
+			})
+            return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
 	  })
 	});
 
