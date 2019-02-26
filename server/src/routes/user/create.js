@@ -24,7 +24,7 @@ module.exports = function (router, usersRef) {
                 console.log(err);
                 return res.status(500).send(err);
             }
-            console.log("Token: ", body);
+            console.log("Token: ", body.access_token);
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
                     'sendImmediately': false,
@@ -97,27 +97,27 @@ module.exports = function (router, usersRef) {
                 console.log(err);
                 return res.status(500).send(err);
             }
-			console.log(body);
-			request.post({
-				url: 'https://api.spotify.com/v1/me',
-				headers: {
-					Authorization: 'Bearer ' + body.access_token
-				}
+            console.log(body);
+            request.post({
+                url: 'https://api.spotify.com/v1/me',
+                headers: {
+                    Authorization: 'Bearer ' + body.access_token
+                }
 
-			}, function(err, response, body) {
-				if (err) {
-					console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
-					console.log(err);
-					console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
-					return res.status(500).send(err);
-				}
-				let user = body;
-				console.log("==========================================================");
-				console.log(body);
-				console.log("==========================================================");
-				let newUsersRef = usersRef.push();
+            }, function (err, response, body) {
+                if (err) {
+                    console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
+                    console.log(err);
+                    console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
+                    return res.status(500).send(err);
+                }
+                let user = body;
+                console.log("==========================================================");
+                console.log(body);
+                console.log("==========================================================");
+                let newUsersRef = usersRef.push();
 
-			})
+            })
             return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
     });
