@@ -26,6 +26,8 @@ module.exports = function (router, usersRef) {
                 return res.status(500).send(err);
             }
             console.log("Token: ", body, JSON.parse(body).access_token);
+            let access_token = JSON.parse(body).access_token;
+            let refresh_token = JSON.parse(body).refresh_token;
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
                     'bearer': JSON.parse(body).access_token
@@ -39,8 +41,8 @@ module.exports = function (router, usersRef) {
                 console.log(body);
                 console.log("========================================");
                 let user = JSON.parse(body).data[0];
-                user.access_token = JSON.parse(body).access_token;
-                user.refresh_token = JSON.parse(body).refresh_token;
+                user.access_token = access_token;
+                user.refresh_token = refresh_token;
                 let newUsersRef = usersRef.push();
                 usersRef.orderByChild("twitch/id").equalTo(user.id).once("value")
                     .then(function (snapShot) {
