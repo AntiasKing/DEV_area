@@ -40,17 +40,32 @@ const user = {
     "services": [{
         "name": "facebook",
         "color": "#3b5998",
-        "icon": "fab fa-facebook-f",
+        "icon": "fab fa-facebook-f"
     },
     {
         "name": "twitter",
         "color": "#00aced",
-        "icon": "fab fa-twitter",
+        "icon": "fab fa-twitter"
     },
     {
-        "name": "youtube",
-        "color": "#ff0000",
-        "icon": "fab fa-youtube",
+        "name": "google",
+        "color": "#dd4b39",
+        "icon": "fab fa-google"
+    },
+    {
+        "name": "Twitch",
+        "color": "#6441a5",
+        "icon": "fab fa-twitch"
+    },
+    {
+        "name": "spotify",
+            "color": "#1DB954",
+        "icon": "fab fa-spotify"
+    },
+    {
+        "name": "Weather",
+        "color": "#333",
+        "icon": "fas fa-cloud-sun"
     },
     ],
 }
@@ -113,16 +128,16 @@ class Dashboard extends React.Component {
         }
         return (
             <div classes={classes.main}>
-                <AppBar color="primary" position="static">
+                <AppBar style={{ background: "#f5f5f5", color: "#0f0f0f" }} position="static">
                     <Toolbar>
-                        <Typography variant="h6" color="inherit">Area</Typography>
-                        <IconButton color="inherit" aria-label="Add Applet" className={classes.AddIcon} href="./createApplet">
+                        <Typography variant="h4" color="inherit">Area</Typography>
+                        <IconButton color="inherit" aria-label="Add Applet" className={classes.AddIcon} style={{ marginTop: "10px", marginRight: "40px" }} href="./createApplet">
                             <AddIcon />
-                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px " }}> Create Applet</Typography>
+                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px"}}> Create Applet</Typography>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <Tabs fullWidth value={this.state.tab} onChange={this.handleTabChange}>
+                <Tabs fullWidth value={this.state.tab} onChange={this.handleTabChange} style={{ background: "#f5f5f5", color: "#0f0f0f" }}>
                     <Tab label="Applets" />
                     <Tab label="Services" />
                 </Tabs>

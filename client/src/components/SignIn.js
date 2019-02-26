@@ -73,7 +73,7 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/google",
+        Axios.post("https://prod-area-epitech.herokuapp.com/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
@@ -84,7 +84,7 @@ class SignIn extends React.Component {
             })
     }
 
-    // Axios.post("http://localhost:8080/facebook/",
+    // Axios.post("https://prod-area-epitech.herokuapp.com/facebook/",
     handleFacebook(response) {
         let data = JSON.stringify({
             "user": response
@@ -114,7 +114,7 @@ class SignIn extends React.Component {
                 "password": this.state.password,
             }
         });
-        Axios.post("http://localhost:8080/user/local/login",
+        Axios.post("https://prod-area-epitech.herokuapp.com/user/local/login",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
