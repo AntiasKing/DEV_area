@@ -27,19 +27,46 @@ module.exports = function (router, usersRef) {
             console.log("Token: ", body, JSON.parse(body).access_token);
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
-                    // 'sendImmediately': false,
                     'bearer': JSON.parse(body).access_token
                 }
             }, function (err, r, body) {
                 if (err) {
                     console.log(err);
-                    // return res.status(500).send(err);
+                    return res.status(500).send(err);
                 }
                 console.log("========================================");
                 console.log(body);
                 console.log("========================================");
+                let user = JSON.parse(body).data[0];
+                user.access_token = JSON.parse(body).access_token;
+                user.refresh_token = JSON.parse(body).refresh_token;
+                let newUsersRef = usersRef.push();
+                usersRef.orderByChild("twitch/id").equalTo(user.id).once("value")
+                    .then(function (snapShot) {
+                        if (snapShot.val()) {
+                            snapShot.forEach(function (childSnapShot) {
+                                childSnapShot.child("facebook").ref.update(user)
+                                    .then(function () {
+                                        return res.redirect('http://localhost:3000/' + '?user=' + user);
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                        res.status(500).send(error);
+                                    });
+                            });
+                            return;
+                        }
+                        obj["twitch"] = user;
+                        newUsersRef.set(obj)
+                            .then(function () {
+                                console.log("Successfully created new user:", user);
+                                return res.redirect('http://localhost:3000/' + '?user=' + user);
+                            }).catch(function (error) {
+                                console.log("Error creating new user:", error);
+                                res.status(500).send(error);
+                            })
+                    })
             })
-            return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
     });
 
