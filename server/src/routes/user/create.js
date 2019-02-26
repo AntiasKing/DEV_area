@@ -105,9 +105,17 @@ module.exports = function (router, usersRef) {
 
 			}, function(err, response, body) {
 				if (err) {
+					console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
 					console.log(err);
+					console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
 					return res.status(500).send(err);
 				}
+				let user = body;
+				console.log("==========================================================");
+				console.log(body);
+				console.log("==========================================================");
+				let newUsersRef = usersRef.push();
+
 			})
             return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
 	  })
