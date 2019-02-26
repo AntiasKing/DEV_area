@@ -28,7 +28,7 @@ module.exports = function (router, usersRef) {
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
                     'sendImmediately': false,
-                    'bearer': body.access_token
+                    'bearer': JSON.parse(body).access_token
                 }
             }, function (err, r, body) {
                 if (err) {
