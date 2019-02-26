@@ -24,20 +24,20 @@ module.exports = function (router, usersRef) {
                 console.log(err);
                 return res.status(500).send(err);
             }
-            request.get('https://api.twitch.tv/helix/users', {
-                'auth': {
+            // request.get('https://api.twitch.tv/helix/users', {
+            //     'auth': {
 
-                    'bearer': body.access_token
-                }
-            }, function (err, r, body) {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).send(err);
-                }
-                console.log("========================================");
-                console.log(body);
-                console.log("========================================");
-            })
+            //         'bearer': body.access_token
+            //     }
+            // }, function (err, r, body) {
+            //     if (err) {
+            //         console.log(err);
+            //         return res.status(500).send(err);
+            //     }
+            //     console.log("========================================");
+            //     console.log(body);
+            //     console.log("========================================");
+            // })
             return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
     });
