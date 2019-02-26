@@ -10,6 +10,7 @@ module.exports = function (router, usersRef) {
     })
 
     router.get('/auth/twitch', function (req, res) {
+        let obj = {};
         request.post({
             url: 'https://id.twitch.tv/oauth2/token',
             form: {
