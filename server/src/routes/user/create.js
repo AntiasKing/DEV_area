@@ -200,7 +200,7 @@ module.exports = function (router, usersRef) {
             req.auth = {
                 id: req.user.id
             };
-
+						console.log("ok");
             return res.status(200).send();
         });
 

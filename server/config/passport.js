@@ -76,8 +76,8 @@ module.exports = function (router, usersRef) {
     ));
 
     passport.use(new TwitterTokenStrategy({
-        consumerKey: 'Vr3UJYSKvR4BNEcrwCMoUrbtX',
-        consumerSecret: 'e8YXYMWEhF3jIB3pzxBmRRJkE663gUtphfOMj9J5aH6HEHWdFF',
+        consumerKey: 'BUai9dWTe9p2DDxhulZx6yoXq',
+        consumerSecret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
         includeEmail: true
     },
         function (token, refreshToken, profile, done) {

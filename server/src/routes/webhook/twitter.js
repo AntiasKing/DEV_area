@@ -14,4 +14,9 @@ module.exports = function (router, usersRef) {
 		}
 	})
 
+	router.post('/webhooks/twitter', function(req, res) {
+		console.log(req.body)
+		res.status(200).send();
+	})
+
 }
