@@ -77,7 +77,7 @@ const user = {
     },
     {
         "name": "spotify",
-            "color": "#1DB954",
+        "color": "#1DB954",
         "icon": "fab fa-spotify"
     },
     {
