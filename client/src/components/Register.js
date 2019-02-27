@@ -118,17 +118,6 @@ class Register extends React.Component {
 
 			}
 		}, 500);
-
-		// Axios.get('https://accounts.spotify.com/authorize'+
-		// 	'?response_type=code'+
-		// 	'&client_id=d6606813f1904768bb612bf21e76d04f'+
-		// 	'&scope='+encodeURIComponent('user-read-private user-read-email')+
-		// 	'&redirect_uri='+encodeURIComponent('http://localhost:8080/auth/spotify')).
-		// then(function (response) {
-		//    console.log(response)
-		// }).catch(function (error) {
-		// 	console.log(error)
-		// });
 	}
 
     // TODO: Add Error message for bad register
