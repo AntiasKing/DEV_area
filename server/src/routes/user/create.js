@@ -124,9 +124,6 @@ module.exports = function (router, usersRef) {
 			}
 			let access_token = body.access_token;
 			let refresh_token = body.refresh_token;
-			console.log("test")
-			console.log(access_token);
-			console.log("test")
             request.get({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
@@ -138,21 +135,15 @@ module.exports = function (router, usersRef) {
                     console.log(err);
                     return res.status(500).send(err);
 				}
-				let user = body;
-				console.log("test2");
-				console.log(access_token);
-				console.log("test2");
+				let user = JSON.parse(body);
 				user.access_token = access_token;
 				user.refresh_token = refresh_token;
-				console.log("test3");
-				console.log(user.access_token);
-				console.log("test3");
 				console.log(user);
 				let newUsersRef = usersRef.push();
 				usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
 					.then(function (snapshot) {
 						if (snapshot.val()) {
-							snapShot.forEach(function (childSnapShot) {
+							snapshot.forEach(function (childSnapShot) {
 								childSnapShot.child("spotify").ref.update(user)
 									.then(function () {
 										return res.redirect('http://localhost:3000/' + '?user=' + user);
