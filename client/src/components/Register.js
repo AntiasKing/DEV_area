@@ -222,9 +222,9 @@ class Register extends React.Component {
                         <li>
                             <button
                                 onClick={this.LoginSpotify}
-                                className="Ext-Login btn-Spotify"
-                                text={
-                                    <Icon class={classNames(classes.icon, 'fa fa-spotify')} />} />
+                                className="Ext-Login btn-Spotify">
+                                <Icon className={classNames(classes.icon, 'fa fa-spotify')} />
+                            </button>
                         </li>
                         {/* FIN des services à changer */}
                     </ul>
