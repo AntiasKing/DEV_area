@@ -15,6 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import TwitchButton from './TwitchButton';
+import SpotifyButton from './SpotifyButton';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
@@ -133,7 +134,12 @@ class SignIn extends React.Component {
     onTwitchSucess = (document) => {
         console.log(document);
         // window.location = './dashboard';
-    }
+	}
+	
+	onSpotifySuccess = (document) => {
+		console.log(document);
+		// window.location = './dashboard';
+	}
 
     onFailed = (error) => {
         console.log(error);
@@ -202,13 +208,10 @@ class SignIn extends React.Component {
                                 onSuccess={this.onTwitchSucess} />
                         </li>
                         <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Spotify"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+						<SpotifyButton
+								onFailure={this.onFailed}
+								onSuccess={this.onSpotifySuccess}
+							></SpotifyButton>
                         </li>
                         {/* FIN des services à changer */}
                     </ul>
