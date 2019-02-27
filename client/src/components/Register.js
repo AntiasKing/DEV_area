@@ -14,6 +14,7 @@ import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import TwitchButton from './TwitchButton';
 import SpotifyButton from './SpotifyButton';
+import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
 import classNames from 'classnames';
@@ -75,7 +76,20 @@ class Register extends React.Component {
         this.setState({ [name]: target.value });
 	}
 	
-
+    handleGoogle(response) {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("https://prod-area-epitech.herokuapp.com/google",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response);
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
     handleFacebook(response) {
         let data = JSON.stringify({
@@ -176,13 +190,12 @@ class Register extends React.Component {
                         </li>
                         {/* Changer en dessous par les autres services de login */}
                         <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                            <GoogleLogin
+                                clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
+                                onFailure={this.onFailed} onSuccess={this.handleGoogle}
                                 className="Ext-Login btn-Google"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                                icon=""
+                                buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />} />
                         </li>
                         <li>
                             <TwitchButton

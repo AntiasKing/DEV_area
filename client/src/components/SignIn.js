@@ -192,15 +192,13 @@ class SignIn extends React.Component {
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
                                 requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                         </li>
-                        {/* Changer en dessous par les autres services de login */}
                         <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                            <GoogleLogin
+                                clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
+                                onFailure={this.onFailed} onSuccess={this.handleGoogle}
                                 className="Ext-Login btn-Google"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                                icon=""
+                                buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />} />
                         </li>
                         <li>
                             <TwitchButton
@@ -213,7 +211,6 @@ class SignIn extends React.Component {
 								onSuccess={this.onSpotifySuccess}
 							></SpotifyButton>
                         </li>
-                        {/* FIN des services à changer */}
                     </ul>
 
                     <Button
