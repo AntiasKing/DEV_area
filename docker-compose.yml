@@ -1,0 +1,17 @@
+version: '2.1'
+
+services:
+  dev_area_2018_server:
+    image: dev_area_2018_server
+    build: ./server
+    environment:
+      NODE_ENV: development
+    ports:
+      - 8080:8080
+  dev_area_2018_client:
+    image: dev_area_2018_client
+    build: ./client
+    environment:
+      NODE_ENV: development
+    ports:
+      - 8081:3000

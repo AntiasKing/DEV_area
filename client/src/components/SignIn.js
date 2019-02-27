@@ -179,12 +179,12 @@ class SignIn extends React.Component {
                         </li>
                         <li>
                             <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
+                                loginUrl="http://localhost:8080/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Twitter"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                         </li>
                         {/* Changer en dessous par les autres services de login */}
                         <li>

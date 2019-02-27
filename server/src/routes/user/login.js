@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const utils = require('../../utils');
 
 // TODO: Check user's params and send jw-token
