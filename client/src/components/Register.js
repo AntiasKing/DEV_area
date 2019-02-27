@@ -211,15 +211,6 @@ class Register extends React.Component {
                                 onSuccess={this.onTwitchSucess} />
                         </li>
                         <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Spotify"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
-                        </li>
-                        <li>
                             <button
                                 onClick={this.LoginSpotify}
                                 className="Ext-Login btn-Spotify">
