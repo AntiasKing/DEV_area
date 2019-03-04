@@ -10,30 +10,48 @@ const user = {
     "email": "test@test.test",
     "applets": [
         {
-            "name": "Hello World",
+            "name": "Facebook",
             "service": "facebook",
             "action": "receive a message",
             "reaction": "send an email",
             "color": "#3b5998",
-            "icon": "fab fa-google", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Bonjour",
-            "service": "google",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "color": "#00aced",
             "icon": "fab fa-facebook-f", // Font Awesome icon name
             "on": true
         },
         {
-            "name": "Hello",
-            "service": "google",
+            "name": "Twitter",
+            "service": "twitter",
             "action": "receive a message",
             "reaction": "send an email",
-            "color": "#ff0000",
-            "icon": "fab fa-youtube", // Font Awesome icon name
+            "color": "#00acee",
+            "icon": "fab fa-twitter", // Font Awesome icon name
+            "on": true
+        },
+        {
+            "name": "Twitch",
+            "service": "twitch",
+            "action": "receive a message",
+            "reaction": "send an email",
+            "color": "#6441a5",
+            "icon": "fab fa-twitch", // Font Awesome icon name
+            "on": true
+        },
+        {
+            "name": "Spotify",
+            "service": "spotify",
+            "action": "receive a message",
+            "reaction": "send an email",
+            "color": "#1DB954",
+            "icon": "fab fa-spotify", // Font Awesome icon name
+            "on": true
+        },
+        {
+            "name": "Weather",
+            "service": "weather",
+            "action": "receive a message",
+            "reaction": "send an email",
+            "color": "#333",
+            "icon": "fas fa-cloud-sun", // Font Awesome icon name
             "on": true
         },
     ],
@@ -59,7 +77,7 @@ const user = {
     },
     {
         "name": "spotify",
-            "color": "#1DB954",
+        "color": "#1DB954",
         "icon": "fab fa-spotify"
     },
     {
@@ -85,7 +103,7 @@ const styles = theme => ({
         flexGrow: 1,
     },
     Applet: {
-        height: 140,
+        height: 100,
         width: 100,
     }
 });

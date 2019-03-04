@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, CardActions } from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
@@ -58,8 +58,14 @@ const config = {
             "name": "Weather",
             "color": "#333",
             "icon": "fas fa-cloud-sun",
-            "actions": [],
-            "reactions": []
+            "actions": [{
+                "name": "it's rainy tomorrow",
+                "description": "Détecte si il pleut demain"
+            }],
+            "reactions": [{
+                "name": "like_message",
+                "description": "L’utilisateur aime un message"
+            }]
         },
     ]
 };
@@ -68,6 +74,16 @@ const styles = theme => ({
     grid: {
         flexGrow: 1,
     },
+
+    GoBack: {
+        textAlign: 'center',
+        margin: "auto",
+        marginTop: "150px",
+    },
+
+    GoBackLink: {
+        justifyContent: 'center',
+    }
 });
 
 function getSteps() {
@@ -177,8 +193,10 @@ class AppletDesigner extends React.Component {
                             } else {
                                 return (
                                     <div>
-                                        <Typography variant="h1"> Good Job</Typography>
+                                        <Typography className={classes.GoBack} variant="h1"> Good Job</Typography>
+                                        <CardActions className={classes.GoBackLink}>
                                         <Button color="primary" href="./dashboard"> Go back to your dashboard</Button>
+                                        </CardActions>
                                     </div>
                                 )
                             }

@@ -53,11 +53,11 @@
 }
 
 .btn-Google {
-    background: #db4a39;
+    background: #db4a39 !important;
 }
 
 .btn-Google:hover {
-    background: #c73625;
+    background: #c73625 !important;
 }
 
 .btn-Twitch {
