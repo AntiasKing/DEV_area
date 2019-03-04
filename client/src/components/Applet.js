@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch, IconButton } from '@material-ui/core';
+import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch } from '@material-ui/core';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import classNames from 'classnames';
 
