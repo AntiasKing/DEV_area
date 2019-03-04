@@ -101,6 +101,7 @@ module.exports = function (router, usersRef) {
                         });
                         return;
                     }
+                    user.applets = [];
                     obj["twitter"] = user;
                     newUsersRef.set(obj)
                         .then(function () {

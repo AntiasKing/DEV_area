@@ -1,14 +1,15 @@
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 8080;
 var passport = require('passport');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 
-var morgan       = require('morgan');
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
-const admin   = require('firebase-admin');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+const admin = require('firebase-admin');
+const utils = require('./src/utils');
 
 var serviceAccount = require('./config/area-94f1b-firebase-adminsdk-546mu-dc7f6f1e2c.json');
 
@@ -43,18 +44,7 @@ app.use(flash());
 
 app.use('/', require('./src/routes/')(admin));
 
+// utils.searchApplet("10214476734692236", {}, admin.database().ref('users'), "facebook/userID");
+
 app.listen(port);
 console.log("Server on " + port);
-
-function logEvery1Seconds(i) {
-	    setTimeout(() => {
-				// let db = admin.database();
-		    // var usersRef = db.ref('users');
-				// usersRef.once('value').then(function(snapshot){
-				// 	console.log(snapshot.val())
-				// });
-        // logEvery1Seconds(++i);
-	    }, 1000)
-	}
-
-logEvery1Seconds(0);
