@@ -207,7 +207,7 @@ class Register extends React.Component {
 							<SpotifyButton
 								onFailure={this.onFailed}
 								onSuccess={this.onSpotifySuccess}
-							></SpotifyButton>
+							/>
                         </li>
                         {/* FIN des services à changer */}
                     </ul>
