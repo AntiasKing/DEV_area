@@ -92,7 +92,8 @@ class SignIn extends React.Component {
         Axios.post("https://prod-area-epitech.herokuapp.com/facebook/",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
-                console.log(response);
+								console.log(response);
+								localStorage.setItem("userRef", response.data)
                 window.location = "./dashboard";
             })
             .catch(function (error) {
@@ -114,11 +115,12 @@ class SignIn extends React.Component {
                 "password": this.state.password,
             }
         });
-        Axios.post("https://prod-area-epitech.herokuapp.com/user/local/login",
+        Axios.post("https://staging-area-epitech/user/local/login",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
+								localStorage.setItem("userRef", response.data)
                 window.location = "./dashboard";
             }).catch(function (error) {
                 console.log(error);

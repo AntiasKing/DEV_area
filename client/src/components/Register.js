@@ -75,7 +75,7 @@ class Register extends React.Component {
 
         this.setState({ [name]: target.value });
 	}
-	
+
     handleGoogle(response) {
         let data = JSON.stringify({
             "user": response
@@ -100,13 +100,14 @@ class Register extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+								localStorage.setItem("userRef", response.data)
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
             });
 	}
-	
+
 
     // TODO: Add Error message for bad register
     handleSubmit(event) {
@@ -124,13 +125,14 @@ class Register extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+								localStorage.setItem("userRef", response.data)
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
             });
 	}
-	
+
 	onSpotifySuccess = (document) => {
 		console.log(document);
 		// window.location = './dashboard';
@@ -202,7 +204,7 @@ class Register extends React.Component {
                                 onFailure={this.onFailed}
                                 onSuccess={this.onTwitchSucess} />
                         </li>
-                        
+
 						<li>
 							<SpotifyButton
 								onFailure={this.onFailed}

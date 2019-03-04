@@ -21,6 +21,8 @@ module.exports = function (router, usersRef) {
 		console.log(req.body)
 		console.log(req.body.user)
 
+		searchApplet();
+
 		// usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
 		// 				.then(function (snapShot) {
 		// 					if (snapShot.val()) {
@@ -41,6 +43,10 @@ module.exports = function (router, usersRef) {
 			console.log("tweet !!")
 		res.status(200).send();
 	})
+
+	function searchApplet() {
+		console.log("new webhooks");
+	}
 
 	function postTweet(cons_token, refreshToken) {
 		var options = { method: 'POST',

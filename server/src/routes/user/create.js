@@ -79,7 +79,7 @@ module.exports = function (router, usersRef) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("google").ref.update(user)
                             .then(function () {
-                                res.status(200).send();
+                                res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -138,7 +138,6 @@ module.exports = function (router, usersRef) {
 				let user = JSON.parse(body);
 				user.access_token = access_token;
 				user.refresh_token = refresh_token;
-				console.log(user);
 				let newUsersRef = usersRef.push();
 				usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
 					.then(function (snapshot) {
@@ -228,14 +227,13 @@ module.exports = function (router, usersRef) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
-        console.log(user);
         usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
-                                res.status(200).send();
+                                res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -247,10 +245,8 @@ module.exports = function (router, usersRef) {
                 obj["facebook"] = user;
                 newUsersRef.set(obj)
                     .then(function () {
-                        console.log("Successfully created new user:", user);
                         res.status(201).send(newUsersRef.key);
                     }).catch(function (error) {
-                        console.log("Error creating new user:", error);
                         res.status(500).send(error);
                     })
             })
@@ -267,7 +263,7 @@ module.exports = function (router, usersRef) {
                         snapShot.forEach(function (childSnapShot) {
                             childSnapShot.child("local").ref.update(user)
                                 .then(function () {
-                                    res.status(200).send("User Already exist");
+                                    res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                                 })
                                 .catch(function (error) {
                                     console.log(error);
@@ -275,7 +271,7 @@ module.exports = function (router, usersRef) {
                                 });
                         });
                     } else {
-                        res.status(200).send("No User Found");
+                        res.status(400).send("No User Found");
                     }
                 })
         })(req, res, next);
