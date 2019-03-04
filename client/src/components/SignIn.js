@@ -15,7 +15,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import TwitchButton from './TwitchButton';
-import SpotifyButton from './SpotifyButton';
 import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
@@ -115,7 +114,7 @@ class SignIn extends React.Component {
                 "password": this.state.password,
             }
         });
-        Axios.post("http://localhost:8080/user/local/login",
+        Axios.post("https://prod-area-epitech.herokuapp.com/user/local/login",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
@@ -134,12 +133,7 @@ class SignIn extends React.Component {
     onTwitchSucess = (document) => {
         console.log(document);
         // window.location = './dashboard';
-	}
-	
-	onSpotifySuccess = (document) => {
-		console.log(document);
-		// window.location = './dashboard';
-	}
+    }
 
     onFailed = (error) => {
         console.log(error);
@@ -192,13 +186,15 @@ class SignIn extends React.Component {
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
                                 requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                         </li>
+                        {/* Changer en dessous par les autres services de login */}
                         <li>
-                            <GoogleLogin
-                                clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
-                                onFailure={this.onFailed} onSuccess={this.handleGoogle}
+                            <TwitterLogin
+                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Google"
-                                icon=""
-                                buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />} />
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
+                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         <li>
                             <TwitchButton
@@ -206,11 +202,15 @@ class SignIn extends React.Component {
                                 onSuccess={this.onTwitchSucess} />
                         </li>
                         <li>
-						<SpotifyButton
-								onFailure={this.onFailed}
-								onSuccess={this.onSpotifySuccess}
-							></SpotifyButton>
+                            <TwitterLogin
+                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Spotify"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
+                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
+                        {/* FIN des services à changer */}
                     </ul>
 
                     <Button
