@@ -39,7 +39,6 @@ module.exports = function (router, usersRef) {
                 let user = JSON.parse(body).data[0];
                 user.access_token = access_token;
                 user.refresh_token = refresh_token;
-                user.applets = [];
                 let newUsersRef = usersRef.push();
                 usersRef.orderByChild("twitch/id").equalTo(user.id).once("value")
                     .then(function (snapShot) {
@@ -89,7 +88,6 @@ module.exports = function (router, usersRef) {
                     });
                     return;
                 }
-                user.applets = [];
                 obj["google"] = user;
                 newUsersRef.set(obj)
                     .then(function () {
@@ -140,7 +138,6 @@ module.exports = function (router, usersRef) {
                 let user = JSON.parse(body);
                 user.access_token = access_token;
                 user.refresh_token = refresh_token;
-                user.applets = [];
                 console.log(user);
                 let newUsersRef = usersRef.push();
                 usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
@@ -247,7 +244,6 @@ module.exports = function (router, usersRef) {
                     });
                     return;
                 }
-                user.applets = [];
                 obj["facebook"] = user;
                 newUsersRef.set(obj)
                     .then(function () {
@@ -290,7 +286,6 @@ module.exports = function (router, usersRef) {
             let user = req.body.user;
             let newUsersRef = usersRef.push();
             let obj = {};
-            user.applets = [];
             obj["local"] = user;
             newUsersRef.set(obj)
                 .then(function () {
