@@ -103,7 +103,7 @@ module.exports = function (router, usersRef) {
     })
 
     router.get('/auth/spotify/', function (req, res) {
-		let obj = {};
+        let obj = {};
         let code = req.query.code || null
         let authOptions = {
             url: 'https://accounts.spotify.com/api/token',
@@ -123,9 +123,9 @@ module.exports = function (router, usersRef) {
             if (err) {
                 console.log(err);
                 return res.status(500).send(err);
-			}
-			let access_token = body.access_token;
-			let refresh_token = body.refresh_token;
+            }
+            let access_token = body.access_token;
+            let refresh_token = body.refresh_token;
             request.get({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
@@ -136,37 +136,38 @@ module.exports = function (router, usersRef) {
                 if (err) {
                     console.log(err);
                     return res.status(500).send(err);
-				}
-				let user = JSON.parse(body);
-				user.access_token = access_token;
-				user.refresh_token = refresh_token;
-				console.log(user);
-				let newUsersRef = usersRef.push();
-				usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
-					.then(function (snapshot) {
-						if (snapshot.val()) {
-							snapshot.forEach(function (childSnapShot) {
-								childSnapShot.child("spotify").ref.update(user)
-									.then(function () {
-										return res.redirect('http://localhost:3000/' + '?user=' + user);
-									})
-									.catch(function (error) {
+                }
+                let user = JSON.parse(body);
+                user.access_token = access_token;
+                user.refresh_token = refresh_token;
+                user.applets = [];
+                console.log(user);
+                let newUsersRef = usersRef.push();
+                usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
+                    .then(function (snapshot) {
+                        if (snapshot.val()) {
+                            snapshot.forEach(function (childSnapShot) {
+                                childSnapShot.child("spotify").ref.update(user)
+                                    .then(function () {
+                                        return res.redirect('http://localhost:3000/' + '?user=' + user);
+                                    })
+                                    .catch(function (error) {
                                         console.log(error);
                                         res.status(500).send(error);
                                     });
-							});
-							return;
-						}
-						obj["spotify"] = user;
-						newUsersRef.set(obj)
-							.then(function () {
-								console.log("Successfully created new user:", user);
+                            });
+                            return;
+                        }
+                        obj["spotify"] = user;
+                        newUsersRef.set(obj)
+                            .then(function () {
+                                console.log("Successfully created new user:", user);
                                 return res.redirect('http://localhost:3000/' + '?user=' + user);
-							}).catch(function (error) {
-								console.log("Error creating new user:", error);
-								res.status(500).send(error);
-							});
-					});
+                            }).catch(function (error) {
+                                console.log("Error creating new user:", error);
+                                res.status(500).send(error);
+                            });
+                    });
             })
         })
     });
@@ -246,6 +247,7 @@ module.exports = function (router, usersRef) {
                     });
                     return;
                 }
+                user.applets = [];
                 obj["facebook"] = user;
                 newUsersRef.set(obj)
                     .then(function () {
@@ -288,6 +290,7 @@ module.exports = function (router, usersRef) {
             let user = req.body.user;
             let newUsersRef = usersRef.push();
             let obj = {};
+            user.applets = [];
             obj["local"] = user;
             newUsersRef.set(obj)
                 .then(function () {

@@ -44,7 +44,7 @@ app.use(flash());
 
 app.use('/', require('./src/routes/')(admin));
 
-utils.searchApplet("10214476734692236", {}, admin.database().ref('users'), "facebook/userID");
+// utils.searchApplet("10214476734692236", {}, admin.database().ref('users'), "facebook/userID");
 
 app.listen(port);
 console.log("Server on " + port);
