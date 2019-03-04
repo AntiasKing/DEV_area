@@ -130,6 +130,7 @@ class SignIn extends React.Component {
 
     handleTwitter = (response) => {
         console.log("Twitter handled !!");
+				console.log(response);
         window.location = './dashboard';
     };
 

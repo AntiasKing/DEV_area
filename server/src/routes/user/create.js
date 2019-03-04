@@ -100,91 +100,74 @@ module.exports = function (router, usersRef) {
             })
     })
 
-    router.get('/auth/spotify/', function (req, res) {
-        let obj = {};
-        let code = req.query.code || null
-        let authOptions = {
-            url: 'https://accounts.spotify.com/api/token',
-            form: {
-                code: code,
-                redirect_uri: 'http://localhost:8080/auth/spotify',
-                grant_type: 'authorization_code'
-            },
-            headers: {
-                'Authorization': 'Basic ' + (new Buffer(
-                    'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
-                ).toString('base64'))
-            },
-            json: true
-        }
-        request.post(authOptions, function (err, response, body) {
-            if (err) {
-                console.log(err);
-                return res.status(500).send(err);
-            }
-            let access_token = body.access_token;
-            let refresh_token = body.refresh_token;
-            request.get({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                    Authorization: 'Bearer ' + body.access_token
-                }
+		router.get('/auth/spotify/', function (req, res) {
+			let obj = {};
+			let code = req.query.code || null
+			let authOptions = {
+					url: 'https://accounts.spotify.com/api/token',
+					form: {
+							code: code,
+							redirect_uri: 'http://localhost:8080/auth/spotify',
+							grant_type: 'authorization_code'
+					},
+					headers: {
+							'Authorization': 'Basic ' + (new Buffer(
+									'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
+							).toString('base64'))
+					},
+					json: true
+			}
+			request.post(authOptions, function (err, response, body) {
+					if (err) {
+							console.log(err);
+							return res.status(500).send(err);
+					}
+					let access_token = body.access_token;
+					let refresh_token = body.refresh_token;
+					request.get({
+							url: 'https://api.spotify.com/v1/me',
+							headers: {
+									Authorization: 'Bearer ' + body.access_token
+							}
 
-            }, function (err, response, body) {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).send(err);
-<<<<<<< HEAD
-				}
-				let user = JSON.parse(body);
-				user.access_token = access_token;
-				user.refresh_token = refresh_token;
-				let newUsersRef = usersRef.push();
-				usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
-					.then(function (snapshot) {
-						if (snapshot.val()) {
-							snapshot.forEach(function (childSnapShot) {
-								childSnapShot.child("spotify").ref.update(user)
-									.then(function () {
-										return res.redirect('http://localhost:3000/' + '?user=' + user);
-									})
-									.catch(function (error) {
-=======
-                }
-                let user = JSON.parse(body);
-                user.access_token = access_token;
-                user.refresh_token = refresh_token;
-                console.log(user);
-                let newUsersRef = usersRef.push();
-                usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
-                    .then(function (snapshot) {
-                        if (snapshot.val()) {
-                            snapshot.forEach(function (childSnapShot) {
-                                childSnapShot.child("spotify").ref.update(user)
-                                    .then(function () {
-                                        return res.redirect('http://localhost:3000/' + '?user=' + user);
-                                    })
-                                    .catch(function (error) {
->>>>>>> 2a517f1154542e8356180fb320ae42e75c25e2f8
-                                        console.log(error);
-                                        res.status(500).send(error);
-                                    });
-                            });
-                            return;
-                        }
-                        obj["spotify"] = user;
-                        newUsersRef.set(obj)
-                            .then(function () {
-                                console.log("Successfully created new user:", user);
-                                return res.redirect('http://localhost:3000/' + '?user=' + user);
-                            }).catch(function (error) {
-                                console.log("Error creating new user:", error);
-                                res.status(500).send(error);
-                            });
-                    });
-            })
-        })
-    });
+					}, function (err, response, body) {
+							if (err) {
+									console.log(err);
+									return res.status(500).send(err);
+							}
+							let user = JSON.parse(body);
+							user.access_token = access_token;
+							user.refresh_token = refresh_token;
+							console.log(user);
+							let newUsersRef = usersRef.push();
+							usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
+									.then(function (snapshot) {
+											if (snapshot.val()) {
+													snapshot.forEach(function (childSnapShot) {
+															childSnapShot.child("spotify").ref.update(user)
+																	.then(function () {
+																			return res.redirect('http://localhost:3000/' + '?user=' + user);
+																	})
+																	.catch(function (error) {
+																			console.log(error);
+																			res.status(500).send(error);
+																	});
+													});
+													return;
+											}
+											obj["spotify"] = user;
+											newUsersRef.set(obj)
+													.then(function () {
+															console.log("Successfully created new user:", user);
+															return res.redirect('http://localhost:3000/' + '?user=' + user);
+													}).catch(function (error) {
+															console.log("Error creating new user:", error);
+															res.status(500).send(error);
+													});
+									});
+					})
+			})
+	});
 
     router.route('/auth/twitter/reverse')
         .post(function (req, res) {
@@ -238,7 +221,7 @@ module.exports = function (router, usersRef) {
             req.auth = {
                 id: req.user.id
             };
-            return res.status(200).send();
+            return res.status(200).send("salut");
         });
 
     router.post('/facebook', function (req, res, next) {
