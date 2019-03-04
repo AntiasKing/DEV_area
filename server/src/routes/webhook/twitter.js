@@ -19,6 +19,7 @@ module.exports = function (router, usersRef) {
 	router.post('/webhooks/twitter', function(req, res) {
 
 		console.log(req.body)
+		console.log(req.body.user)
 
 		usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
 						.then(function (snapShot) {
