@@ -133,12 +133,12 @@ class SignIn extends React.Component {
 
 	onSpotifySuccess = (document) => {
 		console.log(document);
-		// window.location = './dashboard';
+        window.location = './dashboard';
 	}
 
     onTwitchSucess = (document) => {
         console.log(document);
-        // window.location = './dashboard';
+        window.location = './dashboard';
     }
 
     onFailed = (error) => {
@@ -192,7 +192,6 @@ class SignIn extends React.Component {
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
                                 requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                         </li>
-                        {/* Changer en dessous par les autres services de login */}
                         <li>
                             <GoogleLogin
                                 clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
@@ -213,7 +212,6 @@ class SignIn extends React.Component {
                                 onSuccess={this.onSpotifySuccess}
                             />
                         </li>
-                        {/* FIN des services à changer */}
                     </ul>
 
                     <Button

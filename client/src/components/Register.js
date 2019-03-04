@@ -100,7 +100,7 @@ class Register extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -133,12 +133,12 @@ class Register extends React.Component {
 	
 	onSpotifySuccess = (document) => {
 		console.log(document);
-		// window.location = './dashboard';
+		window.location = './dashboard';
 	}
 
     onTwitchSucess = (document) => {
         console.log(document);
-        // window.location = './dashboard';
+        window.location = './dashboard';
     }
 
     render() {
@@ -188,7 +188,6 @@ class Register extends React.Component {
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
                                 requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
-                        {/* Changer en dessous par les autres services de login */}
                         <li>
                             <GoogleLogin
                                 clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
@@ -209,7 +208,6 @@ class Register extends React.Component {
 								onSuccess={this.onSpotifySuccess}
 							/>
                         </li>
-                        {/* FIN des services à changer */}
                     </ul>
                     <Button
                         fullWidth
