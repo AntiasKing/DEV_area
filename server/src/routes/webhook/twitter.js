@@ -21,21 +21,22 @@ module.exports = function (router, usersRef) {
 		console.log(req.body)
 		console.log(req.body.user)
 
-		usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
-						.then(function (snapShot) {
-							if (snapShot.val()) {
-								let cons_token = snapShot.val().token;
-								let secret_token = snapShot.val().refreshToken;
-								console.log(token, refreshToken);
-							} else {
-								console.log("no found");
-								return;
-							}
-							res.status(200).send();
-						})
+		// usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
+		// 				.then(function (snapShot) {
+		// 					if (snapShot.val()) {
+		// 						let cons_token = snapShot.val().token;
+		// 						let secret_token = snapShot.val().refreshToken;
+		// 						console.log(token, refreshToken);
+		// 					} else {
+		// 						console.log("no found");
+		// 						return;
+		// 					}
+		// 					res.status(200).send();
+		// 				})
 
 		if (req.body["favorite_events"])
-			postTweet(cons_token, refreshToken);
+			console.log("favorited !!")
+			// postTweet(cons_token, refreshToken);
 		else if (req.body["tweet_create_events"])
 			console.log("tweet !!")
 		res.status(200).send();
