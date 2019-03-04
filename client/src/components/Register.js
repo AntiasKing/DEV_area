@@ -13,6 +13,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import TwitchButton from './TwitchButton';
+import SpotifyButton from './SpotifyButton';
+import GoogleLogin from 'react-google-login';
 import Axios from 'axios';
 
 import classNames from 'classnames';
@@ -72,13 +74,21 @@ class Register extends React.Component {
         const name = target.name;
 
         this.setState({ [name]: target.value });
-    }
-
-    onSuccessSpotify(response) {
-        console.log("Bite");
+	}
+	
+    handleGoogle(response) {
         let data = JSON.stringify({
-
-        })
+            "user": response
+        });
+        Axios.post("https://prod-area-epitech.herokuapp.com/google",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response);
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     handleFacebook(response) {
@@ -97,39 +107,6 @@ class Register extends React.Component {
             });
 	}
 	
-	LoginSpotify() {
-		let popup = window.open('', '', 'toolbar=no, location=no');
-		popup.location = 'https://accounts.spotify.com/authorize'+'?response_type=code'+'&client_id=d6606813f1904768bb612bf21e76d04f'+'&scope='+'user-read-private user-read-email'+'&redirect_uri='+'http://localhost:8080/auth/spotify';
-
-		let polling = setInterval(() => {
-			if	(!popup || popup.closed || popup.closed === undefined) {
-				clearInterval(polling);
-				this.props.onFailure(new Error('Popup has been closed by user'));
-			}
-			try {
-				if (!popup.location.hostname.includes('accounts.spotify.com') && !popup.location.hostname == '') {
-					let query = new URLSearchParams(popup.location.search);
-					let accessToken = query.get('access_token')
-					clearInterval(polling);
-					popup.close();
-					this.props.onSuccess(accessToken);
-				}
-			} catch (error) {
-
-			}
-		}, 500);
-
-		// Axios.get('https://accounts.spotify.com/authorize'+
-		// 	'?response_type=code'+
-		// 	'&client_id=d6606813f1904768bb612bf21e76d04f'+
-		// 	'&scope='+encodeURIComponent('user-read-private user-read-email')+
-		// 	'&redirect_uri='+encodeURIComponent('http://localhost:8080/auth/spotify')).
-		// then(function (response) {
-		//    console.log(response)
-		// }).catch(function (error) {
-		// 	console.log(error)
-		// });
-	}
 
     // TODO: Add Error message for bad register
     handleSubmit(event) {
@@ -152,7 +129,12 @@ class Register extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
-    }
+	}
+	
+	onSpotifySuccess = (document) => {
+		console.log(document);
+		// window.location = './dashboard';
+	}
 
     onTwitchSucess = (document) => {
         console.log(document);
@@ -208,34 +190,24 @@ class Register extends React.Component {
                         </li>
                         {/* Changer en dessous par les autres services de login */}
                         <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                            <GoogleLogin
+                                clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
+                                onFailure={this.onFailed} onSuccess={this.handleGoogle}
                                 className="Ext-Login btn-Google"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                                icon=""
+                                buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />} />
                         </li>
                         <li>
                             <TwitchButton
                                 onFailure={this.onFailed}
                                 onSuccess={this.onTwitchSucess} />
                         </li>
-                        <li>
-                            <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
-                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Spotify"
-                                showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-spotify')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
-                        </li>
-                        <li>
-                            <button
-                                onClick={this.LoginSpotify}
-                                className="Ext-Login btn-Spotify"
-                                text={
-                                    <Icon class={classNames(classes.icon, 'fa fa-spotify')} />} />
+                        
+						<li>
+							<SpotifyButton
+								onFailure={this.onFailed}
+								onSuccess={this.onSpotifySuccess}
+							></SpotifyButton>
                         </li>
                         {/* FIN des services à changer */}
                     </ul>

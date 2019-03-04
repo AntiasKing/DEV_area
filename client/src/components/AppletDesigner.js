@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, Icon, CardActions } from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
@@ -68,6 +68,16 @@ const styles = theme => ({
     grid: {
         flexGrow: 1,
     },
+
+    GoBack: {
+        textAlign: 'center',
+        margin: "auto",
+        marginTop: "150px",
+    },
+
+    GoBackLink: {
+        justifyContent: 'center',
+    }
 });
 
 function getSteps() {
@@ -177,8 +187,10 @@ class AppletDesigner extends React.Component {
                             } else {
                                 return (
                                     <div>
-                                        <Typography variant="h1"> Good Job</Typography>
+                                        <Typography className={classes.GoBack} variant="h1"> Good Job</Typography>
+                                        <CardActions className={classes.GoBackLink}>
                                         <Button color="primary" href="./dashboard"> Go back to your dashboard</Button>
+                                        </CardActions>
                                     </div>
                                 )
                             }

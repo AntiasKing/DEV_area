@@ -44,7 +44,7 @@ module.exports = function (router, usersRef) {
                     .then(function (snapShot) {
                         if (snapShot.val()) {
                             snapShot.forEach(function (childSnapShot) {
-                                childSnapShot.child("facebook").ref.update(user)
+                                childSnapShot.child("twitch").ref.update(user)
                                     .then(function () {
                                         return res.redirect('http://localhost:3000/' + '?user=' + user);
                                     })
@@ -101,9 +101,8 @@ module.exports = function (router, usersRef) {
     })
 
     router.get('/auth/spotify/', function (req, res) {
-        console.log(req.query);
+		let obj = {};
         let code = req.query.code || null
-        console.log(req.body);
         let authOptions = {
             url: 'https://accounts.spotify.com/api/token',
             form: {
@@ -122,9 +121,10 @@ module.exports = function (router, usersRef) {
             if (err) {
                 console.log(err);
                 return res.status(500).send(err);
-            }
-            console.log(body);
-            request.post({
+			}
+			let access_token = body.access_token;
+			let refresh_token = body.refresh_token;
+            request.get({
                 url: 'https://api.spotify.com/v1/me',
                 headers: {
                     Authorization: 'Bearer ' + body.access_token
@@ -132,19 +132,40 @@ module.exports = function (router, usersRef) {
 
             }, function (err, response, body) {
                 if (err) {
-                    console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
                     console.log(err);
-                    console.log("taatoottaatoottaatoottaatoottaatoottaatoottaatoottaatoot")
                     return res.status(500).send(err);
-                }
-                let user = body;
-                console.log("==========================================================");
-                console.log(body);
-                console.log("==========================================================");
-                let newUsersRef = usersRef.push();
-
+				}
+				let user = JSON.parse(body);
+				user.access_token = access_token;
+				user.refresh_token = refresh_token;
+				console.log(user);
+				let newUsersRef = usersRef.push();
+				usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
+					.then(function (snapshot) {
+						if (snapshot.val()) {
+							snapshot.forEach(function (childSnapShot) {
+								childSnapShot.child("spotify").ref.update(user)
+									.then(function () {
+										return res.redirect('http://localhost:3000/' + '?user=' + user);
+									})
+									.catch(function (error) {
+                                        console.log(error);
+                                        res.status(500).send(error);
+                                    });
+							});
+							return;
+						}
+						obj["spotify"] = user;
+						newUsersRef.set(obj)
+							.then(function () {
+								console.log("Successfully created new user:", user);
+                                return res.redirect('http://localhost:3000/' + '?user=' + user);
+							}).catch(function (error) {
+								console.log("Error creating new user:", error);
+								res.status(500).send(error);
+							});
+					});
             })
-            return res.redirect('http://localhost:3000/' + '?access_token=' + body.access_token);
         })
     });
 

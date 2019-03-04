@@ -1,24 +1,21 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Card, CardHeader, CardContent, Icon, Typography, Switch } from '@material-ui/core';
+import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch, IconButton } from '@material-ui/core';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import classNames from 'classnames';
 
 const styles = theme => ({
     Card: {
-        width: 'auto',
+        width: 380,
+        height: 'auto',
         display: 'block', // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            width: 400,
             marginLeft: 'auto',
             marginRight: 'auto',
         },
         marginTop: theme.spacing.unit * 8,
         flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+        padding: '0', //${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
     },
     icon: {
         overflow: 'visible'
@@ -50,23 +47,27 @@ class Applet extends React.Component {
         const { classes } = this.props;
         return (
             <Card className={classes.Card} color="primary" style={{ background: this.props.color }}>
-                <CardHeader
-                    title={this.props.name}
-                    titleTypographyProps={{ variant: "h4", color: "textPrimary" }}
-                    avatar={
-                        <Icon
-                            className={classNames(classes.icon, this.props.icon)}
-                            color="inherit"
-                            fontSize="large" />}
-                />
-                <CardContent>
-                    <Typography variant="h3" align="right" paragraph>{this.props.action} when you {this.props.reaction}</Typography>
+                <CardActionArea>
+                    <CardContent>
+                        <Typography variant="h4" paragraph>{this.props.action} when you {this.props.reaction}</Typography>
+                    </CardContent>
+                </CardActionArea>
+                <CardActions style={{ background: "rgba(0, 0, 0, 0.3)", padding: "0px 20px 0px 20px" }}>
+                    <Icon
+                        className={classNames(classes.icon, this.props.icon)}
+                        color="inherit"
+                        fontSize="medium"
+                    />
+                    <CardHeader
+                        title={this.props.name}
+                        titleTypographyProps={{ variant: "h6", color: "textPrimary" }}
+                    />
                     <Switch
                         color="secondary"
                         checked={this.state.on}
                         onChange={this.handleSwitchChange("on")}
                     />
-                </CardContent>
+                </CardActions>
             </Card >);
     }
 };
