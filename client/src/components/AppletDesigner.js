@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, Icon, CardActions } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, CardActions } from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
@@ -58,8 +58,14 @@ const config = {
             "name": "Weather",
             "color": "#333",
             "icon": "fas fa-cloud-sun",
-            "actions": [],
-            "reactions": []
+            "actions": [{
+                "name": "it's rainy tomorrow",
+                "description": "Détecte si il pleut demain"
+            }],
+            "reactions": [{
+                "name": "like_message",
+                "description": "L’utilisateur aime un message"
+            }]
         },
     ]
 };
