@@ -85,7 +85,6 @@ class SignIn extends React.Component {
             })
     }
 
-    // Axios.post("https://prod-area-epitech.herokuapp.com/facebook/",
     handleFacebook(response) {
         let data = JSON.stringify({
             "user": response
@@ -130,8 +129,16 @@ class SignIn extends React.Component {
 
     handleTwitter = (response) => {
         console.log("Twitter handled !!");
-				console.log(response);
-        window.location = './dashboard';
+
+				console.log(response.headers)
+
+				// Axios.get("http://localhost:8080/twitter")
+        //     .then(function (response) {
+        //         console.log(response);
+        //     }).catch(function (error) {
+        //         console.log(error);
+        //     })
+        // window.location = './dashboard';
     };
 
 	onSpotifySuccess = (document) => {

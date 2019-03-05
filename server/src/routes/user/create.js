@@ -9,6 +9,42 @@ module.exports = function (router, usersRef) {
         res.status(201).send("test succeed !!")
     })
 
+		router.get('/twitter', function (req, res, next) {
+			console.log(req);
+        res.status(201).send("test test succeed !!")
+    })
+
+		router.post('/spotify', function (req, res, next) {
+			let user = req.body.user;
+			let newUsersRef = usersRef.push();
+			let obj = {};
+			usersRef.orderByChild("spotify/access_token").equalTo(user.profileObj.googleId).once("value")
+					.then(function (snapShot) {
+							if (snapShot.val()) {
+									snapShot.forEach(function (childSnapShot) {
+											childSnapShot.child("spotify").ref.update(user)
+													.then(function () {
+															res.status(200).send(childSnapShot.ref.path.pieces_[1]);
+													})
+													.catch(function (error) {
+															console.log(error);
+															res.status(500).send(error);
+													});
+									});
+									return;
+							}
+							obj["spotify"] = user;
+							newUsersRef.set(obj)
+									.then(function () {
+											console.log("Successfully created new user:", user);
+											res.status(201).send(newUsersRef.key);
+									}).catch(function (error) {
+											console.log("Error creating new user:", error);
+											res.status(500).send(error);
+									})
+					})
+		})
+
     router.get('/auth/twitch', function (req, res) {
         let obj = {};
         request.post({
@@ -221,7 +257,8 @@ module.exports = function (router, usersRef) {
             req.auth = {
                 id: req.user.id
             };
-            return res.status(200).send("salut");
+						res.writeHead(200, {"status": "okok"})
+						return res.status(200).send()
         });
 
     router.post('/facebook', function (req, res, next) {
