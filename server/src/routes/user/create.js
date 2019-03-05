@@ -18,7 +18,7 @@ module.exports = function (router, usersRef) {
 			let user = req.body.user;
 			let newUsersRef = usersRef.push();
 			let obj = {};
-			usersRef.orderByChild("spotify/access_token").equalTo(user.profileObj.googleId).once("value")
+			usersRef.orderByChild("spotify/access_token").equalTo(user.access_token).once("value")
 					.then(function (snapShot) {
 							if (snapShot.val()) {
 									snapShot.forEach(function (childSnapShot) {
@@ -34,6 +34,37 @@ module.exports = function (router, usersRef) {
 									return;
 							}
 							obj["spotify"] = user;
+							newUsersRef.set(obj)
+									.then(function () {
+											console.log("Successfully created new user:", user);
+											res.status(201).send(newUsersRef.key);
+									}).catch(function (error) {
+											console.log("Error creating new user:", error);
+											res.status(500).send(error);
+									})
+					})
+		})
+
+		router.post('/twitch', function (req, res, next) {
+			let user = req.body.user;
+			let newUsersRef = usersRef.push();
+			let obj = {};
+			usersRef.orderByChild("twitch/access_token").equalTo(user.access_token).once("value")
+					.then(function (snapShot) {
+							if (snapShot.val()) {
+									snapShot.forEach(function (childSnapShot) {
+											childSnapShot.child("twitch").ref.update(user)
+													.then(function () {
+															res.status(200).send(childSnapShot.ref.path.pieces_[1]);
+													})
+													.catch(function (error) {
+															console.log(error);
+															res.status(500).send(error);
+													});
+									});
+									return;
+							}
+							obj["twitch"] = user;
 							newUsersRef.set(obj)
 									.then(function () {
 											console.log("Successfully created new user:", user);
@@ -265,6 +296,7 @@ module.exports = function (router, usersRef) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
+				console.log(req);
         usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
