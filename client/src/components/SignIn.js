@@ -74,7 +74,7 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("https://prod-area-epitech.herokuapp.com/google",
+        Axios.post("https://staging-area-epitech.herokuapp.com/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
@@ -89,7 +89,7 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("https://prod-area-epitech.herokuapp.com/facebook/",
+        Axios.post("https://staging-area-epitech.herokuapp.com/facebook/",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
 								console.log(response);
