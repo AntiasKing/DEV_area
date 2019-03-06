@@ -328,12 +328,13 @@ module.exports = function (router, usersRef, db) {
     router.post('/facebook', function (req, res, next) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
-        usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
+        usersRef.orderByChild("facebook/email").equalTo(user.email).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
+																console.log("update")
                                 res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
@@ -356,6 +357,7 @@ module.exports = function (router, usersRef, db) {
 						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.email) {
 							refKey = Object.keys(snapshot.val())[0];
 						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.email) {
+							console.log(childSnapshot.val().twitter.emails[0].value)
 							refKey = Object.keys(snapshot.val())[0];
 						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.email) {
 							refKey = Object.keys(snapshot.val())[0];
@@ -363,35 +365,31 @@ module.exports = function (router, usersRef, db) {
 							refKey = Object.keys(snapshot.val())[0];
 						}
 
-						setTimeout(() => {
-							if (refKey !== "") {
-								let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
-								.then(function () {
-									console.log("Successfully created new user:", user);
-									res.status(200).send();
-									return
-								}).catch(function (error) {
-									console.log("Error creating new user:", error);
-									res.status(500).send();
-									return
-								})
-							} else {
-								let newUsersRef = usersRef.push();
-								let obj = {};
-								obj[service] = user;
-								newUsersRef.set(obj)
-										.then(function () {
-												console.log("Successfully created new user:", user);
-												res.status(200).send();
-												return
-										}).catch(function (error) {
-												console.log("Error creating new user:", error);
-												res.status(500).send();
-												return
-										})
-							}
-						}, 1000);
 				});
+					if (refKey != "") {
+						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
+						.then(function () {
+							res.status(200).send();
+							return
+						}).catch(function (error) {
+							res.status(500).send();
+							return
+						})
+					} else {
+						let newUsersRef = usersRef.push();
+						let obj = {};
+						obj[service] = user;
+						newUsersRef.set(obj)
+								.then(function () {
+										console.log("Successfully created new user:", user);
+										res.status(200).send();
+										return
+								}).catch(function (error) {
+										console.log("Error creating new user:", error);
+										res.status(500).send();
+										return
+								})
+					}
 			});
 		}
 
