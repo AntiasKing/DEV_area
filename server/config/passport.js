@@ -117,31 +117,31 @@ module.exports = function (router, usersRef, db) {
 														refKey = Object.keys(snapshot.val())[0];
 													}
 									  });
+
+										setTimeout(() => {
+											if (refKey !== "") {
+												let newUsersRef = db.ref('users/'+refKey+'/twitter').update(user)
+												.then(function () {
+													return done(null, user);
+												}).catch(function (error) {
+													return done(error, user);
+												})
+											} else {
+												let newUsersRef = usersRef.push();
+												obj["twitter"] = user;
+												newUsersRef.set(obj)
+												.then(function () {
+													console.log("Successfully created new user:", user);
+													return done(null, user);
+												}).catch(function (error) {
+													console.log("Error creating new user:", error);
+													return done(error, user);
+												})
+											}
+										}, 1000);
+
 									});
 
-									setTimeout(() => {
-										if (refKey !== "") {
-											let newUsersRef = db.ref('users/'+refKey+'/twitter').update(user)
-											.then(function () {
-												console.log("Successfully created new user:", user);
-												return done(null, user);
-											}).catch(function (error) {
-												console.log("Error creating new user:", error);
-												return done(error, user);
-											})
-										} else {
-											let newUsersRef = usersRef.push();
-											obj["twitter"] = user;
-	                    newUsersRef.set(obj)
-	                        .then(function () {
-	                            console.log("Successfully created new user:", user);
-	                            return done(null, user);
-	                        }).catch(function (error) {
-	                            console.log("Error creating new user:", error);
-	                            return done(error, user);
-													})
-										}
-									}, 1000);
                 })
                 .catch(err => {
                     console.log(err);
