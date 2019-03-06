@@ -3,7 +3,7 @@ const request = require('request');
 
 crypto = require('crypto')
 
-module.exports = function (router, usersRef) {
+module.exports = function (router, usersRef, db) {
 
     router.get('/test', function (req, res, next) {
         res.status(201).send("test succeed !!")
@@ -295,8 +295,6 @@ module.exports = function (router, usersRef) {
     router.post('/facebook', function (req, res, next) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
-        let obj = {};
-				console.log(req);
         usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
@@ -312,15 +310,57 @@ module.exports = function (router, usersRef) {
                     });
                     return;
                 }
-                obj["facebook"] = user;
-                newUsersRef.set(obj)
-                    .then(function () {
-                        res.status(201).send(newUsersRef.key);
-                    }).catch(function (error) {
-                        res.status(500).send(error);
-                    })
-            })
+								checkServices(user, "facebook", res);
+							})
     })
+
+		function checkServices(user, service, res) {
+			var refKey = "";
+			usersRef.once('value')
+				.then(function (snapshot) {
+					 snapshot.forEach(function(childSnapshot) {
+
+						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.email) {
+							refKey = Object.keys(snapshot.val())[0];
+						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.email) {
+							refKey = Object.keys(snapshot.val())[0];
+						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.email) {
+							refKey = Object.keys(snapshot.val())[0];
+						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.email) {
+							refKey = Object.keys(snapshot.val())[0];
+						}
+
+						setTimeout(() => {
+							if (refKey !== "") {
+								let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
+								.then(function () {
+									console.log("Successfully created new user:", user);
+									res.status(200).send();
+									return
+								}).catch(function (error) {
+									console.log("Error creating new user:", error);
+									res.status(500).send();
+									return
+								})
+							} else {
+								let newUsersRef = usersRef.push();
+								let obj = {};
+								obj[service] = user;
+								newUsersRef.set(obj)
+										.then(function () {
+												console.log("Successfully created new user:", user);
+												res.status(200).send();
+												return
+										}).catch(function (error) {
+												console.log("Error creating new user:", error);
+												res.status(500).send();
+												return
+										})
+							}
+						}, 1000);
+				});
+			});
+		}
 
     router.post('/user/local/login', function (req, res, next) {
         passport.authenticate('local-signin', function (err, lol, info) {

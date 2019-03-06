@@ -7,7 +7,7 @@ var configAuth = require('./auth');
 
 var passport = require('passport');
 
-module.exports = function (router, usersRef) {
+module.exports = function (router, usersRef, db) {
 
     passport.serializeUser(function (user, done) {
         done(null, user.id);
@@ -84,7 +84,6 @@ module.exports = function (router, usersRef) {
             let user = profile;
             user.token = token;
             user.refreshToken = refreshToken;
-            let newUsersRef = usersRef.push();
             let obj = {};
             usersRef.orderByChild("twitter/id").equalTo(user.id).once("value")
                 .then(function (snapShot) {
@@ -102,15 +101,47 @@ module.exports = function (router, usersRef) {
                         return;
                     }
                     user.applets = [];
-                    obj["twitter"] = user;
-                    newUsersRef.set(obj)
-                        .then(function () {
-                            console.log("Successfully created new user:", user);
-                            return done(null, user);
-                        }).catch(function (error) {
-                            console.log("Error creating new user:", error);
-                            return done(error, user);
-                        })
+										var refKey = "";
+
+										usersRef.once('value')
+											.then(function (snapshot) {
+									       snapshot.forEach(function(childSnapshot) {
+
+													if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.emails[0].value) {
+														refKey = Object.keys(snapshot.val())[0];
+													} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.emails[0].value) {
+														refKey = Object.keys(snapshot.val())[0];
+													} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.emails[0].value) {
+														refKey = Object.keys(snapshot.val())[0];
+													} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.emails[0].value) {
+														refKey = Object.keys(snapshot.val())[0];
+													}
+									  });
+									});
+
+									setTimeout(() => {
+										if (refKey !== "") {
+											let newUsersRef = db.ref('users/'+refKey+'/twitter').update(user)
+											.then(function () {
+												console.log("Successfully created new user:", user);
+												return done(null, user);
+											}).catch(function (error) {
+												console.log("Error creating new user:", error);
+												return done(error, user);
+											})
+										} else {
+											let newUsersRef = usersRef.push();
+											obj["twitter"] = user;
+	                    newUsersRef.set(obj)
+	                        .then(function () {
+	                            console.log("Successfully created new user:", user);
+	                            return done(null, user);
+	                        }).catch(function (error) {
+	                            console.log("Error creating new user:", error);
+	                            return done(error, user);
+													})
+										}
+									}, 1000);
                 })
                 .catch(err => {
                     console.log(err);
@@ -138,7 +169,7 @@ module.exports = function (router, usersRef) {
                     obj[req.params.type] = user;
                     newUsersRef.set(obj)
                         .then(function () {
-                            console.log("Successfully created new user:", user);
+                            // console.log("Successfully created new user:", user);
                             res.status(201).send(newUsersRef.key);
                         })
                         .catch(function (error) {
