@@ -160,7 +160,6 @@ module.exports = function (router, usersRef, db) {
                         }
 
 												var email = user.email;
-												console.log(email);
 												checkServices(user, "twitch", email, res)
 
                         // obj["twitch"] = user;
@@ -386,8 +385,10 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										if (service === "twitch")
+										if (service === "twitch") {
+											console.log("okokokokokokokokokokokokokokok");
 											res.redirect('http://localhost:3000/' + '?user=' + user);
+										}
 										else
 											res.status(200).send();
 										return
