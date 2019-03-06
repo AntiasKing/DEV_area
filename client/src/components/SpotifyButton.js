@@ -18,7 +18,7 @@ class SpotifyButton extends React.Component {
 		popup.location = 'https://accounts.spotify.com/authorize?response_type=code&client_id=d6606813f1904768bb612bf21e76d04f&scope=user-read-private user-read-email&redirect_uri=http://localhost:8080/auth/spotify';
 
 		let polling = setInterval(() => {
-			if	(!popup || popup.closed || popup.closed === undefined) {
+			if	(!popup || popup.closed || popup.closed == undefined) {
 				clearInterval(polling);
 				this.props.onFailure(new Error('Popup has been closed by user'));
 			}
