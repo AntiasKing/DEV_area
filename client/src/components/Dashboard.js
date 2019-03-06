@@ -289,7 +289,7 @@ class Dashboard extends React.Component {
                             <SpotifyButton
                                 onFailure={this.onFailed}
                                 onSuccess={this.onSpotifySuccess}
-                                btnstyle='btn-Service btn-Spotify'
+                                btnstyle='btn-Service btn-Spotify-Service'
                                 btnlogo='fab fa-10x fa-spotify' />
                         );
                     }

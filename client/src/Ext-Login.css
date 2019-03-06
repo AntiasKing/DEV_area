@@ -83,6 +83,14 @@
     background: #502d91;
 }
 
+.btn-Spotify-Service {
+    background: #1DB954;
+}
+
+.btn-Spotify-Service:hover {
+    background: rgb(15, 179, 72);
+}
+
 .btn-Spotify {
     color: #1DB954;
     background: #222326;

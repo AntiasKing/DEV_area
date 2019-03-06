@@ -42,8 +42,8 @@ class SpotifyButton extends React.Component {
 		return (
 			<button
             	onClick={this.onClick}
-                className="Ext-Login btn-Spotify">
-                <Icon className={classNames(classes.icon, 'fa fa-spotify')} />
+				className={classNames(this.props.btnstyle)}>
+                <Icon className={classNames(this.props.btnlogo)} />
         	</button>
 		)
 	}
