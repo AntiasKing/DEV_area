@@ -160,7 +160,6 @@ module.exports = function (router, usersRef, db) {
                         }
 
 												var email = user.email;
-												console.log(email);
 												checkServices(user, "twitch", email, res)
 
                         // obj["twitch"] = user;
@@ -373,7 +372,10 @@ module.exports = function (router, usersRef, db) {
 					if (refKey != "") {
 						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
 						.then(function () {
-							res.status(200).send();
+							if (service == "twitch") {
+								res.redirect('http://localhost:3000/' + '?user=' + user);
+							else
+								res.status(200).send();
 							return
 						}).catch(function (error) {
 							res.status(500).send();
@@ -386,7 +388,7 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										if (service === "twitch")
+										if (service == "twitch") {
 											res.redirect('http://localhost:3000/' + '?user=' + user);
 										else
 											res.status(200).send();
