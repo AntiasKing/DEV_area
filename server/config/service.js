@@ -8,7 +8,8 @@ const Config = {
         name: "facebook",
         actions: [{
             id: 0,
-            constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
+			constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
+			params: ["userID"],
             name: "...",
             description: "..."
         },],
@@ -18,7 +19,39 @@ const Config = {
             name: "...",
             description: "..."
         },]
-    }]
+	},
+	{
+		serviceID: 1,
+        name: "twitch",
+        actions: [{
+            id: 0,
+			constructor: function () { console.log("") }, // function to call at creation of the applet
+			params: ["twitchID"],
+            name: "getFollowed",
+            description: "the user get followed"
+		},
+		{
+            id: 1,
+			constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
+			params: ["twitchID"],
+            name: "Follow",
+            description: "the user followed someone"
+		},
+		{
+            id: 2,
+			constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
+			params: ["userID"],
+            name: "...",
+            description: "..."
+		},
+		{
+            id: 3,
+			constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
+			params: ["userID"],
+            name: "...",
+            description: "..."
+        },]
+	}]
 }
 
 module.exports = {
