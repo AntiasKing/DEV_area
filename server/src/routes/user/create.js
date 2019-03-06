@@ -355,18 +355,23 @@ module.exports = function (router, usersRef, db) {
 					 snapshot.forEach(function(childSnapshot) {
 
 						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.email) {
+							console.log("1")
 							refKey = Object.keys(snapshot.val())[0];
 						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.email) {
-							console.log(childSnapshot.val().twitter.emails[0].value)
+							console.log("2")
 							refKey = Object.keys(snapshot.val())[0];
 						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.email) {
+							console.log("3")
 							refKey = Object.keys(snapshot.val())[0];
 						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.email) {
+							console.log("4")
 							refKey = Object.keys(snapshot.val())[0];
 						}
 
 				});
+				setTimeout(() => {
 					if (refKey != "") {
+						console.log(refKey)
 						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
 						.then(function () {
 							res.status(200).send();
@@ -390,6 +395,7 @@ module.exports = function (router, usersRef, db) {
 										return
 								})
 					}
+				}, 1000)
 			});
 		}
 
