@@ -17,7 +17,7 @@ class TwitchButton extends React.Component {
         popup.location = 'https://id.twitch.tv/oauth2/authorize?client_id=gh2sbdqqplvq5qa89ze2h6e6zb4tur&redirect_uri=https://staging-area-epitech.herokuapp.com/auth/twitch&response_type=code&scope=user:read:email';
         console.log("Bite", this.props);
         let polling = setInterval(() => {
-            if (!popup || popup.closed || popup.closed === undefined) {
+            if (!popup || popup.closed || popup.closed == undefined) {
                 clearInterval(polling);
                 this.props.onFailure(new Error('Popup has been closed by user'));
             }
@@ -39,8 +39,8 @@ class TwitchButton extends React.Component {
         const { classes } = this.props;
 
         return (
-            <button onClick={this.onClick} className="Ext-Login btn-Twitch">
-                <Icon showIcon={false} className={classNames(classes.icon, 'fa fa-twitch')} />
+            <button onClick={this.onClick} className={ classNames(this.props.btnstyle) }>
+                <Icon showIcon={false} className={ classNames(this.props.btnlogo)} />
             </button>
         );
     }

@@ -214,12 +214,16 @@ class SignIn extends React.Component {
                         <li>
                             <TwitchButton
                                 onFailure={this.onFailed}
-                                onSuccess={this.onTwitchSucess} />
+                                onSuccess={this.onTwitchSucess}
+                                btnstyle='Ext-Login btn-Twitch'
+                                btnlogo='fa fa-twitch' />
                         </li>
                         <li>
                             <SpotifyButton
                                 onFailure={this.onFailed}
                                 onSuccess={this.onSpotifySuccess}
+                                btnstyle='Ext-Login btn-spotify'
+                                btnlogo='fa fa-spotify'
                             />
                         </li>
                     </ul>

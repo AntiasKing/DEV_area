@@ -1,20 +1,18 @@
 import React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Applet from './Applet';
 import Service from './Service';
 import { AppBar, Typography, Toolbar, IconButton, Grid, Tabs, Tab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircle';
 import Axios from 'axios';
+import classNames from 'classnames';
+import Icon from '@material-ui/core/Icon';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import TwitchButton from './TwitchButton';
 import SpotifyButton from './SpotifyButton';
 import GoogleLogin from 'react-google-login';
-
-import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import classNames from 'classnames';
-import Icon from '@material-ui/core/Icon';
 
 import './../Ext-Login.css';
 
@@ -133,6 +131,72 @@ class Dashboard extends React.Component {
         this.CheckLogin();
     }
 
+    handleGoogle(response) {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("https://staging-area-epitech.herokuapp.com/google",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response);
+                window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    handleFacebook(response) {
+        let data = JSON.stringify({
+            "user": response
+        });
+        Axios.post("http://localhost:8080/facebook/",
+            data, { headers: { "Content-Type": "application/json" } })
+            .then(function (response) {
+                console.log(response);
+                localStorage.setItem("userRef", response.data)
+                // window.location = "./dashboard";
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+
+        this.setState({ [name]: target.value });
+    }
+
+    handleTwitter = (response) => {
+        console.log("Twitter handled !!");
+
+        console.log(response.headers)
+
+        // Axios.get("http://localhost:8080/twitter")
+        //     .then(function (response) {
+        //         console.log(response);
+        //     }).catch(function (error) {
+        //         console.log(error);
+        //     })
+        // window.location = './dashboard';
+    };
+
+    onSpotifySuccess = (document) => {
+        console.log(document);
+        window.location = './dashboard';
+    }
+
+    onTwitchSucess = (document) => {
+        console.log(document);
+        window.location = './dashboard';
+    }
+
+    onFailed = (error) => {
+        console.log(error);
+    };
+
     handleTabChange = (event, tab) => {
         this.setState({ tab });
     }
@@ -184,8 +248,8 @@ class Dashboard extends React.Component {
                                 appId="410435456195867"
                                 autoLoad={false}
                                 fields="name,email,picture"
-                                cssClass="Ext-Login btn-Facebook"
-                                textButton={<Icon className={classNames(classes.icon, 'fa fa-facebook')} />}
+                                cssClass="btn-Facebook btn-Service"
+                                textButton={<Icon className={classNames(classes.icon, 'fab fa-10x fa-facebook-f')} />}
                                 icon=""
                                 callback={this.handleFacebook} />
                         );
@@ -195,9 +259,9 @@ class Dashboard extends React.Component {
                             <TwitterLogin
                                 loginUrl="http://localhost:8080/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
-                                className="Ext-Login btn-Twitter"
+                                className="btn-Service btn-Twitter"
                                 showIcon={false}
-                                text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
+                                text={<Icon className={classNames(classes.icon, 'fab fa-10x fa-twitter')} />}
                                 requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
                         );
                     }
@@ -206,17 +270,18 @@ class Dashboard extends React.Component {
                             <GoogleLogin
                                 clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
                                 onFailure={this.onFailed} onSuccess={this.handleGoogle}
-                                className="Ext-Login btn-Google"
+                                className="btn-Service btn-Google"
                                 icon=""
-                                buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
-                            />
+                                buttonText={<Icon className={classNames(classes.icon, 'fab fa-10x fa-google')} />} />
                         );
                     }
                     if (i === 3) {
                         servicesArray.push(
                             <TwitchButton
                                 onFailure={this.onFailed}
-                                onSuccess={this.onTwitchSucess} />
+                                onSuccess={this.onTwitchSucess}
+                                btnstyle='btn-Service btn-Twitch'
+                                btnlogo='fab fa-10x fa-twitch' />
                         );
                     }
                     if (i === 4) {
@@ -224,7 +289,8 @@ class Dashboard extends React.Component {
                             <SpotifyButton
                                 onFailure={this.onFailed}
                                 onSuccess={this.onSpotifySuccess}
-                            />
+                                btnstyle='btn-Service btn-Spotify'
+                                btnlogo='fab fa-10x fa-spotify' />
                         );
                     }
                 }
