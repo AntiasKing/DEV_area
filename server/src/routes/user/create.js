@@ -9,9 +9,15 @@ module.exports = function (router, usersRef, db) {
         res.status(201).send("test succeed !!")
     })
 
-		router.get('/twitter', function (req, res, next) {
-			console.log(req);
+	router.get('/twitter', function (req, res, next) {
+		console.log(req);
         res.status(201).send("test test succeed !!")
+    })
+
+    router.get('/social', function (req, res, next) {
+        res.status(201)
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({ facebook: false, twitter: false, google: false, twitch: false, spotify: false }));
     })
 
 		router.post('/spotify', function (req, res, next) {
