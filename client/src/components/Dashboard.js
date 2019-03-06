@@ -4,6 +4,7 @@ import Applet from './Applet';
 import Service from './Service';
 import { AppBar, Typography, Toolbar, IconButton, Grid, Tabs, Tab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/AddCircle';
+import Axios from 'axios';
 
 const user = {
     "username": "Test",
@@ -114,12 +115,28 @@ class Dashboard extends React.Component {
         this.state = {
             applets: user.applets,
             services: user.services,
+            login: [ false, false, false, false, false, true ],
             tab: 0,
         }
+        this.CheckLogin();
     }
 
     handleTabChange = (event, tab) => {
         this.setState({ tab });
+    }
+
+    CheckLogin(response) {
+        let GetUserRef = localStorage.getItem('userRef');
+
+        Axios.get("http://localhost:8080/social?userRef=" + GetUserRef,
+            { headers: { "Content-Type": "application/json" } })
+            .then((response) => {
+                let arrtmp = [ response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify ];
+                this.setState({ 'login': arrtmp });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render() {
@@ -141,9 +158,16 @@ class Dashboard extends React.Component {
             servicesArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have register to zero services for now</Typography>
         } else {
             for (let i = 0; i < services.length; i++) {
-                servicesArray.push(<Service {...services[i]} key={services[i].name} />);
+                if (this.state.login[i] === true) {
+                    servicesArray.push(<Service {...services[i]} key={services[i].name} />);
+                }
+                else {
+                    // mettre le service de connection
+                    servicesArray.push("pas connecté");
+                }
             }
         }
+
         return (
             <div classes={classes.main}>
                 <AppBar style={{ background: "#f5f5f5", color: "#0f0f0f" }} position="static">

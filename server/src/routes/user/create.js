@@ -9,6 +9,79 @@ module.exports = function (router, usersRef) {
         res.status(201).send("test succeed !!")
     })
 
+	router.get('/twitter', function (req, res, next) {
+		console.log(req);
+        res.status(201).send("test test succeed !!")
+    })
+
+    router.get('/social', function (req, res, next) {
+        res.status(201)
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({ facebook: true, twitter: false, google: false, twitch: false, spotify: true }));
+    })
+
+		router.post('/spotify', function (req, res, next) {
+			let user = req.body.user;
+			let newUsersRef = usersRef.push();
+			let obj = {};
+			usersRef.orderByChild("spotify/access_token").equalTo(user.access_token).once("value")
+					.then(function (snapShot) {
+							if (snapShot.val()) {
+									snapShot.forEach(function (childSnapShot) {
+											childSnapShot.child("spotify").ref.update(user)
+													.then(function () {
+															res.status(200).send(childSnapShot.ref.path.pieces_[1]);
+													})
+													.catch(function (error) {
+															console.log(error);
+															res.status(500).send(error);
+													});
+									});
+									return;
+							}
+							obj["spotify"] = user;
+							newUsersRef.set(obj)
+									.then(function () {
+											console.log("Successfully created new user:", user);
+											res.status(201).send(newUsersRef.key);
+									}).catch(function (error) {
+											console.log("Error creating new user:", error);
+											res.status(500).send(error);
+									})
+					})
+		})
+
+		router.post('/twitch', function (req, res, next) {
+			let user = req.body.user;
+			let newUsersRef = usersRef.push();
+			let obj = {};
+			usersRef.orderByChild("twitch/access_token").equalTo(user.access_token).once("value")
+					.then(function (snapShot) {
+							if (snapShot.val()) {
+									snapShot.forEach(function (childSnapShot) {
+											childSnapShot.child("twitch").ref.update(user)
+													.then(function () {
+															res.status(200).send(childSnapShot.ref.path.pieces_[1]);
+													})
+													.catch(function (error) {
+															console.log(error);
+															res.status(500).send(error);
+													});
+									});
+									return;
+							}
+							obj["twitch"] = user;
+							newUsersRef.set(obj)
+									.then(function () {
+											console.log("Successfully created new user:", user);
+											res.status(201).send(newUsersRef.key);
+									}).catch(function (error) {
+											console.log("Error creating new user:", error);
+											res.status(500).send(error);
+									})
+					})
+		})
+
     router.get('/auth/twitch', function (req, res) {
         let obj = {};
         request.post({
@@ -79,7 +152,7 @@ module.exports = function (router, usersRef) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("google").ref.update(user)
                             .then(function () {
-                                res.status(200).send();
+                                res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -100,74 +173,74 @@ module.exports = function (router, usersRef) {
             })
     })
 
-    router.get('/auth/spotify/', function (req, res) {
-        let obj = {};
-        let code = req.query.code || null
-        let authOptions = {
-            url: 'https://accounts.spotify.com/api/token',
-            form: {
-                code: code,
-                redirect_uri: 'http://localhost:8080/auth/spotify',
-                grant_type: 'authorization_code'
-            },
-            headers: {
-                'Authorization': 'Basic ' + (new Buffer(
-                    'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
-                ).toString('base64'))
-            },
-            json: true
-        }
-        request.post(authOptions, function (err, response, body) {
-            if (err) {
-                console.log(err);
-                return res.status(500).send(err);
-            }
-            let access_token = body.access_token;
-            let refresh_token = body.refresh_token;
-            request.get({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                    Authorization: 'Bearer ' + body.access_token
-                }
+		router.get('/auth/spotify/', function (req, res) {
+			let obj = {};
+			let code = req.query.code || null
+			let authOptions = {
+					url: 'https://accounts.spotify.com/api/token',
+					form: {
+							code: code,
+							redirect_uri: 'http://localhost:8080/auth/spotify',
+							grant_type: 'authorization_code'
+					},
+					headers: {
+							'Authorization': 'Basic ' + (new Buffer(
+									'd6606813f1904768bb612bf21e76d04f' + ':' + '0ecc6c233c974752a8edc31b299929a1'
+							).toString('base64'))
+					},
+					json: true
+			}
+			request.post(authOptions, function (err, response, body) {
+					if (err) {
+							console.log(err);
+							return res.status(500).send(err);
+					}
+					let access_token = body.access_token;
+					let refresh_token = body.refresh_token;
+					request.get({
+							url: 'https://api.spotify.com/v1/me',
+							headers: {
+									Authorization: 'Bearer ' + body.access_token
+							}
 
-            }, function (err, response, body) {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).send(err);
-                }
-                let user = JSON.parse(body);
-                user.access_token = access_token;
-                user.refresh_token = refresh_token;
-                console.log(user);
-                let newUsersRef = usersRef.push();
-                usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
-                    .then(function (snapshot) {
-                        if (snapshot.val()) {
-                            snapshot.forEach(function (childSnapShot) {
-                                childSnapShot.child("spotify").ref.update(user)
-                                    .then(function () {
-                                        return res.redirect('http://localhost:3000/' + '?user=' + user);
-                                    })
-                                    .catch(function (error) {
-                                        console.log(error);
-                                        res.status(500).send(error);
-                                    });
-                            });
-                            return;
-                        }
-                        obj["spotify"] = user;
-                        newUsersRef.set(obj)
-                            .then(function () {
-                                console.log("Successfully created new user:", user);
-                                return res.redirect('http://localhost:3000/' + '?user=' + user);
-                            }).catch(function (error) {
-                                console.log("Error creating new user:", error);
-                                res.status(500).send(error);
-                            });
-                    });
-            })
-        })
-    });
+					}, function (err, response, body) {
+							if (err) {
+									console.log(err);
+									return res.status(500).send(err);
+							}
+							let user = JSON.parse(body);
+							user.access_token = access_token;
+							user.refresh_token = refresh_token;
+							console.log(user);
+							let newUsersRef = usersRef.push();
+							usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
+									.then(function (snapshot) {
+											if (snapshot.val()) {
+													snapshot.forEach(function (childSnapShot) {
+															childSnapShot.child("spotify").ref.update(user)
+																	.then(function () {
+																			return res.redirect('http://localhost:3000/' + '?user=' + user);
+																	})
+																	.catch(function (error) {
+																			console.log(error);
+																			res.status(500).send(error);
+																	});
+													});
+													return;
+											}
+											obj["spotify"] = user;
+											newUsersRef.set(obj)
+													.then(function () {
+															console.log("Successfully created new user:", user);
+															return res.redirect('http://localhost:3000/' + '?user=' + user);
+													}).catch(function (error) {
+															console.log("Error creating new user:", error);
+															res.status(500).send(error);
+													});
+									});
+					})
+			})
+	});
 
     router.route('/auth/twitter/reverse')
         .post(function (req, res) {
@@ -221,21 +294,22 @@ module.exports = function (router, usersRef) {
             req.auth = {
                 id: req.user.id
             };
-            return res.status(200).send();
+						res.writeHead(200, {"status": "okok"})
+						return res.status(200).send()
         });
 
     router.post('/facebook', function (req, res, next) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
-        console.log(user);
+				console.log(req);
         usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
-                                res.status(200).send();
+                                res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -247,10 +321,8 @@ module.exports = function (router, usersRef) {
                 obj["facebook"] = user;
                 newUsersRef.set(obj)
                     .then(function () {
-                        console.log("Successfully created new user:", user);
                         res.status(201).send(newUsersRef.key);
                     }).catch(function (error) {
-                        console.log("Error creating new user:", error);
                         res.status(500).send(error);
                     })
             })
@@ -267,7 +339,7 @@ module.exports = function (router, usersRef) {
                         snapShot.forEach(function (childSnapShot) {
                             childSnapShot.child("local").ref.update(user)
                                 .then(function () {
-                                    res.status(200).send("User Already exist");
+                                    res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                                 })
                                 .catch(function (error) {
                                     console.log(error);
@@ -275,7 +347,7 @@ module.exports = function (router, usersRef) {
                                 });
                         });
                     } else {
-                        res.status(200).send("No User Found");
+                        res.status(400).send("No User Found");
                     }
                 })
         })(req, res, next);
