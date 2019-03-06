@@ -122,10 +122,15 @@ const styles = theme => ({
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        let services;
+        Axios.get('https://staging-area-epitech.herokuapp.com/services').then((response) => {
+            console.log(response.body);
+            services = response.body;
+        })
         this.state = {
             applets: user.applets,
-            services: user.services,
-            login: [ false, false, false, false, false, true ],
+            services: services,
+            login: [false, false, false, false, false, true],
             tab: 0,
         }
         this.CheckLogin();
@@ -207,7 +212,7 @@ class Dashboard extends React.Component {
         Axios.get("http://localhost:8080/social?userRef=" + GetUserRef,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
-                let arrtmp = [ response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify ];
+                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify];
                 this.setState({ 'login': arrtmp });
             })
             .catch(function (error) {
@@ -304,7 +309,7 @@ class Dashboard extends React.Component {
                         <Typography variant="h4" color="inherit">Area</Typography>
                         <IconButton color="inherit" aria-label="Add Applet" className={classes.AddIcon} style={{ marginTop: "10px", marginRight: "40px" }} href="./createApplet">
                             <AddIcon />
-                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px"}}> Create Applet</Typography>
+                            <Typography variant="h6" color="inherit" style={{ marginLeft: "3px" }}> Create Applet</Typography>
                         </IconButton>
                     </Toolbar>
                 </AppBar>

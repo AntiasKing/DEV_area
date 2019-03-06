@@ -222,7 +222,7 @@ class SignIn extends React.Component {
                             <SpotifyButton
                                 onFailure={this.onFailed}
                                 onSuccess={this.onSpotifySuccess}
-                                btnstyle='Ext-Login btn-spotify'
+                                btnstyle='Ext-Login btn-Spotify'
                                 btnlogo='fa fa-spotify'
                             />
                         </li>
