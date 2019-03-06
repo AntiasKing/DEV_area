@@ -9,11 +9,6 @@ module.exports = function (router, usersRef, db) {
         res.status(201).send("test succeed !!")
     })
 
-	router.get('/twitter', function (req, res, next) {
-		console.log(req);
-        res.status(201).send("test test succeed !!")
-    })
-
     router.get('/social', function (req, res, next) {
 
 			let data = {
@@ -64,18 +59,8 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-
 							var email = user.email;
 							checkServices(user, "spotify", email, res)
-							// obj["spotify"] = user;
-							// newUsersRef.set(obj)
-							// 		.then(function () {
-							// 				console.log("Successfully created new user:", user);
-							// 				res.status(201).send(newUsersRef.key);
-							// 		}).catch(function (error) {
-							// 				console.log("Error creating new user:", error);
-							// 				res.status(500).send(error);
-							// 		})
 					})
 		})
 
@@ -98,19 +83,8 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-
 							var email = user.email;
 							checkServices(user, "twitch", email, res)
-							//
-							// obj["twitch"] = user;
-							// newUsersRef.set(obj)
-							// 		.then(function () {
-							// 				console.log("Successfully created new user:", user);
-							// 				res.status(201).send(newUsersRef.key);
-							// 		}).catch(function (error) {
-							// 				console.log("Error creating new user:", error);
-							// 				res.status(500).send(error);
-							// 		})
 					})
 		})
 
@@ -160,19 +134,8 @@ module.exports = function (router, usersRef, db) {
                             });
                             return;
                         }
-
 												var email = user.email;
 												checkServices(user, "twitch", email, res)
-
-                        // obj["twitch"] = user;
-                        // newUsersRef.set(obj)
-                        //     .then(function () {
-                        //         console.log("Successfully created new user:", user);
-                        //         return res.redirect('http://localhost:3000/' + '?user=' + user);
-                        //     }).catch(function (error) {
-                        //         console.log("Error creating new user:", error);
-                        //         res.status(500).send(error);
-                        //     })
                     })
             })
         })
@@ -256,19 +219,8 @@ module.exports = function (router, usersRef, db) {
 													});
 													return;
 											}
-
 											var email = user.email;
 											checkServices(user, "spotify", email, res)
-
-											// obj["spotify"] = user;
-											// newUsersRef.set(obj)
-											// 		.then(function () {
-											// 				console.log("Successfully created new user:", user);
-											// 				return res.redirect('http://localhost:3000/' + '?user=' + user);
-											// 		}).catch(function (error) {
-											// 				console.log("Error creating new user:", error);
-											// 				res.status(500).send(error);
-											// 		});
 									});
 					})
 			})
