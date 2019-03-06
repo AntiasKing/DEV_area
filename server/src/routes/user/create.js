@@ -125,6 +125,7 @@ module.exports = function (router, usersRef, db) {
                 return res.status(500).send(err);
             }
             let access_token = JSON.parse(body).access_token;
+						console.log(access_token);
             let refresh_token = JSON.parse(body).refresh_token;
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
