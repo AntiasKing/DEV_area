@@ -25,7 +25,6 @@ class TwitchButton extends React.Component {
                 if (!popup.location.hostname.includes('id.twitch.tv') && !popup.location.hostname == '') {
                     let query = new URLSearchParams(popup.location.search);
                     let accessToken = query.get('access_token');
-										console.log(query)
 										console.log(accessToken);
                     clearInterval(polling);
                     popup.close();

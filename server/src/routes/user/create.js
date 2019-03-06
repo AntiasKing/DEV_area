@@ -322,6 +322,8 @@ module.exports = function (router, usersRef, db) {
 							refKey = Object.keys(snapshot.val())[count];
 						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === email) {
 							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().local && childSnapshot.val().local.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
 						}
 						count++;
 				});
@@ -388,20 +390,22 @@ module.exports = function (router, usersRef, db) {
 
     router.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, lol, info) {
-            let user = req.body.user;
-            let newUsersRef = usersRef.push();
-            let obj = {};
-            obj["local"] = user;
-            newUsersRef.set(obj)
-                .then(function () {
-                    console.log("Successfully created new user:", user);
-                    res.status(201).send(newUsersRef.key);
-                })
-                .catch(function (error) {
-                    console.log("Error creating new user:", error);
-                    res.status(500).send(error);
-                });
-            return;
+          let user = req.body.user;
+					var email = user.email;
+					checkServices(user, "local", email, res)
+          // let newUsersRef = usersRef.push();
+          // let obj = {};
+          // obj["local"] = user;
+          // newUsersRef.set(obj)
+          //     .then(function () {
+          //         console.log("Successfully created new user:", user);
+          //         res.status(201).send(newUsersRef.key);
+          //     })
+          //     .catch(function (error) {
+          //         console.log("Error creating new user:", error);
+          //         res.status(500).send(error);
+          //     });
+          // return;
         })(req, res, next);
     });
 }
