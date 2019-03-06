@@ -112,6 +112,8 @@ module.exports = function (router, usersRef, db) {
 														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.emails[0].value) {
 														refKey = Object.keys(snapshot.val())[count];
+													} else if (childSnapshot.val().google && childSnapshot.val().google.profileObj.email === user.emails[0].value) {
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.emails[0].value) {
 														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.emails[0].value) {
