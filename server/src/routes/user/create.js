@@ -15,9 +15,34 @@ module.exports = function (router, usersRef, db) {
     })
 
     router.get('/social', function (req, res, next) {
-        res.status(201)
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ facebook: false, twitter: false, google: false, twitch: false, spotify: false }));
+
+			let data = {
+				facebook: false,
+				twitter: false,
+				google: false,
+				twitch: false,
+				spotify: false
+			}
+
+			db.ref("users").child(req.query.userRef).once("value")
+					.then(function (snapshot) {
+						if (snapshot.val()) {
+							if (snapshot.val().facebook)
+								data.facebook = true;
+							if (snapshot.val().twitter)
+								data.twitter = true;
+							if (snapshot.val().google)
+								data.google = true;
+							if (snapshot.val().twitch)
+								data.twitch = true;
+							if (snapshot.val().spotify)
+								data.spotify = true;
+						}
+						res.status(201)
+						res.setHeader('Content-Type', 'application/json');
+						res.send(JSON.stringify(data));
+					})
+
     })
 
 		router.post('/spotify', function (req, res, next) {
