@@ -78,7 +78,8 @@ class SignIn extends React.Component {
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                // window.location = "./dashboard";
+								localStorage.setItem("userRef", response.data)
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -94,7 +95,7 @@ class SignIn extends React.Component {
             .then(function (response) {
 								console.log(response);
 								localStorage.setItem("userRef", response.data)
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -128,31 +129,25 @@ class SignIn extends React.Component {
     }
 
     handleTwitter = (response) => {
-        console.log("Twitter handled !!");
-
-				console.log(response.headers)
-
-				// Axios.get("http://localhost:8080/twitter")
-        //     .then(function (response) {
-        //         console.log(response);
-        //     }).catch(function (error) {
-        //         console.log(error);
-        //     })
-        // window.location = './dashboard';
+      console.log("Twitter handled !!");
+			console.log(response.headers)
+      window.location = './dashboard';
     };
 
 	onSpotifySuccess = (document) => {
 		console.log(document);
-        window.location = './dashboard';
+		// localStorage.setItem("userRef", response.data)
+    window.location = './dashboard';
 	}
 
     onTwitchSucess = (document) => {
-        console.log(document);
-        window.location = './dashboard';
+      console.log(document);
+			// localStorage.setItem("userRef", response.data)
+      window.location = './dashboard';
     }
 
     onFailed = (error) => {
-        console.log(error);
+      console.log(error);
     };
 
     render() {

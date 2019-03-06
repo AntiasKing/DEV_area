@@ -64,15 +64,18 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-							obj["spotify"] = user;
-							newUsersRef.set(obj)
-									.then(function () {
-											console.log("Successfully created new user:", user);
-											res.status(201).send(newUsersRef.key);
-									}).catch(function (error) {
-											console.log("Error creating new user:", error);
-											res.status(500).send(error);
-									})
+
+							var email = user.email;
+							checkServices(user, "spotify", email, res)
+							// obj["spotify"] = user;
+							// newUsersRef.set(obj)
+							// 		.then(function () {
+							// 				console.log("Successfully created new user:", user);
+							// 				res.status(201).send(newUsersRef.key);
+							// 		}).catch(function (error) {
+							// 				console.log("Error creating new user:", error);
+							// 				res.status(500).send(error);
+							// 		})
 					})
 		})
 
@@ -336,7 +339,6 @@ module.exports = function (router, usersRef, db) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
-																console.log("update")
                                 res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
@@ -378,7 +380,7 @@ module.exports = function (router, usersRef, db) {
 							if (service == "twitch" || service == "spotify")
 								res.redirect('http://localhost:3000/' + '?user=' + user);
 							else
-								res.status(200).send();
+								res.status(200).send(refKey);
 							return
 						}).catch(function (error) {
 							res.status(500).send();
@@ -393,8 +395,9 @@ module.exports = function (router, usersRef, db) {
 										console.log("Successfully created new user:", user);
 										if (service == "twitch" || service == "spotify")
 											res.redirect('http://localhost:3000/' + '?user=' + user);
-										else
-											res.status(200).send();
+										else {
+											res.status(200).send(newUsersRef.key);
+										}
 										return
 								}).catch(function (error) {
 										console.log("Error creating new user:", error);
