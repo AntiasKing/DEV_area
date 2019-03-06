@@ -385,7 +385,7 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										if (service === "twitch") {
+										if (service == "twitch") {
 											console.log("okokokokokokokokokokokokokokok");
 											res.redirect('http://localhost:3000/' + '?user=' + user);
 										}
