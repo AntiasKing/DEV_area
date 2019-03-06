@@ -74,7 +74,7 @@ class Register extends React.Component {
         const name = target.name;
 
         this.setState({ [name]: target.value });
-	}
+    }
 
     handleGoogle(response) {
         let data = JSON.stringify({
@@ -100,13 +100,13 @@ class Register extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-								localStorage.setItem("userRef", response.data)
+                localStorage.setItem("userRef", response.data)
                 window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
             });
-	}
+    }
 
 
     // TODO: Add Error message for bad register
@@ -125,18 +125,18 @@ class Register extends React.Component {
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-								localStorage.setItem("userRef", response.data)
+                localStorage.setItem("userRef", response.data)
                 window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
             });
-	}
+    }
 
-	onSpotifySuccess = (document) => {
-		console.log(document);
-		window.location = './dashboard';
-	}
+    onSpotifySuccess = (document) => {
+        console.log(document);
+        window.location = './dashboard';
+    }
 
     onTwitchSucess = (document) => {
         console.log(document);
@@ -204,11 +204,11 @@ class Register extends React.Component {
                                 onSuccess={this.onTwitchSucess} />
                         </li>
 
-						<li>
-							<SpotifyButton
-								onFailure={this.onFailed}
-								onSuccess={this.onSpotifySuccess}
-							/>
+                        <li>
+                            <SpotifyButton
+                                onFailure={this.onFailed}
+                                onSuccess={this.onSpotifySuccess}
+                            />
                         </li>
                     </ul>
                     <Button
