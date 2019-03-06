@@ -17,7 +17,7 @@ module.exports = function (router, usersRef) {
     router.get('/social', function (req, res, next) {
         res.status(201)
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ facebook: true, twitter: false, google: false, twitch: false, spotify: true }));
+        res.send(JSON.stringify({ facebook: false, twitter: false, google: false, twitch: false, spotify: false }));
     })
 
 		router.post('/spotify', function (req, res, next) {

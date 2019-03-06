@@ -6,6 +6,18 @@ import { AppBar, Typography, Toolbar, IconButton, Grid, Tabs, Tab } from '@mater
 import AddIcon from '@material-ui/icons/AddCircle';
 import Axios from 'axios';
 
+import TwitterLogin from 'react-twitter-auth';
+import FacebookLogin from 'react-facebook-login';
+import TwitchButton from './TwitchButton';
+import SpotifyButton from './SpotifyButton';
+import GoogleLogin from 'react-google-login';
+
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import classNames from 'classnames';
+import Icon from '@material-ui/core/Icon';
+
+import './../Ext-Login.css';
+
 const user = {
     "username": "Test",
     "email": "test@test.test",
@@ -139,6 +151,10 @@ class Dashboard extends React.Component {
             });
     }
 
+    onFailed = (error) => {
+        console.log(error);
+    };
+
     render() {
         const { classes } = this.props;
         const applets = this.state.applets;
@@ -162,8 +178,55 @@ class Dashboard extends React.Component {
                     servicesArray.push(<Service {...services[i]} key={services[i].name} />);
                 }
                 else {
-                    // mettre le service de connection
-                    servicesArray.push("pas connecté");
+                    if (i === 0) {
+                        servicesArray.push(
+                            <FacebookLogin
+                                appId="410435456195867"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                cssClass="Ext-Login btn-Facebook"
+                                textButton={<Icon className={classNames(classes.icon, 'fa fa-facebook')} />}
+                                icon=""
+                                callback={this.handleFacebook} />
+                        );
+                    }
+                    if (i === 1) {
+                        servicesArray.push(
+                            <TwitterLogin
+                                loginUrl="http://localhost:8080/auth/twitter"
+                                onFailure={this.onFailed} onSuccess={this.handleTwitter}
+                                className="Ext-Login btn-Twitter"
+                                showIcon={false}
+                                text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
+                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                        );
+                    }
+                    if (i === 2) {
+                        servicesArray.push(
+                            <GoogleLogin
+                                clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
+                                onFailure={this.onFailed} onSuccess={this.handleGoogle}
+                                className="Ext-Login btn-Google"
+                                icon=""
+                                buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
+                            />
+                        );
+                    }
+                    if (i === 3) {
+                        servicesArray.push(
+                            <TwitchButton
+                                onFailure={this.onFailed}
+                                onSuccess={this.onTwitchSucess} />
+                        );
+                    }
+                    if (i === 4) {
+                        servicesArray.push(
+                            <SpotifyButton
+                                onFailure={this.onFailed}
+                                onSuccess={this.onSpotifySuccess}
+                            />
+                        );
+                    }
                 }
             }
         }
