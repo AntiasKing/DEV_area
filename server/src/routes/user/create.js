@@ -350,23 +350,21 @@ module.exports = function (router, usersRef, db) {
 
 		function checkServices(user, service, res) {
 			var refKey = "";
+			var count = 0;
 			usersRef.once('value')
 				.then(function (snapshot) {
 					 snapshot.forEach(function(childSnapshot) {
 
 						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.email) {
-							console.log("1")
-							refKey = Object.keys(snapshot.val())[0];
+							refKey = Object.keys(snapshot.val())[count];
 						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.email) {
-							console.log("2")
-							refKey = Object.keys(snapshot.val())[0];
+							refKey = Object.keys(snapshot.val())[count];
 						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.email) {
-							console.log("3")
-							refKey = Object.keys(snapshot.val())[0];
+							refKey = Object.keys(snapshot.val())[count];
 						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.email) {
-							console.log("4")
-							refKey = Object.keys(snapshot.val())[0];
+							refKey = Object.keys(snapshot.val())[count];
 						}
+						count++;
 
 				});
 				setTimeout(() => {

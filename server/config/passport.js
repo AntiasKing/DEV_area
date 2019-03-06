@@ -102,20 +102,22 @@ module.exports = function (router, usersRef, db) {
                     }
                     user.applets = [];
 										var refKey = "";
+										var count = 0;
 
 										usersRef.once('value')
 											.then(function (snapshot) {
 									       snapshot.forEach(function(childSnapshot) {
 
 													if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													}
+													count++;
 									  });
 
 										setTimeout(() => {
