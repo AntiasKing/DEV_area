@@ -7,5 +7,6 @@ module.exports = function (admin) {
   require('../../config/passport.js')(router, usersRef);
   require('./user')(router, usersRef);
   require('./webhook')(router, usersRef);
+  require('./applets')(router, usersRef);
   return router;
 };
