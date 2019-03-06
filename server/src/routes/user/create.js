@@ -95,21 +95,25 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-							obj["twitch"] = user;
-							newUsersRef.set(obj)
-									.then(function () {
-											console.log("Successfully created new user:", user);
-											res.status(201).send(newUsersRef.key);
-									}).catch(function (error) {
-											console.log("Error creating new user:", error);
-											res.status(500).send(error);
-									})
+
+							var email = user.email;
+							console.log(email);
+							checkServices(user, "twitch", email, res)
+							//
+							// obj["twitch"] = user;
+							// newUsersRef.set(obj)
+							// 		.then(function () {
+							// 				console.log("Successfully created new user:", user);
+							// 				res.status(201).send(newUsersRef.key);
+							// 		}).catch(function (error) {
+							// 				console.log("Error creating new user:", error);
+							// 				res.status(500).send(error);
+							// 		})
 					})
 		})
 
     router.get('/auth/twitch', function (req, res) {
         let obj = {};
-				console.log(req.query.code)
         request.post({
             url: 'https://id.twitch.tv/oauth2/token',
             form: {
@@ -125,7 +129,6 @@ module.exports = function (router, usersRef, db) {
                 return res.status(500).send(err);
             }
             let access_token = JSON.parse(body).access_token;
-						console.log(access_token);
             let refresh_token = JSON.parse(body).refresh_token;
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
@@ -155,15 +158,19 @@ module.exports = function (router, usersRef, db) {
                             });
                             return;
                         }
-                        obj["twitch"] = user;
-                        newUsersRef.set(obj)
-                            .then(function () {
-                                console.log("Successfully created new user:", user);
-                                return res.redirect('http://localhost:3000/' + '?user=' + user);
-                            }).catch(function (error) {
-                                console.log("Error creating new user:", error);
-                                res.status(500).send(error);
-                            })
+
+												var email = user.email;
+												checkServices(user, "twitch", email, res)
+
+                        // obj["twitch"] = user;
+                        // newUsersRef.set(obj)
+                        //     .then(function () {
+                        //         console.log("Successfully created new user:", user);
+                        //         return res.redirect('http://localhost:3000/' + '?user=' + user);
+                        //     }).catch(function (error) {
+                        //         console.log("Error creating new user:", error);
+                        //         res.status(500).send(error);
+                        //     })
                     })
             })
         })
@@ -173,7 +180,7 @@ module.exports = function (router, usersRef, db) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
-        usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
+        usersRef.orderByChild("google/googleId").equalTo(user.googleId).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
@@ -188,15 +195,8 @@ module.exports = function (router, usersRef, db) {
                     });
                     return;
                 }
-                obj["google"] = user;
-                newUsersRef.set(obj)
-                    .then(function () {
-                        console.log("Successfully created new user:", user);
-                        res.status(201).send(newUsersRef.key);
-                    }).catch(function (error) {
-                        console.log("Error creating new user:", error);
-                        res.status(500).send(error);
-                    })
+								var mail = user.profileObj.email;
+								checkServices(user, "google", mail, res);
             })
     })
 
@@ -238,7 +238,6 @@ module.exports = function (router, usersRef, db) {
 							let user = JSON.parse(body);
 							user.access_token = access_token;
 							user.refresh_token = refresh_token;
-							console.log(user);
 							let newUsersRef = usersRef.push();
 							usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
 									.then(function (snapshot) {
@@ -328,12 +327,13 @@ module.exports = function (router, usersRef, db) {
     router.post('/facebook', function (req, res, next) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
-        usersRef.orderByChild("facebook/userID").equalTo(user.userID).once("value")
+        usersRef.orderByChild("facebook/email").equalTo(user.email).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
+																console.log("update")
                                 res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
@@ -343,55 +343,63 @@ module.exports = function (router, usersRef, db) {
                     });
                     return;
                 }
-								checkServices(user, "facebook", res);
+								var email = user.email;
+								checkServices(user, "facebook", email, res);
 							})
     })
 
-		function checkServices(user, service, res) {
+		function checkServices(user, service, email, res) {
 			var refKey = "";
+			var count = 0;
 			usersRef.once('value')
 				.then(function (snapshot) {
 					 snapshot.forEach(function(childSnapshot) {
 
-						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.email) {
-							refKey = Object.keys(snapshot.val())[0];
-						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.email) {
-							refKey = Object.keys(snapshot.val())[0];
-						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.email) {
-							refKey = Object.keys(snapshot.val())[0];
-						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.email) {
-							refKey = Object.keys(snapshot.val())[0];
+						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === email) {
+							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().google && childSnapshot.val().google.profileObj.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
 						}
-
-						setTimeout(() => {
-							if (refKey !== "") {
-								let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
-								.then(function () {
-									console.log("Successfully created new user:", user);
-									res.status(200).send();
-									return
-								}).catch(function (error) {
-									console.log("Error creating new user:", error);
-									res.status(500).send();
-									return
-								})
-							} else {
-								let newUsersRef = usersRef.push();
-								let obj = {};
-								obj[service] = user;
-								newUsersRef.set(obj)
-										.then(function () {
-												console.log("Successfully created new user:", user);
-												res.status(200).send();
-												return
-										}).catch(function (error) {
-												console.log("Error creating new user:", error);
-												res.status(500).send();
-												return
-										})
-							}
-						}, 1000);
+						count++;
 				});
+				setTimeout(() => {
+					if (refKey != "") {
+						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
+						.then(function () {
+							if (service == "twitch")
+								res.redirect('http://localhost:3000/' + '?user=' + user);
+							else
+								res.status(200).send();
+							return
+						}).catch(function (error) {
+							res.status(500).send();
+							return
+						})
+					} else {
+						let newUsersRef = usersRef.push();
+						let obj = {};
+						obj[service] = user;
+						newUsersRef.set(obj)
+								.then(function () {
+										console.log("Successfully created new user:", user);
+										if (service == "twitch")
+											res.redirect('http://localhost:3000/' + '?user=' + user);
+										else
+											res.status(200).send();
+										return
+								}).catch(function (error) {
+										console.log("Error creating new user:", error);
+										res.status(500).send();
+										return
+								})
+					}
+				}, 1000)
 			});
 		}
 

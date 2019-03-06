@@ -74,11 +74,11 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("https://staging-area-epitech.herokuapp.com/google",
+        Axios.post("http://localhost:8080/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                window.location = "./dashboard";
+                // window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -214,12 +214,16 @@ class SignIn extends React.Component {
                         <li>
                             <TwitchButton
                                 onFailure={this.onFailed}
-                                onSuccess={this.onTwitchSucess} />
+                                onSuccess={this.onTwitchSucess}
+                                btnstyle='Ext-Login btn-Twitch'
+                                btnlogo='fa fa-twitch' />
                         </li>
                         <li>
                             <SpotifyButton
                                 onFailure={this.onFailed}
                                 onSuccess={this.onSpotifySuccess}
+                                btnstyle='Ext-Login btn-Spotify'
+                                btnlogo='fa fa-spotify'
                             />
                         </li>
                     </ul>

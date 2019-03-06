@@ -102,46 +102,50 @@ module.exports = function (router, usersRef, db) {
                     }
                     user.applets = [];
 										var refKey = "";
+										var count = 0;
 
 										usersRef.once('value')
 											.then(function (snapshot) {
 									       snapshot.forEach(function(childSnapshot) {
 
 													if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
+													} else if (childSnapshot.val().google && childSnapshot.val().google.profileObj.email === user.emails[0].value) {
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.emails[0].value) {
-														refKey = Object.keys(snapshot.val())[0];
+														refKey = Object.keys(snapshot.val())[count];
 													}
+													count++;
 									  });
+
+										setTimeout(() => {
+											if (refKey !== "") {
+												let newUsersRef = db.ref('users/'+refKey+'/twitter').update(user)
+												.then(function () {
+													return done(null, user);
+												}).catch(function (error) {
+													return done(error, user);
+												})
+											} else {
+												let newUsersRef = usersRef.push();
+												obj["twitter"] = user;
+												newUsersRef.set(obj)
+												.then(function () {
+													console.log("Successfully created new user:", user);
+													return done(null, user);
+												}).catch(function (error) {
+													console.log("Error creating new user:", error);
+													return done(error, user);
+												})
+											}
+										}, 1000);
+
 									});
 
-									setTimeout(() => {
-										if (refKey !== "") {
-											let newUsersRef = db.ref('users/'+refKey+'/twitter').update(user)
-											.then(function () {
-												console.log("Successfully created new user:", user);
-												return done(null, user);
-											}).catch(function (error) {
-												console.log("Error creating new user:", error);
-												return done(error, user);
-											})
-										} else {
-											let newUsersRef = usersRef.push();
-											obj["twitter"] = user;
-	                    newUsersRef.set(obj)
-	                        .then(function () {
-	                            console.log("Successfully created new user:", user);
-	                            return done(null, user);
-	                        }).catch(function (error) {
-	                            console.log("Error creating new user:", error);
-	                            return done(error, user);
-													})
-										}
-									}, 1000);
                 })
                 .catch(err => {
                     console.log(err);
