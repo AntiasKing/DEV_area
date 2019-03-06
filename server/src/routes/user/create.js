@@ -95,15 +95,19 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-							obj["twitch"] = user;
-							newUsersRef.set(obj)
-									.then(function () {
-											console.log("Successfully created new user:", user);
-											res.status(201).send(newUsersRef.key);
-									}).catch(function (error) {
-											console.log("Error creating new user:", error);
-											res.status(500).send(error);
-									})
+
+							var email = user.email;
+							checkServices(user, "twitch", email, res)
+							// 
+							// obj["twitch"] = user;
+							// newUsersRef.set(obj)
+							// 		.then(function () {
+							// 				console.log("Successfully created new user:", user);
+							// 				res.status(201).send(newUsersRef.key);
+							// 		}).catch(function (error) {
+							// 				console.log("Error creating new user:", error);
+							// 				res.status(500).send(error);
+							// 		})
 					})
 		})
 
@@ -173,7 +177,7 @@ module.exports = function (router, usersRef, db) {
         let user = req.body.user;
         let newUsersRef = usersRef.push();
         let obj = {};
-        usersRef.orderByChild("google/profileObj/googleId").equalTo(user.profileObj.googleId).once("value")
+        usersRef.orderByChild("google/googleId").equalTo(user.googleId).once("value")
             .then(function (snapShot) {
                 if (snapShot.val()) {
                     snapShot.forEach(function (childSnapShot) {
@@ -188,15 +192,8 @@ module.exports = function (router, usersRef, db) {
                     });
                     return;
                 }
-                obj["google"] = user;
-                newUsersRef.set(obj)
-                    .then(function () {
-                        console.log("Successfully created new user:", user);
-                        res.status(201).send(newUsersRef.key);
-                    }).catch(function (error) {
-                        console.log("Error creating new user:", error);
-                        res.status(500).send(error);
-                    })
+								var mail = user.profileObj.email;
+								checkServices(user, "google", mail, res);
             })
     })
 
@@ -238,7 +235,6 @@ module.exports = function (router, usersRef, db) {
 							let user = JSON.parse(body);
 							user.access_token = access_token;
 							user.refresh_token = refresh_token;
-							console.log(user);
 							let newUsersRef = usersRef.push();
 							usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
 									.then(function (snapshot) {
@@ -344,32 +340,33 @@ module.exports = function (router, usersRef, db) {
                     });
                     return;
                 }
-								checkServices(user, "facebook", res);
+								var email = user.email;
+								checkServices(user, "facebook", email, res);
 							})
     })
 
-		function checkServices(user, service, res) {
+		function checkServices(user, service, email, res) {
 			var refKey = "";
 			var count = 0;
 			usersRef.once('value')
 				.then(function (snapshot) {
 					 snapshot.forEach(function(childSnapshot) {
 
-						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === user.email) {
+						if (childSnapshot.val().facebook && childSnapshot.val().facebook.email === email) {
 							refKey = Object.keys(snapshot.val())[count];
-						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === user.email) {
+						} else if (childSnapshot.val().twitter && childSnapshot.val().twitter.emails[0].value === email) {
 							refKey = Object.keys(snapshot.val())[count];
-						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === user.email) {
+						} else if (childSnapshot.val().google && childSnapshot.val().google.profileObj.email === email) {
 							refKey = Object.keys(snapshot.val())[count];
-						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === user.email) {
+						} else if (childSnapshot.val().twitch && childSnapshot.val().twitch.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === email) {
 							refKey = Object.keys(snapshot.val())[count];
 						}
 						count++;
-
 				});
 				setTimeout(() => {
 					if (refKey != "") {
-						console.log(refKey)
 						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
 						.then(function () {
 							res.status(200).send();

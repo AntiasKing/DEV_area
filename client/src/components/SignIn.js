@@ -74,11 +74,11 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("https://staging-area-epitech.herokuapp.com/google",
+        Axios.post("http://localhost:8080/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
-                window.location = "./dashboard";
+                // window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
