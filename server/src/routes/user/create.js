@@ -97,8 +97,9 @@ module.exports = function (router, usersRef, db) {
 							}
 
 							var email = user.email;
+							console.log(email);
 							checkServices(user, "twitch", email, res)
-							// 
+							//
 							// obj["twitch"] = user;
 							// newUsersRef.set(obj)
 							// 		.then(function () {
