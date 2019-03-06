@@ -16,89 +16,6 @@ import GoogleLogin from 'react-google-login';
 
 import './../Ext-Login.css';
 
-const user = {
-    "username": "Test",
-    "email": "test@test.test",
-    "applets": [
-        {
-            "name": "Facebook",
-            "service": "facebook",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "color": "#3b5998",
-            "icon": "fab fa-facebook-f", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Twitter",
-            "service": "twitter",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "color": "#00acee",
-            "icon": "fab fa-twitter", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Twitch",
-            "service": "twitch",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "color": "#6441a5",
-            "icon": "fab fa-twitch", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Spotify",
-            "service": "spotify",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "color": "#1DB954",
-            "icon": "fab fa-spotify", // Font Awesome icon name
-            "on": true
-        },
-        {
-            "name": "Weather",
-            "service": "weather",
-            "action": "receive a message",
-            "reaction": "send an email",
-            "color": "#333",
-            "icon": "fas fa-cloud-sun", // Font Awesome icon name
-            "on": true
-        },
-    ],
-    "services": [{
-        "name": "facebook",
-        "color": "#3b5998",
-        "icon": "fab fa-facebook-f"
-    },
-    {
-        "name": "twitter",
-        "color": "#00aced",
-        "icon": "fab fa-twitter"
-    },
-    {
-        "name": "google",
-        "color": "#dd4b39",
-        "icon": "fab fa-google"
-    },
-    {
-        "name": "Twitch",
-        "color": "#6441a5",
-        "icon": "fab fa-twitch"
-    },
-    {
-        "name": "spotify",
-        "color": "#1DB954",
-        "icon": "fab fa-spotify"
-    },
-    {
-        "name": "Weather",
-        "color": "#333",
-        "icon": "fas fa-cloud-sun"
-    },
-    ],
-}
-
 const styles = theme => ({
     main: {
         overflow: 'hidden',
@@ -122,18 +39,28 @@ const styles = theme => ({
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        let services;
-        Axios.get('https://staging-area-epitech.herokuapp.com/services').then((response) => {
-            console.log(response.body);
-            services = response.body;
-        })
         this.state = {
-            applets: user.applets,
-            services: services,
+            applets: [],
+            services: [],
             login: [false, false, false, false, false, true],
             tab: 0,
         }
         this.CheckLogin();
+        this.getServices();
+        this.getApplets();
+    }
+
+    getServices() {
+        Axios.get('https://staging-area-epitech.herokuapp.com/services').then((response) => {
+            this.setState({ services: response.data });
+        })
+    }
+
+    getApplets() {
+        let userID = localStorage.getItem('userRef');
+        Axios.get(`https://staging-area-epitech.herokuapp.com/applets/${userID}`).then((response) => {
+            this.setState({ applets: response.data });
+        })
     }
 
     handleGoogle(response) {
