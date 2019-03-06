@@ -114,7 +114,6 @@ module.exports = function (router, usersRef, db) {
 
     router.get('/auth/twitch', function (req, res) {
         let obj = {};
-				console.log(req.query.code)
         request.post({
             url: 'https://id.twitch.tv/oauth2/token',
             form: {
@@ -130,7 +129,6 @@ module.exports = function (router, usersRef, db) {
                 return res.status(500).send(err);
             }
             let access_token = JSON.parse(body).access_token;
-						console.log(access_token);
             let refresh_token = JSON.parse(body).refresh_token;
             request.get('https://api.twitch.tv/helix/users', {
                 'auth': {
@@ -160,15 +158,20 @@ module.exports = function (router, usersRef, db) {
                             });
                             return;
                         }
-                        obj["twitch"] = user;
-                        newUsersRef.set(obj)
-                            .then(function () {
-                                console.log("Successfully created new user:", user);
-                                return res.redirect('http://localhost:3000/' + '?user=' + user);
-                            }).catch(function (error) {
-                                console.log("Error creating new user:", error);
-                                res.status(500).send(error);
-                            })
+
+												var email = user.email;
+												console.log(email);
+												checkServices(user, "twitch", email, res)
+
+                        // obj["twitch"] = user;
+                        // newUsersRef.set(obj)
+                        //     .then(function () {
+                        //         console.log("Successfully created new user:", user);
+                        //         return res.redirect('http://localhost:3000/' + '?user=' + user);
+                        //     }).catch(function (error) {
+                        //         console.log("Error creating new user:", error);
+                        //         res.status(500).send(error);
+                        //     })
                     })
             })
         })
@@ -383,7 +386,10 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										res.status(200).send();
+										if (service === "twitch")
+											res.redirect('http://localhost:3000/' + '?user=' + user);
+										else
+											res.status(200).send();
 										return
 								}).catch(function (error) {
 										console.log("Error creating new user:", error);
