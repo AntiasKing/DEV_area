@@ -31,6 +31,7 @@ class Service extends React.Component {
 
     render() {
         const { classes } = this.props;
+        console.log("color ======= "+this.props.color)
         return (
             <Grid item xs={2}>
                 <Button
