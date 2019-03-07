@@ -23,7 +23,7 @@ const Config = {
     }, {
         serviceID: 1,
         name: "twitter",
-        "color": "#3b5998",
+        "color": "#00acee",
         "icon": "fab fa-twitter",
         actions: [],
         reactions: [],

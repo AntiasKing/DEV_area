@@ -6,6 +6,7 @@ import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
 import Action from './Action';
 import Reaction from './Reaction';
+import Axios from 'axios';
 
 // TODO in future will be send by server
 const config = {
@@ -101,6 +102,12 @@ class AppletDesigner extends React.Component {
             reactionName: "",
             skipped: new Set(),
         }
+    }
+
+    getServices() {
+        Axios.get('https://staging-area-epitech.herokuapp.com/services').then((response) => {
+            this.setState({ services: response.data });
+        })
     }
 
     componentDidMount() {
