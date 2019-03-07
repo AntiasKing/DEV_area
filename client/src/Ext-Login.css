@@ -71,6 +71,15 @@
     background: #db4a39 !important;
 }
 
+.btn-Google-left {
+    padding-left: 65px !important;
+}
+
+.btn-Google-up-log {
+    padding-top: 22px !important;
+    color: white !important;
+}
+
 .btn-Google:hover {
     background: #c73625 !important;
 }

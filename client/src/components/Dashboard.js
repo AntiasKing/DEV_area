@@ -25,7 +25,9 @@ const styles = theme => ({
         right: "0px"
     },
     noApplet: {
-        // TODO:: Center vertically
+        textAlign: 'center',
+        margin: "auto",
+        marginTop: "150px",
     },
     grid: {
         flexGrow: 1,
@@ -67,10 +69,11 @@ class Dashboard extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("https://staging-area-epitech.herokuapp.com/google",
+        Axios.post("http://localhost:8080/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
+                localStorage.setItem("userRef", response.data)
                 window.location = "./dashboard";
             })
             .catch(function (error) {
@@ -87,7 +90,7 @@ class Dashboard extends React.Component {
             .then(function (response) {
                 console.log(response);
                 localStorage.setItem("userRef", response.data)
-                // window.location = "./dashboard";
+                window.location = "./dashboard";
             })
             .catch(function (error) {
                 console.log(error);
@@ -103,25 +106,19 @@ class Dashboard extends React.Component {
 
     handleTwitter = (response) => {
         console.log("Twitter handled !!");
-
         console.log(response.headers)
-
-        // Axios.get("http://localhost:8080/twitter")
-        //     .then(function (response) {
-        //         console.log(response);
-        //     }).catch(function (error) {
-        //         console.log(error);
-        //     })
-        // window.location = './dashboard';
+        window.location = './dashboard';
     };
 
     onSpotifySuccess = (document) => {
         console.log(document);
+        // localStorage.setItem("userRef", response.data)
         window.location = './dashboard';
     }
 
     onTwitchSucess = (document) => {
         console.log(document);
+        // localStorage.setItem("userRef", response.data)
         window.location = './dashboard';
     }
 
@@ -202,7 +199,7 @@ class Dashboard extends React.Component {
                             <GoogleLogin
                                 clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
                                 onFailure={this.onFailed} onSuccess={this.handleGoogle}
-                                className="btn-Service btn-Google"
+                                className="btn-Service btn-Google btn-Google-left"
                                 icon=""
                                 buttonText={<Icon className={classNames(classes.icon, 'fab fa-10x fa-google')} />} />
                         );

@@ -9,11 +9,6 @@ module.exports = function (router, usersRef, db) {
         res.status(201).send("test succeed !!")
     })
 
-	router.get('/twitter', function (req, res, next) {
-		console.log(req);
-        res.status(201).send("test test succeed !!")
-    })
-
     router.get('/social', function (req, res, next) {
 
 			let data = {
@@ -64,15 +59,8 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-							obj["spotify"] = user;
-							newUsersRef.set(obj)
-									.then(function () {
-											console.log("Successfully created new user:", user);
-											res.status(201).send(newUsersRef.key);
-									}).catch(function (error) {
-											console.log("Error creating new user:", error);
-											res.status(500).send(error);
-									})
+							var email = user.email;
+							checkServices(user, "spotify", email, res, false)
 					})
 		})
 
@@ -95,19 +83,8 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-
 							var email = user.email;
-							checkServices(user, "twitch", email, res)
-							//
-							// obj["twitch"] = user;
-							// newUsersRef.set(obj)
-							// 		.then(function () {
-							// 				console.log("Successfully created new user:", user);
-							// 				res.status(201).send(newUsersRef.key);
-							// 		}).catch(function (error) {
-							// 				console.log("Error creating new user:", error);
-							// 				res.status(500).send(error);
-							// 		})
+							checkServices(user, "twitch", email, res, false)
 					})
 		})
 
@@ -157,19 +134,8 @@ module.exports = function (router, usersRef, db) {
                             });
                             return;
                         }
-
 												var email = user.email;
-												checkServices(user, "twitch", email, res)
-
-                        // obj["twitch"] = user;
-                        // newUsersRef.set(obj)
-                        //     .then(function () {
-                        //         console.log("Successfully created new user:", user);
-                        //         return res.redirect('http://localhost:3000/' + '?user=' + user);
-                        //     }).catch(function (error) {
-                        //         console.log("Error creating new user:", error);
-                        //         res.status(500).send(error);
-                        //     })
+												checkServices(user, "twitch", email, res, true)
                     })
             })
         })
@@ -195,7 +161,7 @@ module.exports = function (router, usersRef, db) {
                     return;
                 }
 								var mail = user.profileObj.email;
-								checkServices(user, "google", mail, res);
+								checkServices(user, "google", mail, res, true);
             })
     })
 
@@ -253,19 +219,8 @@ module.exports = function (router, usersRef, db) {
 													});
 													return;
 											}
-
 											var email = user.email;
-											checkServices(user, "spotify", email, res)
-
-											// obj["spotify"] = user;
-											// newUsersRef.set(obj)
-											// 		.then(function () {
-											// 				console.log("Successfully created new user:", user);
-											// 				return res.redirect('http://localhost:3000/' + '?user=' + user);
-											// 		}).catch(function (error) {
-											// 				console.log("Error creating new user:", error);
-											// 				res.status(500).send(error);
-											// 		});
+											checkServices(user, "spotify", email, res, true)
 									});
 					})
 			})
@@ -336,7 +291,6 @@ module.exports = function (router, usersRef, db) {
                     snapShot.forEach(function (childSnapShot) {
                         childSnapShot.child("facebook").ref.update(user)
                             .then(function () {
-																console.log("update")
                                 res.status(200).send(childSnapShot.ref.path.pieces_[1]);
                             })
                             .catch(function (error) {
@@ -347,11 +301,11 @@ module.exports = function (router, usersRef, db) {
                     return;
                 }
 								var email = user.email;
-								checkServices(user, "facebook", email, res);
+								checkServices(user, "facebook", email, res, true);
 							})
     })
 
-		function checkServices(user, service, email, res) {
+		function checkServices(user, service, email, res, stat) {
 			var refKey = "";
 			var count = 0;
 			usersRef.once('value')
@@ -368,6 +322,8 @@ module.exports = function (router, usersRef, db) {
 							refKey = Object.keys(snapshot.val())[count];
 						} else if (childSnapshot.val().spotify && childSnapshot.val().spotify.email === email) {
 							refKey = Object.keys(snapshot.val())[count];
+						} else if (childSnapshot.val().local && childSnapshot.val().local.email === email) {
+							refKey = Object.keys(snapshot.val())[count];
 						}
 						count++;
 				});
@@ -375,10 +331,10 @@ module.exports = function (router, usersRef, db) {
 					if (refKey != "") {
 						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
 						.then(function () {
-							if (service == "twitch" || service == "spotify")
-								res.redirect('http://localhost:3000/' + '?user=' + user);
+							if ((service == "twitch" || service == "spotify") && stat)
+								res.redirect('http://localhost:3000/' + '?user=' + user + "&refKey=" + refKey);
 							else
-								res.status(200).send();
+								res.status(200).send(refKey);
 							return
 						}).catch(function (error) {
 							res.status(500).send();
@@ -391,10 +347,11 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										if (service == "twitch" || service == "spotify")
-											res.redirect('http://localhost:3000/' + '?user=' + user);
-										else
-											res.status(200).send();
+										if ((service == "twitch" || service == "spotify") && stat)
+											res.redirect('http://localhost:3000/' + '?user=' + user + "&refKey=" + newUsersRef.key);
+										else {
+											res.status(200).send(newUsersRef.key);
+										}
 										return
 								}).catch(function (error) {
 										console.log("Error creating new user:", error);
@@ -433,20 +390,22 @@ module.exports = function (router, usersRef, db) {
 
     router.post('/signup', function (req, res, next) {
         passport.authenticate('local-signup', function (err, lol, info) {
-            let user = req.body.user;
-            let newUsersRef = usersRef.push();
-            let obj = {};
-            obj["local"] = user;
-            newUsersRef.set(obj)
-                .then(function () {
-                    console.log("Successfully created new user:", user);
-                    res.status(201).send(newUsersRef.key);
-                })
-                .catch(function (error) {
-                    console.log("Error creating new user:", error);
-                    res.status(500).send(error);
-                });
-            return;
+          let user = req.body.user;
+					var email = user.email;
+					checkServices(user, "local", email, res)
+          // let newUsersRef = usersRef.push();
+          // let obj = {};
+          // obj["local"] = user;
+          // newUsersRef.set(obj)
+          //     .then(function () {
+          //         console.log("Successfully created new user:", user);
+          //         res.status(201).send(newUsersRef.key);
+          //     })
+          //     .catch(function (error) {
+          //         console.log("Error creating new user:", error);
+          //         res.status(500).send(error);
+          //     });
+          // return;
         })(req, res, next);
     });
 }
