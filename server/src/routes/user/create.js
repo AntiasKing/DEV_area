@@ -60,7 +60,7 @@ module.exports = function (router, usersRef, db) {
 									return;
 							}
 							var email = user.email;
-							checkServices(user, "spotify", email, res)
+							checkServices(user, "spotify", email, res, false)
 					})
 		})
 
@@ -84,7 +84,7 @@ module.exports = function (router, usersRef, db) {
 									return;
 							}
 							var email = user.email;
-							checkServices(user, "twitch", email, res)
+							checkServices(user, "twitch", email, res, false)
 					})
 		})
 
@@ -135,7 +135,7 @@ module.exports = function (router, usersRef, db) {
                             return;
                         }
 												var email = user.email;
-												checkServices(user, "twitch", email, res)
+												checkServices(user, "twitch", email, res, true)
                     })
             })
         })
@@ -161,7 +161,7 @@ module.exports = function (router, usersRef, db) {
                     return;
                 }
 								var mail = user.profileObj.email;
-								checkServices(user, "google", mail, res);
+								checkServices(user, "google", mail, res, true);
             })
     })
 
@@ -220,7 +220,7 @@ module.exports = function (router, usersRef, db) {
 													return;
 											}
 											var email = user.email;
-											checkServices(user, "spotify", email, res)
+											checkServices(user, "spotify", email, res, true)
 									});
 					})
 			})
@@ -301,11 +301,11 @@ module.exports = function (router, usersRef, db) {
                     return;
                 }
 								var email = user.email;
-								checkServices(user, "facebook", email, res);
+								checkServices(user, "facebook", email, res, true);
 							})
     })
 
-		function checkServices(user, service, email, res) {
+		function checkServices(user, service, email, res, stat) {
 			var refKey = "";
 			var count = 0;
 			usersRef.once('value')
@@ -331,7 +331,7 @@ module.exports = function (router, usersRef, db) {
 					if (refKey != "") {
 						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
 						.then(function () {
-							if (service == "twitch" || service == "spotify")
+							if ((service == "twitch" || service == "spotify") && stat)
 								res.redirect('http://localhost:3000/' + '?user=' + user + "&refKey=" + refKey);
 							else
 								res.status(200).send(refKey);
@@ -347,7 +347,7 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										if (service == "twitch" || service == "spotify")
+										if ((service == "twitch" || service == "spotify") && stat)
 											res.redirect('http://localhost:3000/' + '?user=' + user + "&refKey=" + newUsersRef.key);
 										else {
 											res.status(200).send(newUsersRef.key);
