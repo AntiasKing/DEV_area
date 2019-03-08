@@ -249,7 +249,7 @@ const Config = {
 
 
     }, {
-				serviceID: 5;
+				serviceID: 5,
         "name": "weather",
         "color": "#333",
         "icon": "fas fa-cloud-sun",
