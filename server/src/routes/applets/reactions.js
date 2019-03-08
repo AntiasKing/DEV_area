@@ -2,6 +2,12 @@ const request = require('request');
 
 module.exports = {
 
+	/* Facebook */
+
+	postStatus: function(user, message) {
+		console.log("oui");
+	},
+
 	/* Twitter */
 
 	postTweet: function(user, message) {
