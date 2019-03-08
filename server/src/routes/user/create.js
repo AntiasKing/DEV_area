@@ -59,7 +59,7 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-							var email = user.email;
+							var email = user.data.email;
 							checkServices(user, "spotify", email, res, false)
 					})
 		})
@@ -83,7 +83,7 @@ module.exports = function (router, usersRef, db) {
 									});
 									return;
 							}
-							var email = user.email;
+							var email = user.data.email;
 							checkServices(user, "twitch", email, res, false)
 					})
 		})

@@ -74,7 +74,7 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/google",
+        Axios.post("https://staging-area-epitech.herokuapp.com/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
@@ -90,7 +90,7 @@ class SignIn extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/facebook/",
+        Axios.post("https://staging-area-epitech.herokuapp.com/facebook/",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
 								console.log(response);
@@ -116,7 +116,7 @@ class SignIn extends React.Component {
                 "password": this.state.password,
             }
         });
-        Axios.post("https://staging-area-epitech/user/local/login",
+        Axios.post("https://staging-area-epitech.herokuapp.com/user/local/login",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
@@ -190,12 +190,12 @@ class SignIn extends React.Component {
                         </li>
                         <li>
                             <TwitterLogin
-                                loginUrl="http://localhost:8080/auth/twitter"
+                                loginUrl="https://staging-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Twitter"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
-                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                                requestTokenUrl="https://staging-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         <li>
                             <GoogleLogin

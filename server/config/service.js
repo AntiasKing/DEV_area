@@ -13,74 +13,63 @@ const Config = {
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User like a post",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 1,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User like a page",
             description: "..."
-        },],
-        reactions: [{
-            id: 1,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 2,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User modify his profile",
             description: "..."
-        },],
-        reactions: [{
-            id: 2,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 3,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new status",
             description: "..."
-        },],
-        reactions: [{
-            id: 3,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 4,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new photo",
             description: "..."
-        },],
-        reactions: [{
-            id: 4,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 5,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new link",
             description: "..."
         },],
         reactions: [{
-            id: 5,
-            constructor: null, // function to call at creation of the applet
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
             name: "...",
             description: "..."
-        },]
-
+        },{
+            id: 1,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 2,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 3,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 4,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 5,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },],
 
 
     }, {
@@ -93,77 +82,65 @@ const Config = {
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new tweet",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 1,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new link",
             description: "..."
-        },],
-        reactions: [{
-            id: 1,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 2,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User like a tweet",
             description: "..."
-        },],
-        reactions: [{
-            id: 2,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 3,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User retweet",
             description: "..."
-        },],
-        reactions: [{
-            id: 3,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 4,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "New tweet from a user",
             description: "..."
-        },],
-        reactions: [{
-            id: 4,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 5,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User is mentioned in a tweet",
             description: "..."
         },],
         reactions: [{
-            id: 5,
-            constructor: null, // function to call at creation of the applet
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
             name: "...",
             description: "..."
-        },]
+        },{
+            id: 1,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 2,
+            constructor: function() { console.log("It works !!") }, // function to call at creation of the applet
+            name: "User post tweet",
+            description: "..."
+        },{
+            id: 3,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 4,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 5,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },],
 
 
-
-    
     }, {
         serviceID: 2,
         name: "google",
@@ -171,6 +148,8 @@ const Config = {
         "icon": "fab fa-google",
         actions: [],
         reactions: [],
+
+
     }, {
         "name": "twitch",
         "color": "#6441a5",
@@ -180,74 +159,63 @@ const Config = {
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "New stream start from a user T",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
-            id: 0,
+        },{
+            id: 1,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User start a new stream",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
-            id: 0,
+        },{
+            id: 2,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "New clip is posted by a user you follow",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
-            id: 0,
+        },{
+            id: 3,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new clip",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
-            id: 0,
+        },{
+            id: 4,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User follow a new streamer",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
-            id: 0,
+        },{
+            id: 5,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User gain a new follower",
             description: "..."
         },],
         reactions: [{
             id: 0,
-            constructor: null, // function to call at creation of the applet
+            constructor: function() {}, // function to call at creation of the applet
             name: "...",
             description: "..."
-        },]
-
+        },{
+            id: 1,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 2,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 3,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 4,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
+            id: 5,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },],
 
 
     }, {
@@ -259,26 +227,23 @@ const Config = {
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User like a new track",
             description: "..."
-        },],
-        reactions: [{
-            id: 0,
-            constructor: null, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-        actions: [{
+        },{
             id: 1,
                 constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
                 name: "User add a track to a playlist",
                 description: "..."
             },],
         reactions: [{
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "...",
+            description: "..."
+        },{
             id: 1,
-                constructor: null, // function to call at creation of the applet
+                constructor: function () {}, // function to call at creation of the applet,
                 name: "...",
                 description: "..."
-            },]
-
+            },],
 
 
     }, {
@@ -293,7 +258,7 @@ const Config = {
         },],
         reactions: [{
             id: 0,
-            constructor: null, // function to call at creation of the applet
+            constructor: function () {}, // function to call at creation of the applet
             name: "...",
             description: "..."
         },]
