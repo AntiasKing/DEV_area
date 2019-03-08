@@ -117,7 +117,10 @@ module.exports = function (router, usersRef, db) {
                 }
                 let user = JSON.parse(body).data[0];
                 user.access_token = access_token;
-                user.refresh_token = refresh_token;
+				user.refresh_token = refresh_token;
+				var twitchID = user.id;
+				twitchWebhooks.twitchFollows(twitchID, 0);
+				twitchWebhooks.twitchFollows(twitchID, 1);
                 let newUsersRef = usersRef.push();
                 usersRef.orderByChild("twitch/id").equalTo(user.id).once("value")
                     .then(function (snapShot) {
@@ -135,9 +138,6 @@ module.exports = function (router, usersRef, db) {
                             return;
                         }
 						var email = user.email;
-						var twitchID = user.id;
-						twitchWebhooks.twitchFollows(twitchID, 0);
-						twitchWebhooks.twitchFollows(twitchID, 1);
 						checkServices(user, "twitch", email, res, true)
                     })
             })
