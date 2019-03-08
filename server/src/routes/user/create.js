@@ -119,8 +119,8 @@ module.exports = function (router, usersRef, db) {
                 user.access_token = access_token;
 				user.refresh_token = refresh_token;
 				var twitchID = user.id;
-				twitchWebhooks.twitchFollows(twitchID, 0);
-				twitchWebhooks.twitchFollows(twitchID, 1);
+				twitchWebhooks.TwitchFollows(twitchID, 0);
+				twitchWebhooks.TwitchFollows(twitchID, 1);
                 let newUsersRef = usersRef.push();
                 usersRef.orderByChild("twitch/id").equalTo(user.id).once("value")
                     .then(function (snapShot) {
