@@ -25,6 +25,7 @@ module.exports = {
 				return res.status(500).send(err);
 			}
 		});
+		console.log("TestTestTestTestTestTest2");
 	},
 	streamFollows: function(twitchID) {
 		request.post({

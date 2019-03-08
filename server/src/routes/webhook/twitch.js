@@ -4,6 +4,7 @@ module.exports = function (router, usersRef) {
 
 	router.post('/webhooks/twitch/follows', function(req, res) {
 		console.log(req.body);
+		console.log("TestTestTestTestTestTest3");
 		if (req.body.hub.challenge !== undefined) {
 			request.post({
 				url: 'https://api.twitch.tv/helix/webhooks/hub',
