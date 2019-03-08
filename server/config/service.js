@@ -47,28 +47,28 @@ const Config = {
         },{
             id: 1,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "2"
+            name: "2",
+            description: "..."
         },{
             id: 2,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "3"
+            name: "3",
+            description: "..."
         },{
             id: 3,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "4"
+            name: "4",
+            description: "..."
         },{
             id: 4,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "5"
+            name: "5",
+            description: "..."
         },{
             id: 5,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "6"
+            name: "6",
+            description: "..."
         },],
 
 
