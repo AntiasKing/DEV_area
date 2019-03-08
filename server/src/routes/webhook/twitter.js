@@ -21,11 +21,8 @@ module.exports = function (router, usersRef) {
 		console.log(req.body)
 		console.log("||||||||||")
 		console.log(req.body.for_user_id)
-		console.log("||||||||||")
-		console.log(req.body.user)
-		console.log("||||||||||")
 
-		// searchApplet(req.body.user);
+		searchApplet(req.body.for_user_id);
 
 		// usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
 		// 				.then(function (snapShot) {
@@ -48,14 +45,15 @@ module.exports = function (router, usersRef) {
 		res.status(200).send();
 	})
 
-	function searchApplet(user) {
+	function searchApplet(userId) {
 		userRef.once('value')
 				.then(function (snapshot) {
 					snapshot.forEach(function(childSnapshot) {
-						if (childSnapshot.val().twitter.id == "1964628600")
-						console.log(childSnapshot.val())
-						if (childSnapshot.val().applets)
-							console.log(childSnapshot.val().applets)
+						if (childSnapshot.val().twitter.id == userId) {
+							console.log(childSnapshot.val())
+							if (childSnapshot.val().applets)
+								console.log(childSnapshot.val().applets)
+						}
 					})
 				})
 	}
