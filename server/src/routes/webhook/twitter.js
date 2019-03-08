@@ -60,7 +60,7 @@ module.exports = function (router, usersRef) {
 						if (childSnapshot.val().twitter && childSnapshot.val().twitter.id == userId) {
 							if (childSnapshot.val().applets) {
 								childSnapshot.val().applets.forEach(function (appletsnap) {
-									if (appletsnap.serviceToID == 2 && appletsnap.on) {
+									if (appletsnap.serviceToID == 1 && appletsnap.on) {
 										let user = childSnapshot.val();
 										action.detectTwitterAction(webhook, appletsnap, user);
 									}
