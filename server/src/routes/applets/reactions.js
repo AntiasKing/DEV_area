@@ -27,6 +27,12 @@ module.exports = {
 
 	starredTweet: function(user, webhook) {
 		console.log(webhook["tweet_create_events"]);
+		console.log("||||||||||||||||||||||||||||");
+		console.log(webhook["tweet_create_events"].id);
+		console.log("||||||||||||||||||||||||||||");
+		console.log(webhook["tweet_create_events"].body);
+		console.log("||||||||||||||||||||||||||||");
+		console.log(webhook["tweet_create_events"].body.id);
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/favorites/create.json',
 			qs: { id: webhook["tweet_create_events"].id },
