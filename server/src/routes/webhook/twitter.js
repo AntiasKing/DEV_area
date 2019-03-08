@@ -19,9 +19,13 @@ module.exports = function (router, usersRef) {
 	router.post('/webhooks/twitter', function(req, res) {
 
 		console.log(req.body)
+		console.log("||||||||||")
+		console.log(req.body.for_user_id)
+		console.log("||||||||||")
 		console.log(req.body.user)
+		console.log("||||||||||")
 
-		searchApplet();
+		// searchApplet(req.body.user);
 
 		// usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
 		// 				.then(function (snapShot) {
@@ -36,16 +40,24 @@ module.exports = function (router, usersRef) {
 		// 					res.status(200).send();
 		// 				})
 
-		if (req.body["favorite_events"])
-			console.log("favorited !!")
-			// postTweet(cons_token, refreshToken);
-		else if (req.body["tweet_create_events"])
-			console.log("tweet !!")
+		// if (req.body["favorite_events"])
+		// 	console.log("favorited !!")
+		// 	// postTweet(cons_token, refreshToken);
+		// else if (req.body["tweet_create_events"])
+		// 	console.log("tweet !!")
 		res.status(200).send();
 	})
 
-	function searchApplet() {
-		console.log("new webhooks");
+	function searchApplet(user) {
+		userRef.once('value')
+				.then(function (snapshot) {
+					snapshot.forEach(function(childSnapshot) {
+						if (childSnapshot.val().twitter.id == "1964628600")
+						console.log(childSnapshot.val())
+						if (childSnapshot.val().applets)
+							console.log(childSnapshot.val().applets)
+					})
+				})
 	}
 
 	function postTweet(cons_token, refreshToken) {

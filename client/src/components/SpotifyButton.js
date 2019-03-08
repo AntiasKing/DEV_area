@@ -23,7 +23,7 @@ class SpotifyButton extends React.Component {
 				this.props.onFailure(new Error('Popup has been closed by user'));
 			}
 			try {
-				if (!popup.location.hostname.includes('accounts.spotify.com') && !popup.location.hostname === '') {
+				if (!popup.location.hostname.includes('accounts.spotify.com') && !popup.location.hostname == '') {
 					let query = new URLSearchParams(popup.location.search);
 					let accessToken = query.get('access_token')
 					clearInterval(polling);
