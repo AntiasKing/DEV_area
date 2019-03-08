@@ -10,10 +10,6 @@ const Config = {
         "icon": "fab fa-facebook-f",
         actions: [{
             id: 0,
-<<<<<<< HEAD
-			constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
-			params: ["userID"],
-=======
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User like a post",
             description: "trigger when you like a post"
@@ -21,7 +17,6 @@ const Config = {
         reactions: [{
             id: 0,
             constructor: null, // function to call at creation of the applet
->>>>>>> d5f22cdb63e9e6abb0a09491a087c6fd5417832d
             name: "...",
             description: "..."
         },],

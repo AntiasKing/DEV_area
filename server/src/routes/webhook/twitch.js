@@ -4,7 +4,7 @@ module.exports = function (router, usersRef) {
 
 	function TwitchFollows(twitchID, gain) {
 		let user;
-		if (gain === -1) {
+		if (gain === 0) {
 			user = 'to_id='+twitchID;
 		} else {
 			user = 'from_id='+twitchID;
