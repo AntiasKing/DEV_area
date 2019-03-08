@@ -201,7 +201,7 @@ class SignIn extends React.Component {
                             <GoogleLogin
                                 clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
                                 onFailure={this.onFailed} onSuccess={this.handleGoogle}
-                                className="Ext-Login btn-Google"
+                                className="Ext-Login btn-Google btn-Google-up-log"
                                 icon=""
                                 buttonText={<Icon className={classNames(classes.icon, 'fa fa-google')} />}
                             />

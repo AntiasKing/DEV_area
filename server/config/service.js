@@ -37,7 +37,7 @@ const Config = {
             id: 5,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User post a new link",
-            description: "..."
+            description: "trigger when you post a new link"
         },],
         reactions: [{
             id: 0,
@@ -106,7 +106,7 @@ const Config = {
             id: 5,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User is mentioned in a tweet",
-            description: "..."
+            description: "trigger when you are mentioned in a tweet"
         },],
         reactions: [{
             id: 0,
@@ -183,7 +183,7 @@ const Config = {
             id: 5,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "User gain a new follower",
-            description: "..."
+            description: "trigger when you gain a new follower"
         },],
         reactions: [{
             id: 0,
@@ -231,7 +231,7 @@ const Config = {
             id: 1,
                 constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
                 name: "User add a track to a playlist",
-                description: "..."
+            description: "trigger when you add a track to a playlist"
             },],
         reactions: [{
             id: 0,
@@ -254,7 +254,7 @@ const Config = {
             id: 0,
             constructor: function () { console.log("Enorme ZGUEG") }, // function to call at creation of the applet
             name: "it's rainy tomorrow",
-            description: "..."
+            description: "trigger if it's rainning tomorrow"
         },],
         reactions: [{
             id: 0,

@@ -199,7 +199,7 @@ class Dashboard extends React.Component {
                             <GoogleLogin
                                 clientId="9362814247-tpm4oqu7grb318iuqtu2frdbmv3iu9mq.apps.googleusercontent.com"
                                 onFailure={this.onFailed} onSuccess={this.handleGoogle}
-                                className="btn-Service btn-Google"
+                                className="btn-Service btn-Google btn-Google-left"
                                 icon=""
                                 buttonText={<Icon className={classNames(classes.icon, 'fab fa-10x fa-google')} />} />
                         );
