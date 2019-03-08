@@ -4,10 +4,10 @@ module.exports = {
 
 	/* Twitter */
 
-	postTweet: function(user) {
+	postTweet: function(user, message) {
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/statuses/update.json',
-			qs: { status: 'I starred a new tweet !!' },
+			qs: { status: message },
 			headers:
 			 { 'Content-Type': 'application/x-www-form-urlencoded' },
 			 oauth: {

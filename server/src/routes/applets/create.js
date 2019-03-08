@@ -10,6 +10,9 @@ module.exports = function (router, usersRef) {
         if (newApplet.serviceID === undefined || newApplet.serviceID === null || newApplet.serviceID > Config.services.length - 1 || newApplet.serviceID < 0)
             return res.status(400).send('No serviceID submited or serviceID out of bounds');
 
+				if (newApplet.serviceToID === undefined || newApplet.serviceToID === null || newApplet.serviceToID > Config.services.length - 1 || newApplet.serviceToID < 0)
+            return res.status(400).send('No serviceToID submited or serviceToID out of bounds');
+
         let service = Config.services[newApplet.serviceID];
         if (newApplet.reactionID === undefined || newApplet.reactionID === null || newApplet.reactionID > service.reactions.length - 1 || newApplet.reactionID < 0)
             return res.status(400).send('No reactionID submited or reactionID out of bounds');
