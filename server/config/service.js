@@ -151,39 +151,39 @@ const Config = {
 
 
     }, {
-				serviceID: 3,
+		serviceID: 3,
         name: "twitch",
         "color": "#6441a5",
         "icon": "fab fa-twitch",
         actions: [{
             id: 0,
             constructor: function () {}, // function to call at creation of the applet
-            name: "New stream start from a user T",
+            name: "User follow a new streamer",
             description: "..."
         },{
-            id: 1,
+			id: 1,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User start a new stream",
+            name: "User gain a new follower",
             description: "..."
         },{
-            id: 2,
+			id: 2,
             constructor: function () {}, // function to call at creation of the applet
             name: "New clip is posted by a user you follow",
             description: "..."
         },{
-            id: 3,
+			id: 3,
             constructor: function () {}, // function to call at creation of the applet
             name: "User post a new clip",
             description: "..."
         },{
-            id: 4,
+			id: 4,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User follow a new streamer",
+            name: "New stream start from a user T",
             description: "..."
         },{
-            id: 5,
+			id: 5,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User gain a new follower",
+            name: "User start a new stream",
             description: "Trigger when you gain a new follower"
         },],
         reactions: [{
