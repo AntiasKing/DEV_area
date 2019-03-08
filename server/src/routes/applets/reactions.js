@@ -26,7 +26,7 @@ module.exports = {
 	},
 
 	starredTweet: function(user, webhook) {
-		console.log(webhook.id);
+		console.log(webhook);
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/favorites/create.json',
 			qs: { id: webhook.id },
