@@ -151,7 +151,8 @@ const Config = {
 
 
     }, {
-        "name": "twitch",
+				serviceID: 3,
+        name: "twitch",
         "color": "#6441a5",
         "icon": "fab fa-twitch",
         actions: [{
@@ -219,6 +220,7 @@ const Config = {
 
 
     }, {
+				serviceID: 4,
         "name": "spotify",
         "color": "#1DB954",
         "icon": "fab fa-spotify",
@@ -247,6 +249,7 @@ const Config = {
 
 
     }, {
+				serviceID: 5;
         "name": "weather",
         "color": "#333",
         "icon": "fas fa-cloud-sun",
