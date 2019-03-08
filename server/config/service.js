@@ -42,33 +42,33 @@ const Config = {
         reactions: [{
             id: 0,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
+            name: "1",
             description: "..."
         },{
             id: 1,
             constructor: function() {}, // function to call at creation of the applet
             name: "...",
-            description: "..."
+            description: "2"
         },{
             id: 2,
             constructor: function() {}, // function to call at creation of the applet
             name: "...",
-            description: "..."
+            description: "3"
         },{
             id: 3,
             constructor: function() {}, // function to call at creation of the applet
             name: "...",
-            description: "..."
+            description: "4"
         },{
             id: 4,
             constructor: function() {}, // function to call at creation of the applet
             name: "...",
-            description: "..."
+            description: "5"
         },{
             id: 5,
             constructor: function() {}, // function to call at creation of the applet
             name: "...",
-            description: "..."
+            description: "6"
         },],
 
 
