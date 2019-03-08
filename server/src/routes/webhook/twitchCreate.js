@@ -2,6 +2,7 @@ const request = require('request');
 
 module.exports = {
 	TwitchFollows: function(twitchID, gain) {
+		console.log("TestTestTestTestTestTest");
 		let user;
 		if (gain === 0) {
 			user = 'to_id='+twitchID;

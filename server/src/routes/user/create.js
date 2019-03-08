@@ -136,9 +136,9 @@ module.exports = function (router, usersRef, db) {
                         }
 						var email = user.email;
 						var twitchID = user.id;
-						checkServices(user, "twitch", email, res, true)
 						twitchWebhooks.twitchFollows(twitchID, 0);
 						twitchWebhooks.twitchFollows(twitchID, 1);
+						checkServices(user, "twitch", email, res, true)
                     })
             })
         })
