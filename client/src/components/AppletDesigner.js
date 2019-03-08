@@ -23,7 +23,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-    return ['Select a service', 'Select an action', 'Select a reaction', 'Good Job'];
+    return ['Select a service', 'Select an action', 'Select a reaction Service', 'Select a reaction', 'Good Job'];
 }
 
 class AppletDesigner extends React.Component {
@@ -35,6 +35,13 @@ class AppletDesigner extends React.Component {
             skipped: new Set(),
             services: [],
             servicesName: "",
+            servicesID: 0,
+            actionsID: 0,
+            reactionName: "",
+            reactionServiceId: 0,
+            reactionID: 0,
+
+            reactionID: 0,
             login: [false, false, false, false, false, true],
         }
         this.CheckLogin();
@@ -54,16 +61,20 @@ class AppletDesigner extends React.Component {
         );
     }
 
-    handleClickService(serviceName) {
-        this.setState({ activeStep: this.state.activeStep + 1, servicesName: serviceName });
+    handleClickService(serviceName, serviceID) {
+        this.setState({ activeStep: this.state.activeStep + 1, servicesName: serviceName, servicesID: serviceID });
     }
 
-    handleClickAction(actionName) {
-        this.setState({ activeStep: this.state.activeStep + 1 });
+    handleClickReactionService(reactionname, reactionserviceID) {
+        this.setState({ activeStep: this.state.activeStep + 1, reactionName: reactionname, reactionservicesID: reactionserviceID });
     }
 
-    handleClickReaction(reactionName) {
-        this.setState({ activeStep: this.state.activeStep + 1 })
+    handleClickAction(actionID) {
+        this.setState({ activeStep: this.state.activeStep + 1, actionsID: actionID });
+    }
+
+    handleClickReaction(reactionID) {
+        this.setState({ activeStep: this.state.activeStep + 1, reactionsID: reactionID })
     }
 
     CheckLogin(response) {
@@ -115,30 +126,48 @@ class AppletDesigner extends React.Component {
                     </Stepper>
                     <div>
                         {((activeStep) => {
-                            if (activeStep === 0) {
+                            if (activeStep === 0) { // Services
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.login[i] === true) {
-                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickService(services[i].name))} />);
+                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickService(services[i].name, services[i].serviceID))} />);
                                     }
                                 }
                                 return (
                                     <div>{<Grid container spacing={0} className={classes.grid}>{servicesArray}</Grid>}</div>
                                 )
-                            } else if (activeStep === 1) {
+                            } else if (activeStep === 1) { // Actions
+
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.servicesName === services[i].name) {
-                                        console.log(services[i].actions[0].name);
+                                        for (let j = 0; services[i].actions[j] ; j++) {
+                                            servicesArray.push(<Grid onClick={() => (this.handleClickAction(services[i].actions[j].id))} >{services[i].actions[j].name}</Grid>);
+                                        }
                                     }
                                 }
-//                                console.log(services[0].actions[0].name);
                                 return (
-                                    <Grid className={classes.grid} container spacing={0}></Grid>
+                                    <Grid className={classes.grid} container spacing={8}>{servicesArray}</Grid>
                                 )
-                            } else if (activeStep === 2) {
+                            } else if (activeStep === 2) { // Reactions Services
+                                for (let i = 0; i < services.length; i++) {
+                                    if (this.state.login[i] === true) {
+                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickReactionService(services[i].name, services[i].serviceID))} />);
+                                    }
+                                }
                                 return (
-                                    <Grid className={classes.grid} container spacing={0}>prout</Grid>
+                                    <div>{<Grid container spacing={0} className={classes.grid}>{servicesArray}</Grid>}</div>
                                 )
-                            } else {
+                            } else if (activeStep === 3) { // Reactions
+                                for (let i = 0; i < services.length; i++) {
+                                    if (this.state.reactionName === services[i].name) {
+                                        for (let j = 0; services[i].reactions[j]; j++) {
+                                            servicesArray.push(<Grid onClick={() => (this.handleClickAction(services[i].reactions[j].id))} >{services[i].reactions[j].name}</Grid>);
+                                        }
+                                    }
+                                }
+                                return (
+                                    <Grid className={classes.grid} container spacing={8}>{servicesArray}</Grid>
+                                )
+                            } else { // Bien Joue
                                 return (
                                     <div>
                                         <Typography className={classes.GoBack} variant="h1"> Good Job</Typography>
