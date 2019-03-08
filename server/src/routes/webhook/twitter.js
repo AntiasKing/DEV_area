@@ -46,7 +46,7 @@ module.exports = function (router, usersRef) {
 	})
 
 	function searchApplet(userId) {
-		userRef.once('value')
+		usersRef.once('value')
 				.then(function (snapshot) {
 					snapshot.forEach(function(childSnapshot) {
 						if (childSnapshot.val().twitter.id == userId) {
