@@ -183,12 +183,12 @@ class Register extends React.Component {
                         </li>
                         <li>
                             <TwitterLogin
-                                loginUrl="https://prod-area-epitech.herokuapp.com/auth/twitter"
+                                loginUrl="https://staging-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="Ext-Login btn-Twitter"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fa fa-twitter')} />}
-                                requestTokenUrl="https://prod-area-epitech.herokuapp.com/auth/twitter/reverse" />
+                                requestTokenUrl="https://staging-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         </li>
                         <li>
                             <GoogleLogin

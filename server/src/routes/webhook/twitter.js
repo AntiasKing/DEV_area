@@ -1,5 +1,7 @@
 const request = require('request');
 
+const action = require('../applets/actions')
+
 module.exports = function (router, usersRef) {
 
 	router.get('/webhooks/twitter', function(req, res) {
@@ -17,11 +19,18 @@ module.exports = function (router, usersRef) {
 	})
 
 	router.post('/webhooks/twitter', function(req, res) {
+	// router.post('/salut', function(req, res) {
 
-		console.log(req.body)
-		console.log(req.body.user)
+		// req = { body : { for_user_id: '1964628600',
+		// 	favorite_events: [ { id: '54b62dfcf5f92e83871ab37600c0a6c7',
+		// 	created_at: 'Fri Mar 08 09:47:20 +0000 2019',
+		// } ] } }
 
-		searchApplet();
+		// console.log(req.body)
+		// console.log("||||||||||")
+		// console.log(req.body.for_user_id)
+
+		searchApplet(req.body, req.body.for_user_id);
 
 		// usersRef.orderByChild("twitter/id").equalTo(req.body.user.id).once("value")
 		// 				.then(function (snapShot) {
@@ -36,37 +45,30 @@ module.exports = function (router, usersRef) {
 		// 					res.status(200).send();
 		// 				})
 
-		if (req.body["favorite_events"])
-			console.log("favorited !!")
-			// postTweet(cons_token, refreshToken);
-		else if (req.body["tweet_create_events"])
-			console.log("tweet !!")
+		// if (req.body["favorite_events"])
+		// 	console.log("favorited !!")
+		// 	// postTweet(cons_token, refreshToken);
+		// else if (req.body["tweet_create_events"])
+		// 	console.log("tweet !!")
 		res.status(200).send();
 	})
 
-	function searchApplet() {
-		console.log("new webhooks");
-	}
-
-	function postTweet(cons_token, refreshToken) {
-		var options = { method: 'POST',
-			url: 'https://api.twitter.com/1.1/statuses/update.json',
-			qs: { status: 'I starred a new tweet !!' },
-			headers:
-			 { 'Content-Type': 'application/x-www-form-urlencoded' },
-			 oauth: {
-					 consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
-					 consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
-					 token: cons_token,
-					 token_secret: refreshToken
-			 },
-			form: { url: 'https://staging-area-epitech.herokuapp.com/webhooks/twitter' } };
-
-		request(options, function (error, response, body) {
-			if (error) throw new Error(error);
-
-			console.log(body);
-		});
+	function searchApplet(webhook, userId) {
+		usersRef.once('value')
+				.then(function (snapshot) {
+					snapshot.forEach(function(childSnapshot) {
+						if (childSnapshot.val().twitter && childSnapshot.val().twitter.id == userId) {
+							if (childSnapshot.val().applets) {
+								childSnapshot.val().applets.forEach(function (appletsnap) {
+									if (appletsnap.serviceToID == 1 && appletsnap.on) {
+										let user = childSnapshot.val();
+										action.detectTwitterAction(webhook, appletsnap, user);
+									}
+								})
+							}
+						}
+					})
+				})
 	}
 
 }

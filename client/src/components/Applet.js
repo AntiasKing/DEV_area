@@ -49,7 +49,7 @@ class Applet extends React.Component {
             <Card className={classes.Card} color="primary" style={{ background: this.props.color }}>
                 <CardActionArea>
                     <CardContent>
-                        <Typography variant="h4" paragraph>{this.props.action} when you {this.props.reaction}</Typography>
+                        <Typography variant="h4" paragraph>{this.props.actionName} when you {this.props.reactionName}</Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions style={{ background: "rgba(0, 0, 0, 0.3)", padding: "0px 20px 0px 20px" }}>
@@ -59,7 +59,7 @@ class Applet extends React.Component {
                         fontSize="medium"
                     />
                     <CardHeader
-                        title={this.props.name}
+                        title={this.props.serviceName}
                         titleTypographyProps={{ variant: "h6", color: "textPrimary" }}
                     />
                     <Switch

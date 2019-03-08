@@ -69,7 +69,7 @@ class Dashboard extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/google",
+        Axios.post("https://staging-area-epitech.herokuapp.com/google",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
@@ -85,7 +85,7 @@ class Dashboard extends React.Component {
         let data = JSON.stringify({
             "user": response
         });
-        Axios.post("http://localhost:8080/facebook/",
+        Axios.post("https://staging-area-epitech.herokuapp.com/facebook/",
             data, { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
                 console.log(response);
@@ -133,10 +133,10 @@ class Dashboard extends React.Component {
     CheckLogin(response) {
         let GetUserRef = localStorage.getItem('userRef');
 
-        Axios.get("http://localhost:8080/social?userRef=" + GetUserRef,
+        Axios.get("https://staging-area-epitech.herokuapp.com/social?userRef=" + GetUserRef,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
-                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify];
+                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true];
                 this.setState({ 'login': arrtmp });
             })
             .catch(function (error) {
@@ -158,8 +158,9 @@ class Dashboard extends React.Component {
         if (applets.length === 0) {
             appletsArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have no applets for now</Typography>
         } else {
+            console.log(this.state.applets);
             for (let i = 0; i < applets.length; i++) {
-                appletsArray.push(<Grid item xs key={applets[i].name}><Applet className={classes.Applet} {...applets[i]} /></Grid>);
+                appletsArray.push(<Grid item xs key={applets[i].actionName}><Applet className={classes.Applet} {...applets[i]} /></Grid>);
             }
         }
 
@@ -186,12 +187,12 @@ class Dashboard extends React.Component {
                     if (i === 1) {
                         servicesArray.push(
                             <TwitterLogin
-                                loginUrl="http://localhost:8080/auth/twitter"
+                                loginUrl="https://staging-area-epitech.herokuapp.com/auth/twitter"
                                 onFailure={this.onFailed} onSuccess={this.handleTwitter}
                                 className="btn-Service btn-Twitter"
                                 showIcon={false}
                                 text={<Icon className={classNames(classes.icon, 'fab fa-10x fa-twitter')} />}
-                                requestTokenUrl="http://localhost:8080/auth/twitter/reverse" />
+                                requestTokenUrl="https://staging-area-epitech.herokuapp.com/auth/twitter/reverse" />
                         );
                     }
                     if (i === 2) {
