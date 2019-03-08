@@ -44,7 +44,7 @@ module.exports = {
 
 			console.log(body);
 		});
-	}
+	},
 
 	retweetTweet: function(user, webhook) {
 		var options = { method: 'POST',
