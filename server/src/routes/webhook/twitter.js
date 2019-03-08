@@ -18,13 +18,13 @@ module.exports = function (router, usersRef) {
 		}
 	})
 
-	// router.post('/webhooks/twitter', function(req, res) {
-	router.post('/salut', function(req, res) {
+	router.post('/webhooks/twitter', function(req, res) {
+	// router.post('/salut', function(req, res) {
 
-		req = { body : { for_user_id: '1964628600',
-			favorite_events: [ { id: '54b62dfcf5f92e83871ab37600c0a6c7',
-			created_at: 'Fri Mar 08 09:47:20 +0000 2019',
-		} ] } }
+		// req = { body : { for_user_id: '1964628600',
+		// 	favorite_events: [ { id: '54b62dfcf5f92e83871ab37600c0a6c7',
+		// 	created_at: 'Fri Mar 08 09:47:20 +0000 2019',
+		// } ] } }
 
 		// console.log(req.body)
 		// console.log("||||||||||")
@@ -60,7 +60,7 @@ module.exports = function (router, usersRef) {
 						if (childSnapshot.val().twitter && childSnapshot.val().twitter.id == userId) {
 							if (childSnapshot.val().applets) {
 								childSnapshot.val().applets.forEach(function (appletsnap) {
-									if (appletsnap.serviceName == "twitter" && appletsnap.on) {
+									if (appletsnap.serviceToID == 2 && appletsnap.on) {
 										let user = childSnapshot.val();
 										action.detectTwitterAction(webhook, appletsnap, user);
 									}
