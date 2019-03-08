@@ -61,7 +61,6 @@ module.exports = function (router, usersRef) {
 							if (childSnapshot.val().applets) {
 								childSnapshot.val().applets.forEach(function (appletsnap) {
 									if (appletsnap.serviceToID == 1 && appletsnap.on) {
-										console.log("tweeter")
 										let user = childSnapshot.val();
 										action.detectTwitterAction(webhook, appletsnap, user);
 									}

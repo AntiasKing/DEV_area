@@ -5,7 +5,7 @@ module.exports = {
   detectTwitterAction: function (webhook, applet, user) {
 		if (webhook["favorite_events"] && applet.actionID == 2) {
 			this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
-		} else if (webhook["create_events"] && applet.actionID == 0) {
+		} else if (webhook["tweet_create_events"] && applet.actionID == 0) {
 			console.log("okok");
 			this.setServiceAction(applet, user, "okokok", webhook)
 		}
