@@ -111,22 +111,22 @@ const Config = {
         reactions: [{
             id: 0,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
+            name: "User post tweet",
             description: "..."
         },{
             id: 1,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
+            name: "User starred a tweet",
             description: "..."
         },{
             id: 2,
             constructor: function() { console.log("It works !!") }, // function to call at creation of the applet
-            name: "User post tweet",
+            name: "User retweet tweet",
             description: "..."
         },{
             id: 3,
             constructor: function() {}, // function to call at creation of the applet
-            name: "...",
+            name: "User send private message",
             description: "..."
         },{
             id: 4,
