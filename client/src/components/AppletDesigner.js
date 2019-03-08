@@ -4,71 +4,7 @@ import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
-import Action from './Action';
-import Reaction from './Reaction';
-
-// TODO in future will be send by server
-const config = {
-    "services": [
-        {
-            "name": "facebook",
-            "color": "#3b5998",
-            "icon": "fab fa-facebook-f",
-            "actions": [{
-                "name": "new_message_in_group",
-                "description": "Un nouveau message est poste dans le groupe"
-            }, {
-                "name": "new_message_inbox ",
-                "description": "Un nouveau message prive est recu par l’utilisateur"
-            }],
-            "reactions": [{
-                "name": "like_message",
-                "description": "L’utilisateur aime un message"
-            }]
-        },
-        {
-            "name": "twitter",
-            "color": "#00aced",
-            "icon": "fab fa-twitter",
-            "actions": [],
-            "reactions": []
-        },
-        {
-            "name": "google",
-            "color": "#dd4b39",
-            "icon": "fab fa-google",
-            "actions": [],
-            "reactions": []
-        },
-        {
-            "name": "Twitch",
-            "color": "#6441a5",
-            "icon": "fab fa-twitch",
-            "actions": [],
-            "reactions": []
-        },
-        {
-            "name": "spotify",
-            "color": "#1DB954",
-            "icon": "fab fa-spotify",
-            "actions": [],
-            "reactions": []
-        },
-        {
-            "name": "Weather",
-            "color": "#333",
-            "icon": "fas fa-cloud-sun",
-            "actions": [{
-                "name": "it's rainy tomorrow",
-                "description": "Détecte si il pleut demain"
-            }],
-            "reactions": [{
-                "name": "like_message",
-                "description": "L’utilisateur aime un message"
-            }]
-        },
-    ]
-};
+import Axios from 'axios';
 
 const styles = theme => ({
     grid: {
@@ -96,11 +32,19 @@ class AppletDesigner extends React.Component {
 
         this.state = {
             activeStep: 0,
-            serviceSelected: "",
-            actionSelected: "",
-            reactionName: "",
             skipped: new Set(),
+            services: [],
+            servicesName: "",
+            login: [false, false, false, false, false, true],
         }
+        this.CheckLogin();
+        this.getServices();
+    }
+
+    getServices() {
+        Axios.get('https://staging-area-epitech.herokuapp.com/services').then((response) => {
+            this.setState({ services: response.data });
+        })
     }
 
     componentDidMount() {
@@ -111,21 +55,38 @@ class AppletDesigner extends React.Component {
     }
 
     handleClickService(serviceName) {
-        this.setState({ activeStep: this.state.activeStep + 1, serviceSelected: serviceName });
+        this.setState({ activeStep: this.state.activeStep + 1, servicesName: serviceName });
     }
 
     handleClickAction(actionName) {
-        this.setState({ activeStep: this.state.activeStep + 1, actionSelected: actionName });
+        this.setState({ activeStep: this.state.activeStep + 1 });
     }
 
     handleClickReaction(reactionName) {
-        this.setState({ activeStep: this.state.activeStep + 1, reactionSelected: reactionName })
+        this.setState({ activeStep: this.state.activeStep + 1 })
+    }
+
+    CheckLogin(response) {
+        let GetUserRef = localStorage.getItem('userRef');
+
+        Axios.get("https://staging-area-epitech.herokuapp.com/social?userRef=" + GetUserRef,
+            { headers: { "Content-Type": "application/json" } })
+            .then((response) => {
+                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true];
+                this.setState({ 'login': arrtmp });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render() {
         const { classes } = this.props;
         const steps = getSteps();
         const { activeStep } = this.state;
+        const services = this.state.services;
+        let servicesArray = [];
+
         return (
             <div>
                 <header>
@@ -155,47 +116,34 @@ class AppletDesigner extends React.Component {
                     <div>
                         {((activeStep) => {
                             if (activeStep === 0) {
+                                for (let i = 0; i < services.length; i++) {
+                                    if (this.state.login[i] === true) {
+                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickService(services[i].name))} />);
+                                    }
+                                }
                                 return (
-                                    <Grid className={classes.grid} container spacing={0}>
-                                        {config.services.map((s, index) => {
-                                            return <Service key={index} {...s} onClick={() => this.handleClickService(s.name)} />
-                                        })}
-                                    </Grid>
+                                    <div>{<Grid container spacing={0} className={classes.grid}>{servicesArray}</Grid>}</div>
                                 )
                             } else if (activeStep === 1) {
+                                for (let i = 0; i < services.length; i++) {
+                                    if (this.state.servicesName === services[i].name) {
+                                        console.log(services[i].actions[0].name);
+                                    }
+                                }
+//                                console.log(services[0].actions[0].name);
                                 return (
-                                    <Grid className={classes.grid} container spacing={8}>
-                                        {
-                                            config
-                                                .services
-                                                .find(s => s.name === this.state.serviceSelected)
-                                                .actions
-                                                .map((a, index) => {
-                                                    return <Action key={index} {...a} onClick={() => this.handleClickAction(a.name)} color={config.services.find(s => s.name === this.state.serviceSelected).color} />
-                                                })
-                                        }
-                                    </Grid>
+                                    <Grid className={classes.grid} container spacing={0}></Grid>
                                 )
                             } else if (activeStep === 2) {
                                 return (
-                                    <Grid className={classes.grid} container spacing={8}>
-                                        {
-                                            config
-                                                .services
-                                                .find(s => s.name === this.state.serviceSelected)
-                                                .reactions
-                                                .map((r, index) => {
-                                                    return <Reaction key={index} {...r} onClick={() => this.handleClickReaction(r.name)} color={config.services.find(s => s.name === this.state.serviceSelected).color} />
-                                                })
-                                        }
-                                    </Grid>
+                                    <Grid className={classes.grid} container spacing={0}>prout</Grid>
                                 )
                             } else {
                                 return (
                                     <div>
                                         <Typography className={classes.GoBack} variant="h1"> Good Job</Typography>
                                         <CardActions className={classes.GoBackLink}>
-                                        <Button color="primary" href="./dashboard"> Go back to your dashboard</Button>
+                                            <Button color="primary" href="./dashboard"> Go back to your dashboard</Button>
                                         </CardActions>
                                     </div>
                                 )

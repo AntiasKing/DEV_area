@@ -136,7 +136,7 @@ class Dashboard extends React.Component {
         Axios.get("https://staging-area-epitech.herokuapp.com/social?userRef=" + GetUserRef,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
-                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify];
+                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true];
                 this.setState({ 'login': arrtmp });
             })
             .catch(function (error) {
