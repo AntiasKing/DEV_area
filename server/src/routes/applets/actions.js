@@ -6,13 +6,11 @@ module.exports = {
 		if (webhook["favorite_events"] && applet.actionID == 2) {
 			this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
 		} else if (webhook["tweet_create_events"] && applet.actionID == 0) {
-			console.log("okok");
-			this.setServiceAction(applet, user, "okokok", webhook)
+			this.setServiceAction(applet, user, "", webhook)
 		}
   },
 
 	setServiceAction: function(applet, user, message, webhook) {
-		console.log(applet.serviceName);
 		if (applet.serviceName == "facebook")
 			this.facebookAction(applet, user, message, webhook);
 		else if (applet.serviceName == "twitter")
@@ -31,7 +29,7 @@ module.exports = {
 		if (applet.reactionID == 1)
 			reaction.starredTweet(user, webhook);
 		if (applet.reactionID == 2)
-			console.log(applet, user, message, webhook);
+			reaction.retweetTweet(user, webhook);
 		if (applet.reactionID == 3)
 			console.log(applet, user, message, webhook);
 		if (applet.reactionID == 4)
@@ -41,13 +39,12 @@ module.exports = {
 	},
 
 	twitterAction: function(applet, user, message, webhook) {
-		console.log("okokokokokokokok");
 		if (applet.reactionID == 0)
 			reaction.postTweet(user, message, webhook);
 		if (applet.reactionID == 1)
 			reaction.starredTweet(user, webhook);
 		if (applet.reactionID == 2)
-			console.log(applet, user, message, webhook);
+			reaction.retweetTweet(user, webhook);
 		if (applet.reactionID == 3)
 			console.log(applet, user, message, webhook);
 		if (applet.reactionID == 4)
