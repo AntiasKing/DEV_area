@@ -15,7 +15,7 @@ class SpotifyButton extends React.Component {
 
 	onClick() {
 		let popup = window.open('', '', 'toolbar=no, location=no');
-		popup.location = 'https://accounts.spotify.com/authorize?response_type=code&client_id=d6606813f1904768bb612bf21e76d04f&scope=user-read-private user-read-email&redirect_uri=http://localhost:8080/auth/spotify';
+		popup.location = 'https://accounts.spotify.com/authorize?response_type=code&client_id=d6606813f1904768bb612bf21e76d04f&scope=user-read-private user-read-email&redirect_uri=https://staging-area-epitech.herokuapp.com/auth/spotify';
 
 		let polling = setInterval(() => {
 			if	(!popup || popup.closed || popup.closed == undefined) {
