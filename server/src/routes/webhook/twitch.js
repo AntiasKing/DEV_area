@@ -19,7 +19,7 @@ module.exports = function (router, usersRef) {
 					.then(function (snapshot) {
 						snapshot.forEach(function (childSnapshot) {
 							if (childSnapshot.val().twitch) {
-								if (childSnapshot.val().twitch.id === req.body.data.from_id) {
+								if (childSnapshot.val().twitch.id === req.body.data[0].from_id) {
 									if (childSnapshot.val().applets) {
 										childSnapshot.val().applets.forEach(function (appletsnap) {
 											if (appletsnap.val().serviceID === 3 && appletsnap.val().actionID === 0 && appletsnap.val().on) {
@@ -27,7 +27,7 @@ module.exports = function (router, usersRef) {
 											}
 										})
 									}
-								} else if (childSnapshot.val().twitch.id === req.body.data.to_id && appletsnap.val().on) {
+								} else if (childSnapshot.val().twitch.id === req.body.data[0].to_id && appletsnap.val().on) {
 									if (childSnapshot.val().applets) {
 										childSnapshot.val().applets.forEach(function (appletsnap) {
 											if (appletsnap.val().serviceID === 3 && appletsnap.val().actionID === 1) {
