@@ -7,15 +7,7 @@ module.exports = function (router, usersRef) {
 		console.log(req.query['hub.challenge']);
 		console.log("TestTestTestTestTestTest3");
 		if (req.query['hub.challenge'] !== undefined) {
-			request.post({
-				url: 'https://api.twitch.tv/helix/webhooks/hub',
-				body: req.query['hub.challenge']
-			}, function(err, response, body) {
-				if (err) {
-					console.log(err);
-					return res.status(500).send(err);
-				}
-			});
+			return res.status(200).send(req.query['hub.challenge']);
 		} else if (req.body.data !== undefined) {
 			usersRef.once('value')
 					.then(function (snapshot) {
@@ -41,6 +33,7 @@ module.exports = function (router, usersRef) {
 							}
 						})
 					})
+			return res.status(200).send('OK');
 		}
 
 	});
