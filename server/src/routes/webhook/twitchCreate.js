@@ -16,11 +16,9 @@ module.exports = {
 				'Client-ID': 'gh2sbdqqplvq5qa89ze2h6e6zb4tur',
 				'Content-Type': 'application/json'
 			},
-			body: {
-				'hub.callback': 'https://staging-area-epitech.herokuapp.com/webhooks/twitch/follows',
-				'hub.mode': 'subscribe',
-				'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&'+user
-			}
+			'hub.callback': 'https://staging-area-epitech.herokuapp.com/webhooks/twitch/follows',
+			'hub.mode': 'subscribe',
+			'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&'+user
 		}, function(err, response, body){
 			if (err) {
 				console.log(err);
