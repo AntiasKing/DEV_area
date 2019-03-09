@@ -6,10 +6,10 @@ module.exports = function (router, usersRef) {
 		console.log(req.query['hub.mode']);
 		console.log(req.query['hub.challenge']);
 		console.log("TestTestTestTestTestTest3");
-		if (req.hub.challenge !== undefined) {
+		if (req.query['hub.challenge'] !== undefined) {
 			request.post({
 				url: 'https://api.twitch.tv/helix/webhooks/hub',
-				body: req.body.hub.challenge
+				body: req.query['hub.challenge']
 			}, function(err, response, body) {
 				if (err) {
 					console.log(err);
