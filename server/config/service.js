@@ -12,7 +12,7 @@ const Config = {
             id: 0,
             constructor: function () {}, // function to call at creation of the applet
             name: "User share a publication",
-            description: "..."
+            description: "...",
         },{
             id: 1,
             constructor: function () {}, // function to call at creation of the applet
@@ -87,32 +87,26 @@ const Config = {
             id: 0,
             constructor: function() {}, // function to call at creation of the applet
             name: "User post tweet",
-            description: "..."
+            description: "...",
+						needMessage: true;
         },{
             id: 1,
             constructor: function() {}, // function to call at creation of the applet
             name: "User starred a tweet",
             description: "..."
+						needMessage: false;
         },{
             id: 2,
             constructor: function() {}, // function to call at creation of the applet
             name: "User retweet tweet",
             description: "..."
+						needMessage: false;
         },{
             id: 3,
             constructor: function() {}, // function to call at creation of the applet
             name: "User send private message",
             description: "..."
-        },{
-            id: 4,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 5,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
+						needMessage: true;
         },],
 
 
@@ -122,7 +116,13 @@ const Config = {
         "color": "#dd4b39",
         "icon": "fab fa-google",
         actions: [],
-        reactions: [],
+        reactions: [{
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "USer send email",
+            description: "...",
+						needMessage: true;
+        },],
 
 
     }, {
@@ -161,37 +161,7 @@ const Config = {
             name: "User start a new stream",
             description: "Trigger when you gain a new follower"
         },],
-        reactions: [{
-            id: 0,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 1,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 2,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 3,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 4,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 5,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
+        reactions: [],
 
 
     }, {
@@ -210,17 +180,7 @@ const Config = {
             name: "User add a track to a playlist",
             description: "Trigger when you add a track to a playlist"
         },],
-        reactions: [{
-            id: 0,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 1,
-	          constructor: function () {}, // function to call at creation of the applet,
-	          name: "...",
-	          description: "..."
-	      },],
+        reactions: [],
 
 
     }, {
