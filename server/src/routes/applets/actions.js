@@ -62,7 +62,7 @@ module.exports = {
 		if (applet.reactionID == 2)
 			reaction.retweetTweet(user, webhook);
 		if (applet.reactionID == 3)
-			console.log(applet, user, message, webhook);
+			reaction.sendPrivateMessage(user, webhook, message);
 		if (applet.reactionID == 4)
 			console.log(applet, user, message, webhook);
 		if (applet.reactionID == 5)

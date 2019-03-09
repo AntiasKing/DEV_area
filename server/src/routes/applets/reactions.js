@@ -66,4 +66,25 @@ module.exports = {
 		});
 	}
 
+	sendPrivateMessage: function(user, webhook) {
+		var options = { method: 'POST',
+			url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
+			headers:
+			 { 'Content-Type': 'application/json' },
+			 oauth: {
+					 consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
+					 consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
+					 token: user.twitter.token,
+					 token_secret: user.twitter.refreshToken
+			 },
+			 data: {"event": {"type": "message_create", "message_create": {"target": {"recipient_id": "1964628600"}, "message_data": {"text": message}}}},
+			form: { url: 'https://staging-area-epitech.herokuapp.com/webhooks/twitter' } };
+
+		request(options, function (error, response, body) {
+			if (error) throw new Error(error);
+
+			console.log(body);
+		});
+	}
+
 }
