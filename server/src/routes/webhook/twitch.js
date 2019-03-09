@@ -4,9 +4,9 @@ module.exports = function (router, usersRef) {
 
 	router.get('/webhooks/twitch/follows', function(req, res) {
 		console.log(req.query['hub.mode']);
-		console.log(req.query['hub.challenge']);
-		console.log("TestTestTestTestTestTest3");
 		if (req.query['hub.challenge'] !== undefined) {
+			console.log("TestTestTestTestTestTest3");
+			console.log(req.query['hub.challenge']);
 			return res.status(200).send(req.query['hub.challenge']);
 		} else if (req.body.data !== undefined) {
 			usersRef.once('value')
