@@ -140,60 +140,8 @@ const Config = {
             constructor: function () {}, // function to call at creation of the applet
             name: "User gain a new follower",
             description: "..."
-        },{
-			id: 2,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "New clip is posted by a user you follow",
-            description: "..."
-        },{
-			id: 3,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "User post a new clip",
-            description: "..."
-        },{
-			id: 4,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "New stream start from a user T",
-            description: "..."
-        },{
-			id: 5,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "User start a new stream",
-            description: "Trigger when you gain a new follower"
         },],
-        reactions: [{
-            id: 0,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 1,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 2,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 3,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 4,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 5,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },],
-
-
+        reactions: [{},],
     }, {
 				serviceID: 4,
         "name": "spotify",

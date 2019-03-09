@@ -1,4 +1,5 @@
 const request = require('request');
+const action = require('../applets/actions')
 
 module.exports = function (router, usersRef) {
 
@@ -18,16 +19,16 @@ module.exports = function (router, usersRef) {
 								if (childSnapshot.val().twitch.id === req.body.data.from_id) {
 									if (childSnapshot.val().applets) {
 										childSnapshot.val().applets.forEach(function (appletsnap) {
-											if (appletsnap.val().serviceID === 3 && appletsnap.val().actionID === 0) {
-
+											if (appletsnap.val().serviceID === 3 && appletsnap.val().actionID === 0 && appletsnap.val().on) {
+												action.detectTwitchAction(req.body, appletsnap, childSnapshot.val());
 											}
 										})
 									}
-								} else if (childSnapshot.val().twitch.id === req.body.data.to_id) {
+								} else if (childSnapshot.val().twitch.id === req.body.data.to_id && appletsnap.val().on) {
 									if (childSnapshot.val().applets) {
 										childSnapshot.val().applets.forEach(function (appletsnap) {
 											if (appletsnap.val().serviceID === 3 && appletsnap.val().actionID === 1) {
-
+												action.detectTwitchAction(req.body, appletsnap, childSnapshot.val());
 											}
 										})
 									}
