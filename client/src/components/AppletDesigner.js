@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, CardActions } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, CardActions, TextField } from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-    return ['Select a service', 'Select an action', 'Select a reaction Service', 'Select a reaction', 'Good Job'];
+    return ['Select a service', 'Select an action', 'Select a reaction Service', 'Select a reaction', 'message', 'Good Job'];
 }
 
 class AppletDesigner extends React.Component {
@@ -39,8 +39,7 @@ class AppletDesigner extends React.Component {
             reactionServicesID: 0,
             actionsID: 0,
             reactionsID: 0,
-
-            reactionID: 0,
+            message: "",
             login: [false, false, false, false, false, true],
         }
         this.CheckLogin();
@@ -72,8 +71,20 @@ class AppletDesigner extends React.Component {
         this.setState({ activeStep: this.state.activeStep + 1, actionsID: actionID });
     }
 
-    handleClickReaction(reactionID) {
-        this.setState({ activeStep: this.state.activeStep + 1, reactionsID: reactionID })
+    handleClickReaction(reactionID, needMessage) {
+        if (needMessage === true) {
+            this.setState({ activeStep: this.state.activeStep + 1, reactionsID: reactionID })
+        } else {
+            this.setState({ activeStep: this.state.activeStep + 2, reactionsID: reactionID })
+        }
+    }
+
+    handleMessage = message => event => {
+        this.setState({ [message]: event.target.value });
+    };
+
+    handleNextStep() {
+        this.setState({ activeStep: this.state.activeStep + 1 })
     }
 
     CheckLogin(response) {
@@ -97,14 +108,17 @@ class AppletDesigner extends React.Component {
                 "serviceID": this.state.servicesID,
                 "actionID": this.state.actionsID,
                 "reactionID": this.state.reactionsID,
+                "message": this.state.message,
+//                "interval": this.state.interval,
             }
         });
+        console.log(data);
         Axios.post("https://staging-area-epitech.herokuapp.com/applets/" + localStorage.getItem('userRef'),
             data,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    console.log("An Applet has been create");
+                    console.log("An Applet has been created");
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -180,12 +194,34 @@ class AppletDesigner extends React.Component {
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.reactionServicesID === services[i].serviceID) {
                                         for (let j = 0; services[i].reactions[j]; j++) {
-                                            servicesArray.push(<Grid onClick={() => (this.handleClickReaction(services[i].reactions[j].id))}><SelectApplet {...services[i].reactions[j]} /></Grid>);
+                                            servicesArray.push(<Grid onClick={() => (this.handleClickReaction(services[i].reactions[j].id, services[i].reactions[j].needMessage))}><SelectApplet {...services[i].reactions[j]} /></Grid>);
                                         }
                                     }
                                 }
                                 return (
                                     <Grid className={classes.grid} container>{servicesArray}</Grid>
+                                )
+                            } else if (activeStep === 4) { // Get Message
+                                servicesArray.push(
+                                    <Grid>
+                                        <TextField
+                                            label="Get a message to send"
+                                            style={{ margin: "30px" }}
+                                            placeholder="Type a message"
+                                            variant="outlined"
+                                            value={this.state.message}
+                                            onChange={this.handleMessage('message')}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                        <Button variant="contained" color="primary" onClick={this.handleNextStep.bind(this)}>
+                                            Send Text
+                                        </Button>
+                                    </Grid>
+                                );
+                                return (
+                                    <div>{<Grid>{servicesArray}</Grid>}</div>
                                 )
                             } else { // Bien Joue
                                 this.SendApplets();
