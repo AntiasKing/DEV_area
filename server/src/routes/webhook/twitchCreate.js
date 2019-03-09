@@ -13,13 +13,13 @@ module.exports = {
 		request.post({
 			url: 'https://api.twitch.tv/helix/webhooks/hub',
 			headers: {
-				'Client-ID': 'gh2sbdqqplvq5qa89ze2h6e6zb4tur'
+				'Client-ID': 'gh2sbdqqplvq5qa89ze2h6e6zb4tur',
+				'Content-Type': 'application/json'
 			},
-			hub: {
-				'callback': 'https://staging-area-epitech.herokuapp.com/webhooks/twitch/follows',
-				'mode': 'subscribe',
-				'topic': 'https://api.twitch.tv/helix/users/follows?first=1&'+user
-				
+			body: {
+				'hub.callback': 'https://staging-area-epitech.herokuapp.com/webhooks/twitch/follows',
+				'hub.mode': 'subscribe',
+				'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&'+user
 			}
 		}, function(err, response, body){
 			if (err) {
