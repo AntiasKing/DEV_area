@@ -18,7 +18,7 @@ module.exports = {
 			'Content-Type': 'application/json',
 			json: true,
 			body: {
-				'hub.callback': 'https://staging-area-epitech.herokuapp.com/webhooks/twitch/follows',
+				'hub.callback': 'https://staging-area-epitech.herokuapp.com/webhook/twitch/follows',
 				'hub.mode': 'subscribe',
 				'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&'+user
 			}
