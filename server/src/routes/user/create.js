@@ -175,7 +175,7 @@ module.exports = function (router, usersRef, db) {
 					url: 'https://accounts.spotify.com/api/token',
 					form: {
 							code: code,
-							redirect_uri: 'http://localhost:8080/auth/spotify',
+							redirect_uri: 'https://staging-area-epitech.herokuapp.com/auth/spotify',
 							grant_type: 'authorization_code'
 					},
 					headers: {
