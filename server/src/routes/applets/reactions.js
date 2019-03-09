@@ -64,7 +64,7 @@ module.exports = {
 
 			console.log(body);
 		});
-	}
+	},
 
 	sendPrivateMessage: function(user, webhook) {
 		var options = { method: 'POST',
