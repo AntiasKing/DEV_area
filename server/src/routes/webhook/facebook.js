@@ -27,11 +27,11 @@ module.exports = function (router, usersRef) {
 			// 	}
 
 				console.log('===============================');
-				console.log(webhook);
+				console.log(req.body);
 				console.log('-------------------------------');
-				console.log(webhook.entry);
+				console.log(req.body.entry);
 				console.log('-------------------------------');
-				console.log(webhook.entry[0].changes[0])
+				console.log(req.body.entry[0].changes[0])
 				console.log('===============================');
 
 				// searchApplet(req.body);
