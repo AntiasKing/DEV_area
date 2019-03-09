@@ -1,12 +1,22 @@
 var twitchWebhooks = require("../webhook/twitchCreate.js");
 var passport = require('passport');
 const request = require('request');
+const sgMail = require('@sendgrid/mail');
 crypto = require('crypto')
 
 module.exports = function (router, usersRef, db) {
 
     router.get('/test', function (req, res, next) {
-        res.status(201).send("test succeed !!")
+			sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+			const msg = {
+				to: 'axel.vandenabeele@gmail.com',
+				from: 'area@epitech.eu',
+				subject: 'Sending with SendGrid is Fun',
+				text: 'and easy to do anywhere, even with Node.js',
+				html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+			};
+			sgMail.send(msg);
+      res.status(201).send("test succeed !!")
     })
 
     router.get('/social', function (req, res, next) {
@@ -227,7 +237,7 @@ module.exports = function (router, usersRef, db) {
 											}
 											var email = user.email;
 											checkServices(user, "spotify", email, res, true)
-											
+
 									});
 					})
 			})
