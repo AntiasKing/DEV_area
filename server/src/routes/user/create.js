@@ -128,7 +128,6 @@ module.exports = function (router, usersRef, db) {
                             snapShot.forEach(function (childSnapShot) {
                                 childSnapShot.child("twitch").ref.update(user)
                                     .then(function () {
-																				console.log("okokokok");
                                         return res.redirect('http://localhost:3000' + '?user=' + user + '&refKey=' + childSnapShot.ref.path.pieces_[1]);
                                     })
                                     .catch(function (error) {
@@ -208,6 +207,7 @@ module.exports = function (router, usersRef, db) {
 							user.access_token = access_token;
 							user.refresh_token = refresh_token;
 							let newUsersRef = usersRef.push();
+							console.log("ookokokokokokokokoko");
 							usersRef.orderByChild("spotify/id").equalTo(user.id).once("value")
 									.then(function (snapshot) {
 											if (snapshot.val()) {

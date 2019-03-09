@@ -25,7 +25,6 @@ class TwitchButton extends React.Component {
                     let query = new URLSearchParams(popup.location.search);
                     let user = query.get('user');
 										let refKey = query.get('refKey');
-										console.log(user, refKey);
                     clearInterval(polling);
                     popup.close();
                     this.props.onSuccess(user, refKey);
