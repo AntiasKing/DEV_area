@@ -33,7 +33,7 @@ module.exports = function (router, usersRef) {
 								newApplet.color = Config.services[newApplet.serviceID].color;
 								newApplet.icon = Config.services[newApplet.serviceID].icon;
 								newApplet.actionName = Config.services[newApplet.serviceID].actions[newApplet.actionID].name;
-								newApplet.reactionName = Config.services[newApplet.serviceID].reactions[newApplet.reactionID].name;
+								newApplet.reactionName = Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].name;
                 applets.push(newApplet);
                 user.applets = applets;
                 snap.ref.update(user);

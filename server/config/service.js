@@ -44,37 +44,7 @@ const Config = {
             name: "User send a private message",
             description: "Trigger when you send private message"
         },],
-        reactions: [{
-            id: 0,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "1",
-            description: "..."
-        },{
-            id: 1,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "2",
-            description: "..."
-        },{
-            id: 2,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "3",
-            description: "..."
-        },{
-            id: 3,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "4",
-            description: "..."
-        },{
-            id: 4,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "5",
-            description: "..."
-        },{
-            id: 5,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "6",
-            description: "..."
-        },],
+        reactions: [],
 
 
     }, {
@@ -236,10 +206,10 @@ const Config = {
             description: "..."
         },{
             id: 1,
-                constructor: function () {}, // function to call at creation of the applet
-                name: "User add a track to a playlist",
+            constructor: function () {}, // function to call at creation of the applet
+            name: "User add a track to a playlist",
             description: "Trigger when you add a track to a playlist"
-            },],
+        },],
         reactions: [{
             id: 0,
             constructor: function() {}, // function to call at creation of the applet
@@ -247,10 +217,10 @@ const Config = {
             description: "..."
         },{
             id: 1,
-                constructor: function () {}, // function to call at creation of the applet,
-                name: "...",
-                description: "..."
-            },],
+	          constructor: function () {}, // function to call at creation of the applet,
+	          name: "...",
+	          description: "..."
+	      },],
 
 
     }, {
@@ -263,13 +233,13 @@ const Config = {
             constructor: function () {}, // function to call at creation of the applet
             name: "it's rainy tomorrow",
             description: "Trigger if it's rainning tomorrow"
-        },],
-        reactions: [{
-            id: 0,
+        },{
+            id: 1,
             constructor: function () {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },]
+            name: "It's sunny tomorrow",
+            description: "Trigger if the weather is sunny tomorrow"
+        },],
+        reactions: []
     },]
 }
 
