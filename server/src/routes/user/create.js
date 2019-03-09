@@ -7,7 +7,7 @@ crypto = require('crypto')
 module.exports = function (router, usersRef, db) {
 
     router.get('/test', function (req, res, next) {
-			sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+			sgMail.setApiKey('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');
 			const msg = {
 				to: 'axel.vandenabeele@gmail.com',
 				from: 'area@epitech.eu',
