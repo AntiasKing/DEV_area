@@ -16,8 +16,10 @@ module.exports = {
 		console.log('-------------------------------');
 		console.log(webhook.entry);
 		console.log('-------------------------------');
-		console.log(webhook.entry[0].changes)
+		console.log(webhook.entry[0].changes[0])
 		console.log('===============================');
+		if (webhook.entry[0].changes[0].field == "status")
+			this.setServiceAction(applet, user, "I just post a new publication in facebook : " + webhook.entry[0].changes[0].value, webhook)
 		// if (webhook["favorite_events"] && applet.actionID == 2) {
 		// 	this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
 		// } else if (webhook["tweet_create_events"] && applet.actionID == 0) {
@@ -26,36 +28,36 @@ module.exports = {
 	},
 
 	setServiceAction: function(applet, user, message, webhook) {
-		if (applet.serviceName == "facebook")
+		if (applet.serviceToID == 0)
 			this.facebookAction(applet, user, message, webhook);
-		else if (applet.serviceName == "twitter")
+		else if (applet.serviceToID == 1)
 			this.twitterAction(applet, user, message, webhook);
-		else if (applet.serviceName == "google")
+		else if (applet.serviceToID == 2)
 			this.googleAction(applet, user, message, webhook);
-		else if (applet.serviceName == "twitch")
+		else if (applet.serviceToID == 3)
 			this.twitchAction(applet, user, message, webhook);
-		else if (applet.serviceName == "spotify")
+		else if (applet.serviceToID == 4)
 			this.spotifyAction(applet, user, message, webhook);
 	},
 
 	facebookAction: function(applet, user, message, webhook) {
-		if (applet.reactionID == 0)
-			reaction.postTweet(user, message, webhook);
-		if (applet.reactionID == 1)
-			reaction.starredTweet(user, webhook);
-		if (applet.reactionID == 2)
-			reaction.retweetTweet(user, webhook);
-		if (applet.reactionID == 3)
-			console.log(applet, user, message, webhook);
-		if (applet.reactionID == 4)
-			console.log(applet, user, message, webhook);
-		if (applet.reactionID == 5)
-			console.log(applet, user, message, webhook);
+		// if (applet.reactionID == 0)
+		// 	reaction.postTweet(user, message);
+		// if (applet.reactionID == 1)
+		// 	reaction.starredTweet(user, webhook);
+		// if (applet.reactionID == 2)
+		// 	reaction.retweetTweet(user, webhook);
+		// if (applet.reactionID == 3)
+		// 	console.log(applet, user, message, webhook);
+		// if (applet.reactionID == 4)
+		// 	console.log(applet, user, message, webhook);
+		// if (applet.reactionID == 5)
+		// 	console.log(applet, user, message, webhook);
 	},
 
 	twitterAction: function(applet, user, message, webhook) {
 		if (applet.reactionID == 0)
-			reaction.postTweet(user, message, webhook);
+			reaction.postTweet(user, message);
 		if (applet.reactionID == 1)
 			reaction.starredTweet(user, webhook);
 		if (applet.reactionID == 2)
