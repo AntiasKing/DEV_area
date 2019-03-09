@@ -19,7 +19,7 @@ module.exports = function (router, usersRef) {
         if (newApplet.actionID === undefined || newApplet.actionID === null || newApplet.reactionID > service.actions.length - 1 || newApplet.reactionID < 0)
             return res.status(400).send('No actionID submited or actionID out of bounds');
         if (service.actions[newApplet.actionID].constructor)
-            service.actions[newApplet.actionID].constructor(newApplet[service.actions[newApplet.actionID.params[0]]]);
+            service.actions[newApplet.actionID].constructor();
         if (service.reactions[newApplet.reactionID].constructor)
             service.reactions[newApplet.reactionID].constructor();
 
