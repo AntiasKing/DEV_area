@@ -1,6 +1,6 @@
+var twitchWebhooks = require("../webhook/twitchCreate.js");
 var passport = require('passport');
 const request = require('request');
-
 crypto = require('crypto')
 
 module.exports = function (router, usersRef, db) {
@@ -117,7 +117,13 @@ module.exports = function (router, usersRef, db) {
                 }
                 let user = JSON.parse(body).data[0];
                 user.access_token = access_token;
-                user.refresh_token = refresh_token;
+				user.refresh_token = refresh_token;
+				var twitchID = user.id;
+				console.log("TESTURE");
+				console.log(user);
+				console.log("TESTURE");
+				twitchWebhooks.TwitchFollows(twitchID, 0);
+				twitchWebhooks.TwitchFollows(twitchID, 1);
                 let newUsersRef = usersRef.push();
                 usersRef.orderByChild("twitch/id").equalTo(user.id).once("value")
                     .then(function (snapShot) {
@@ -134,8 +140,8 @@ module.exports = function (router, usersRef, db) {
                             });
                             return;
                         }
-												var email = user.email;
-												checkServices(user, "twitch", email, res, true)
+						var email = user.email;
+						checkServices(user, "twitch", email, res, true)
                     })
             })
         })
@@ -221,6 +227,7 @@ module.exports = function (router, usersRef, db) {
 											}
 											var email = user.email;
 											checkServices(user, "spotify", email, res, true)
+											
 									});
 					})
 			})
