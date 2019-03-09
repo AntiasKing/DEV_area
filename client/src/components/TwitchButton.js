@@ -22,8 +22,8 @@ class TwitchButton extends React.Component {
             }
             try {
                 if (!popup.location.hostname.includes('id.twitch.tv') && !popup.location.hostname == '') {
-									console.log(popup)
 										console.log(popup.location)
+										console.log(popup.location.search)
                     let query = new URLSearchParams(popup.location);
                     let user = query.get('user');
 										let refKey = query.get('refKey');
