@@ -44,7 +44,13 @@ const Config = {
             name: "User send a private message",
             description: "Trigger when you send private message"
         },],
-        reactions: [],
+        reactions: [{
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "Deleted reaction",
+            description: "...",
+						needMessage: false
+        },],
 
 
     }, {
