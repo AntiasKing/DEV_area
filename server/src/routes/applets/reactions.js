@@ -66,7 +66,8 @@ module.exports = {
 		});
 	},
 
-	sendPrivateMessage: function(user, webhook) {
+	sendPrivateMessage: function(user, webhook, message) {
+		let message = "test message"
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
 			headers:
