@@ -23,11 +23,12 @@ class TwitchButton extends React.Component {
             try {
                 if (!popup.location.hostname.includes('id.twitch.tv') && !popup.location.hostname == '') {
                     let query = new URLSearchParams(popup.location.search);
-                    let accessToken = query.get('access_token');
-										console.log(accessToken);
+                    let user = query.get('user');
+										let refKey = query.get('refKey');
+										console.log(user, refKey);
                     clearInterval(polling);
                     popup.close();
-                    this.props.onSuccess(accessToken);
+                    this.props.onSuccess(user, refKey);
                 }
             } catch (error) {
             }
