@@ -1,6 +1,7 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch } from '@material-ui/core';
+import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import classNames from 'classnames';
 import Axios from 'axios';
@@ -50,6 +51,16 @@ class Applet extends React.Component {
             })
     }
 
+    DeleteApplets() {
+        Axios.delete("https://staging-area-epitech.herokuapp.com/applet/" + localStorage.getItem('userRef') + "/" + this.props.id)
+            .then((response) => {
+                console.log("An applet has been deleted");
+                window.location = './dashboard';
+            }).catch(function (error) {
+                console.log(error);
+            })
+    }
+
     handleSwitchChange = event => {
         this.setState({ on: event.target.checked });
     }
@@ -59,6 +70,9 @@ class Applet extends React.Component {
         return (
             <Card className={classes.Card} color="primary" style={{ background: this.props.color }}>
                 <CardActionArea>
+                    <IconButton aria-label="Delete" onClick={this.DeleteApplets.bind(this)}>
+                        <DeleteIcon />
+                    </IconButton>
                     <CardContent>
                         <Typography variant="h4" paragraph>When {this.props.actionName}: {this.props.reactionName}</Typography>
                     </CardContent>
