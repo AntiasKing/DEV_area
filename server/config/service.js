@@ -100,7 +100,7 @@ const Config = {
         },{
             id: 3,
             constructor: function () {}, // function to call at creation of the applet
-            name: "undefined",
+            name: "User received new private message",
             description: "..."
         },{
             id: 4,

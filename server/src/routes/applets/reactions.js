@@ -1,4 +1,5 @@
 const request = require('request');
+const sgMail = require('@sendgrid/mail');
 
 module.exports = {
 
@@ -67,7 +68,6 @@ module.exports = {
 	},
 
 	sendPrivateMessage: function(user, webhook, message) {
-		message = "send message test"
 		var options = { method: 'POST',
 	  url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
 	  headers: {'Content-Type': 'application/json'},
@@ -90,6 +90,20 @@ module.exports = {
 
 		  console.log(body);
 		});
-	}
+	},
+
+	/* Gmail */
+
+	sendEmail: function(user, webhook, message) {
+		sgMail.setApiKey('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');
+		const msg = {
+			to: 'axel.vandenabeele@gmail.com',
+			from: 'area@epitech.eu',
+			subject: 'Sending with SendGrid is Fun',
+			text: 'and easy to do anywhere, even with Node.js',
+			html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+		};
+		sgMail.send(msg);
+	},
 
 }
