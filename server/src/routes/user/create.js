@@ -128,7 +128,8 @@ module.exports = function (router, usersRef, db) {
                             snapShot.forEach(function (childSnapShot) {
                                 childSnapShot.child("twitch").ref.update(user)
                                     .then(function () {
-                                        return res.redirect('http://localhost:3000/' + '?user=' + user);
+																				console.log("okokokok");
+                                        return res.redirect('http://localhost:3000' + '?user=' + user + '&refKey=' + childSnapShot.ref.path.pieces_[1]);
                                     })
                                     .catch(function (error) {
                                         console.log(error);
@@ -213,7 +214,7 @@ module.exports = function (router, usersRef, db) {
 													snapshot.forEach(function (childSnapShot) {
 															childSnapShot.child("spotify").ref.update(user)
 																	.then(function () {
-																			return res.redirect('http://localhost:3000/' + '?user=' + user);
+																			return res.redirect('http://localhost:3000' + '?user=' + user + '&refKey=' + childSnapShot.ref.path.pieces_[1]);
 																	})
 																	.catch(function (error) {
 																			console.log(error);
@@ -335,9 +336,10 @@ module.exports = function (router, usersRef, db) {
 					if (refKey != "") {
 						let newUsersRef = db.ref('users/'+refKey+"/"+service).update(user)
 						.then(function () {
-							if ((service == "twitch" || service == "spotify") && stat)
-								res.redirect('http://localhost:3000/' + '?user=' + user + "&refKey=" + refKey);
-							else
+							if ((service == "twitch" || service == "spotify") && stat) {
+								console.log("okokokok1");
+								res.redirect('http://localhost:3000' + '?refKey=' + newUsersRef.key + '&user=' + user);
+							} else
 								res.status(200).send(refKey);
 							return
 						}).catch(function (error) {
@@ -351,8 +353,10 @@ module.exports = function (router, usersRef, db) {
 						newUsersRef.set(obj)
 								.then(function () {
 										console.log("Successfully created new user:", user);
-										if ((service == "twitch" || service == "spotify") && stat)
-											res.redirect('http://localhost:3000/' + '?user=' + user + "&refKey=" + newUsersRef.key);
+										if ((service == "twitch" || service == "spotify") && stat) {
+											console.log(user, newUsersRef.key)
+											res.redirect('http://localhost:3000' + '?refKey=' + newUsersRef.key + '&user=' + user );
+										}
 										else {
 											res.status(200).send(newUsersRef.key);
 										}
