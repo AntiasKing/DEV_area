@@ -24,7 +24,7 @@ module.exports = {
 				console.log(err);
 				return res.status(500).send(err);
 			}
-			console.log();
+			console.log(body);
 		});
 		console.log("TestTestTestTestTestTest2");
 	},
