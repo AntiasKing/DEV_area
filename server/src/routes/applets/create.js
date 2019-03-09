@@ -37,6 +37,7 @@ module.exports = function (router, usersRef) {
 								newApplet.icon = Config.services[newApplet.serviceID].icon;
 								newApplet.actionName = Config.services[newApplet.serviceID].actions[newApplet.actionID].name;
 								newApplet.reactionName = Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].name;
+								newApplet.message = newApplet.message;
                 applets.push(newApplet);
                 user.applets = applets;
                 snap.ref.update(user);

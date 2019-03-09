@@ -12,7 +12,7 @@ const Config = {
             id: 0,
             constructor: function () {}, // function to call at creation of the applet
             name: "User share a publication",
-            description: "..."
+            description: "...",
         },{
             id: 1,
             constructor: function () {}, // function to call at creation of the applet
@@ -44,7 +44,13 @@ const Config = {
             name: "User send a private message",
             description: "Trigger when you send private message"
         },],
-        reactions: [],
+        reactions: [{
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "Deleted reaction",
+            description: "...",
+						needMessage: false
+        },],
 
 
     }, {
@@ -87,32 +93,26 @@ const Config = {
             id: 0,
             constructor: function() {}, // function to call at creation of the applet
             name: "User post tweet",
-            description: "..."
+            description: "...",
+						needMessage: true
         },{
             id: 1,
             constructor: function() {}, // function to call at creation of the applet
             name: "User starred a tweet",
-            description: "..."
+            description: "...",
+						needMessage: false
         },{
             id: 2,
             constructor: function() {}, // function to call at creation of the applet
             name: "User retweet tweet",
-            description: "..."
+            description: "...",
+						needMessage: false
         },{
             id: 3,
             constructor: function() {}, // function to call at creation of the applet
             name: "User send private message",
-            description: "..."
-        },{
-            id: 4,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 5,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
+            description: "...",
+						needMessage: true
         },],
 
 
@@ -122,7 +122,13 @@ const Config = {
         "color": "#dd4b39",
         "icon": "fab fa-google",
         actions: [],
-        reactions: [],
+        reactions: [{
+            id: 0,
+            constructor: function() {}, // function to call at creation of the applet
+            name: "USer send email",
+            description: "...",
+						needMessage: true
+        },],
 
 
     }, {
@@ -140,8 +146,35 @@ const Config = {
             constructor: function () {}, // function to call at creation of the applet
             name: "User gain a new follower",
             description: "..."
+<<<<<<< HEAD
         },],
         reactions: [{},],
+=======
+        },{
+			id: 2,
+            constructor: function () {}, // function to call at creation of the applet
+            name: "New clip is posted by a user you follow",
+            description: "..."
+        },{
+			id: 3,
+            constructor: function () {}, // function to call at creation of the applet
+            name: "User post a new clip",
+            description: "..."
+        },{
+			id: 4,
+            constructor: function () {}, // function to call at creation of the applet
+            name: "New stream start from a user T",
+            description: "..."
+        },{
+			id: 5,
+            constructor: function () {}, // function to call at creation of the applet
+            name: "User start a new stream",
+            description: "Trigger when you gain a new follower"
+        },],
+        reactions: [],
+
+
+>>>>>>> 407f1dd7d5ba43b1285a96b0dccd8694c70cc4eb
     }, {
 				serviceID: 4,
         "name": "spotify",
@@ -158,17 +191,7 @@ const Config = {
             name: "User add a track to a playlist",
             description: "Trigger when you add a track to a playlist"
         },],
-        reactions: [{
-            id: 0,
-            constructor: function() {}, // function to call at creation of the applet
-            name: "...",
-            description: "..."
-        },{
-            id: 1,
-	          constructor: function () {}, // function to call at creation of the applet,
-	          name: "...",
-	          description: "..."
-	      },],
+        reactions: [],
 
 
     }, {
