@@ -79,7 +79,7 @@ module.exports = {
 		if (applet.reactionID == 1)
 			console.log(applet, user, message);
 		if (applet.reactionID == 2)
-			reaction.postTweet(user, message);
+			console.log(applet, user, message);
 		if (applet.reactionID == 3)
 			console.log(applet, user, message);
 		if (applet.reactionID == 4)
