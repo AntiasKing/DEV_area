@@ -133,12 +133,12 @@ class SignIn extends React.Component {
 
 	onSpotifySuccess = (document) => {
 		localStorage.setItem("userRef", response.data)
-    window.location = './dashboard';
+    	window.location = './dashboard';
 	}
 
     onTwitchSucess = (document) => {
-			localStorage.setItem("userRef", response.data)
-      window.location = './dashboard';
+		localStorage.setItem("userRef", response.data)
+      	window.location = './dashboard';
     }
 
     onFailed = (error) => {
