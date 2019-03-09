@@ -15,3 +15,12 @@ services:
       NODE_ENV: development
     ports:
       - 8081:8081
+  dev_area_2018_app:
+    image: dev_area_2018_app
+    build: ./app
+    environment:
+      NODE_ENV: development
+      EXPO_USERNAME: antiaskid
+      EXPO_PASSWORD: Antoine2896
+      EXPO_ANDROID_KEYSTORE_PASSWORD: efc0875d6f244315b40855138c22f179
+      EXPO_ANDROID_KEY_PASSWORD: 0db970f0872c4f6a8815d42990a62554

@@ -119,9 +119,6 @@ module.exports = function (router, usersRef, db) {
                 user.access_token = access_token;
 				user.refresh_token = refresh_token;
 				var twitchID = user.id;
-				console.log("TESTURE");
-				console.log(user);
-				console.log("TESTURE");
 				twitchWebhooks.TwitchFollows(twitchID, 0);
 				twitchWebhooks.TwitchFollows(twitchID, 1);
                 let newUsersRef = usersRef.push();
