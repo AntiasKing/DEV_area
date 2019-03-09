@@ -4,6 +4,7 @@ import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
+import SelectApplet from './SelectApplet';
 import Axios from 'axios';
 
 const styles = theme => ({
@@ -34,12 +35,10 @@ class AppletDesigner extends React.Component {
             activeStep: 0,
             skipped: new Set(),
             services: [],
-            servicesName: "",
             servicesID: 0,
+            reactionServicesID: 0,
             actionsID: 0,
-            reactionName: "",
-            reactionServiceId: 0,
-            reactionID: 0,
+            reactionsID: 0,
 
             reactionID: 0,
             login: [false, false, false, false, false, true],
@@ -61,12 +60,12 @@ class AppletDesigner extends React.Component {
         );
     }
 
-    handleClickService(serviceName, serviceID) {
-        this.setState({ activeStep: this.state.activeStep + 1, servicesName: serviceName, servicesID: serviceID });
+    handleClickService(serviceID) {
+        this.setState({ activeStep: this.state.activeStep + 1, servicesID: serviceID });
     }
 
-    handleClickReactionService(reactionname, reactionserviceID) {
-        this.setState({ activeStep: this.state.activeStep + 1, reactionName: reactionname, reactionservicesID: reactionserviceID });
+    handleClickReactionService(reactionserviceID) {
+        this.setState({ activeStep: this.state.activeStep + 1, reactionServicesID: reactionserviceID });
     }
 
     handleClickAction(actionID) {
@@ -89,6 +88,27 @@ class AppletDesigner extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    SendApplets() {
+        let data = JSON.stringify({
+            "applet": {
+                "serviceToID": this.state.reactionServicesID,
+                "serviceID": this.state.servicesID,
+                "actionID": this.state.actionsID,
+                "reactionID": this.state.reactionsID,
+            }
+        });
+        Axios.post("https://staging-area-epitech.herokuapp.com/applets/" + localStorage.getItem('userRef'),
+            data,
+            { headers: { "Content-Type": "application/json" } })
+            .then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    console.log("An Applet has been create");
+                }
+            }).catch(function (error) {
+                console.log(error);
+            })
     }
 
     render() {
@@ -129,45 +149,46 @@ class AppletDesigner extends React.Component {
                             if (activeStep === 0) { // Services
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.login[i] === true) {
-                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickService(services[i].name, services[i].serviceID))} />);
+                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickService(services[i].serviceID))} />);
                                     }
                                 }
                                 return (
-                                    <div>{<Grid container spacing={0} className={classes.grid}>{servicesArray}</Grid>}</div>
+                                    <div>{<Grid container className={classes.grid}>{servicesArray}</Grid>}</div>
                                 )
                             } else if (activeStep === 1) { // Actions
 
                                 for (let i = 0; i < services.length; i++) {
-                                    if (this.state.servicesName === services[i].name) {
+                                    if (this.state.servicesID === services[i].serviceID) {
                                         for (let j = 0; services[i].actions[j] ; j++) {
-                                            servicesArray.push(<Grid onClick={() => (this.handleClickAction(services[i].actions[j].id))} >{services[i].actions[j].name}</Grid>);
+                                            servicesArray.push(<Grid onClick={() => (this.handleClickAction(services[i].actions[j].id))}><SelectApplet {...services[i].actions[j]} /></Grid>);
                                         }
                                     }
                                 }
                                 return (
-                                    <Grid className={classes.grid} container spacing={8}>{servicesArray}</Grid>
+                                    <Grid className={classes.grid} container>{servicesArray}</Grid>
                                 )
                             } else if (activeStep === 2) { // Reactions Services
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.login[i] === true) {
-                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickReactionService(services[i].name, services[i].serviceID))} />);
+                                        servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickReactionService(services[i].serviceID))} />);
                                     }
                                 }
                                 return (
-                                    <div>{<Grid container spacing={0} className={classes.grid}>{servicesArray}</Grid>}</div>
+                                    <div>{<Grid container className={classes.grid}>{servicesArray}</Grid>}</div>
                                 )
                             } else if (activeStep === 3) { // Reactions
                                 for (let i = 0; i < services.length; i++) {
-                                    if (this.state.reactionName === services[i].name) {
+                                    if (this.state.reactionServicesID === services[i].serviceID) {
                                         for (let j = 0; services[i].reactions[j]; j++) {
-                                            servicesArray.push(<Grid onClick={() => (this.handleClickAction(services[i].reactions[j].id))} >{services[i].reactions[j].name}</Grid>);
+                                            servicesArray.push(<Grid onClick={() => (this.handleClickReaction(services[i].reactions[j].id))}><SelectApplet {...services[i].reactions[j]} /></Grid>);
                                         }
                                     }
                                 }
                                 return (
-                                    <Grid className={classes.grid} container spacing={8}>{servicesArray}</Grid>
+                                    <Grid className={classes.grid} container>{servicesArray}</Grid>
                                 )
                             } else { // Bien Joue
+                                this.SendApplets();
                                 return (
                                     <div>
                                         <Typography className={classes.GoBack} variant="h1"> Good Job</Typography>

@@ -158,7 +158,6 @@ class Dashboard extends React.Component {
         if (applets.length === 0) {
             appletsArray = <Typography variant="h3" color="textPrimary" align="center" className={classes.noApplet}>You have no applets for now</Typography>
         } else {
-            console.log(this.state.applets);
             for (let i = 0; i < applets.length; i++) {
                 appletsArray.push(<Grid item xs key={applets[i].actionName}><Applet className={classes.Applet} {...applets[i]} /></Grid>);
             }
