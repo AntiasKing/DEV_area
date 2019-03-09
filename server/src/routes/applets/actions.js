@@ -73,7 +73,7 @@ module.exports = {
 			console.log(applet, user, message, webhook);
 	},
 
-	googleReaction: function(applet, user, message) {
+	googleReaction: function(applet, user, message, webhook) {
 		if (applet.reactionID == 0)
 			reaction.sendEmail(user, webhook, message);
 		if (applet.reactionID == 1)
