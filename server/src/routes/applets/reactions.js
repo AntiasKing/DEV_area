@@ -67,7 +67,6 @@ module.exports = {
 	},
 
 	sendPrivateMessage: function(user, webhook, message) {
-		message = "test message"
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
 			headers:
@@ -78,7 +77,7 @@ module.exports = {
 					 token: user.twitter.token,
 					 token_secret: user.twitter.refreshToken
 			 },
-			 data: {"event": {"type": "message_create", "message_create": {"target": {"recipient_id": "1964628600"}, "message_data": {"text": message}}}},
+			 data: {"event": {"type": "message_create", "message_create": {"target": {"recipient_id": "1964628600"}, "message_data": {"text": "salut"}}}},
 			form: { url: 'https://staging-area-epitech.herokuapp.com/webhooks/twitter' } };
 
 		request(options, function (error, response, body) {
