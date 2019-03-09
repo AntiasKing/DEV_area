@@ -13,8 +13,8 @@ module.exports = function (router, usersRef) {
         return res.status(401).send();
     });
 
-		// router.post('/webhook/facebook', function (req, res) {
-    router.get('/facebook/test', function (req, res) {
+		router.post('/webhook/facebook', function (req, res) {
+    // router.get('/facebook/test', function (req, res) {
 
 			// req = { body: { entry:
 			// 	[ { time: 1552093188,
