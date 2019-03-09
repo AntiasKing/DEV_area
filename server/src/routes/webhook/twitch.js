@@ -15,6 +15,8 @@ module.exports = function (router, usersRef) {
 			console.log(req.body.data);
 			console.log(req.body.data.from_id);
 			console.log(req.body.data.to_id);
+			console.log(req.body.data['to_id']);
+			console.log(req.body.data['from_id']);
 			usersRef.once('value')
 					.then(function (snapshot) {
 						snapshot.forEach(function (childSnapshot) {
