@@ -1,21 +1,11 @@
 var twitchWebhooks = require("../webhook/twitchCreate.js");
 var passport = require('passport');
 const request = require('request');
-const sgMail = require('@sendgrid/mail');
 crypto = require('crypto')
 
 module.exports = function (router, usersRef, db) {
 
     router.get('/test', function (req, res, next) {
-			sgMail.setApiKey('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');
-			const msg = {
-				to: 'axel.vandenabeele@gmail.com',
-				from: 'area@epitech.eu',
-				subject: 'Sending with SendGrid is Fun',
-				text: 'and easy to do anywhere, even with Node.js',
-				html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-			};
-			sgMail.send(msg);
       res.status(201).send("test succeed !!")
     })
 
@@ -129,9 +119,6 @@ module.exports = function (router, usersRef, db) {
                 user.access_token = access_token;
 				user.refresh_token = refresh_token;
 				var twitchID = user.id;
-				console.log("TESTURE");
-				console.log(user);
-				console.log("TESTURE");
 				twitchWebhooks.TwitchFollows(twitchID, 0);
 				twitchWebhooks.TwitchFollows(twitchID, 1);
                 let newUsersRef = usersRef.push();

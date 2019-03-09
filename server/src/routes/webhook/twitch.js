@@ -3,19 +3,14 @@ const request = require('request');
 module.exports = function (router, usersRef) {
 
 	router.get('/webhooks/twitch/follows', function(req, res) {
-		console.log(req.body);
-		console.log("TestTestTestTestTestTest3");
-		if (req.body.hub.challenge !== undefined) {
-			request.post({
-				url: 'https://api.twitch.tv/helix/webhooks/hub',
-				body: req.body.hub.challenge
-			}, function(err, response, body) {
-				if (err) {
-					console.log(err);
-					return res.status(500).send(err);
-				}
-			});
-		} else if (req.body.data !== undefined) {
+		if (req.query['hub.challenge'] !== undefined) {
+			return res.status(200).send(req.query['hub.challenge']);
+		}
+
+	});
+	router.post('/webhooks/twitch/follows', function(req, res) {
+		if (req.body.data !== undefined) {
+			console.log(req.body);
 			usersRef.once('value')
 					.then(function (snapshot) {
 						snapshot.forEach(function (childSnapshot) {
@@ -40,8 +35,8 @@ module.exports = function (router, usersRef) {
 							}
 						})
 					})
+			return res.status(200).send('OK');
 		}
-
 	});
 
 	router.post('/webhooks/twitch/stream', function(req, res) {

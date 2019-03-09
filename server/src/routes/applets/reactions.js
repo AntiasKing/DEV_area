@@ -1,4 +1,5 @@
 const request = require('request');
+const sgMail = require('@sendgrid/mail');
 
 module.exports = {
 
@@ -64,6 +65,45 @@ module.exports = {
 
 			console.log(body);
 		});
-	}
+	},
+
+	sendPrivateMessage: function(user, webhook, message) {
+		var options = { method: 'POST',
+	  url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
+	  headers: {'Content-Type': 'application/json'},
+		oauth: {
+				consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
+				consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
+				token: user.twitter.token,
+				token_secret: user.twitter.refreshToken
+		},
+	  body:
+	   { event:
+	      { type: 'message_create',
+	        message_create:
+	         { target: { recipient_id: '1964628600' },
+	           message_data: { text: message } } } },
+	  json: true };
+
+		request(options, function (error, res, body) {
+		  if (error) throw new Error(error);
+
+		  console.log(body);
+		});
+	},
+
+	/* Gmail */
+
+	sendEmail: function(user, webhook, message) {
+		sgMail.setApiKey('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');
+		const msg = {
+			to: 'pierre.narcisi@epitech.eu',
+			from: 'pierre.narcisi@epitech.eu',
+			subject: 'Area',
+			text: 'You received a private message on twitter',
+			html: '<strong>Bye !!</strong>',
+		};
+		sgMail.send(msg);
+	},
 
 }

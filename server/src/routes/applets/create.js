@@ -13,15 +13,17 @@ module.exports = function (router, usersRef) {
 				if (newApplet.serviceToID === undefined || newApplet.serviceToID === null || newApplet.serviceToID > Config.services.length - 1 || newApplet.serviceToID < 0)
             return res.status(400).send('No serviceToID submited or serviceToID out of bounds');
 
-        let service = Config.services[newApplet.serviceID];
-        if (newApplet.reactionID === undefined || newApplet.reactionID === null || newApplet.reactionID > service.reactions.length - 1 || newApplet.reactionID < 0)
+				if (newApplet.actionID === undefined || newApplet.actionID === null || newApplet.actionID > Config.services[newApplet.serviceID].actions.length - 1 || newApplet.actionID < 0)
+					return res.status(400).send('No actionID submited or actionID out of bounds');
+
+        if (newApplet.reactionID === undefined || newApplet.reactionID === null || newApplet.reactionID > Config.services[newApplet.serviceToID].reactions.length - 1 || newApplet.reactionID < 0)
             return res.status(400).send('No reactionID submited or reactionID out of bounds');
-        if (newApplet.actionID === undefined || newApplet.actionID === null || newApplet.reactionID > service.actions.length - 1 || newApplet.reactionID < 0)
-            return res.status(400).send('No actionID submited or actionID out of bounds');
-        if (service.actions[newApplet.actionID].constructor)
-            service.actions[newApplet.actionID].constructor();
-        if (service.reactions[newApplet.reactionID].constructor)
-            service.reactions[newApplet.reactionID].constructor();
+
+        if (Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor)
+            Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor();
+
+        if (Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor)
+            Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor();
 
         usersRef.child(req.params.userID).once('value').then(snap => {
             if (snap.val()) {
@@ -30,10 +32,11 @@ module.exports = function (router, usersRef) {
                 newApplet.id = applets.length;
 								newApplet.on = true;
 								newApplet.serviceName = Config.services[newApplet.serviceID].name;
+								newApplet.serviceToName = Config.services[newApplet.serviceToID].name;
 								newApplet.color = Config.services[newApplet.serviceID].color;
 								newApplet.icon = Config.services[newApplet.serviceID].icon;
 								newApplet.actionName = Config.services[newApplet.serviceID].actions[newApplet.actionID].name;
-								newApplet.reactionName = Config.services[newApplet.serviceID].reactions[newApplet.reactionID].name;
+								newApplet.reactionName = Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].name;
                 applets.push(newApplet);
                 user.applets = applets;
                 snap.ref.update(user);

@@ -2,19 +2,22 @@ const request = require('request');
 
 module.exports = {
 	TwitchFollows: function(twitchID, gain) {
-		console.log("TestTestTestTestTestTest");
 		let user;
 		if (gain === 0) {
 			user = 'to_id='+twitchID;
 		} else {
 			user = 'from_id='+twitchID;
 		}
+		console.log(user);
 		request.post({
 			url: 'https://api.twitch.tv/helix/webhooks/hub',
 			headers: {
-				'Client-ID': 'gh2sbdqqplvq5qa89ze2h6e6zb4tur'
+				'Client-ID': 'gh2sbdqqplvq5qa89ze2h6e6zb4tur',
 			},
-			payload: {
+			'Content-Type': 'application/json',
+			json: true,
+			body: {
+				'hub.lease_seconds':'864000',
 				'hub.callback': 'https://staging-area-epitech.herokuapp.com/webhooks/twitch/follows',
 				'hub.mode': 'subscribe',
 				'hub.topic': 'https://api.twitch.tv/helix/users/follows?first=1&'+user
@@ -25,7 +28,6 @@ module.exports = {
 				return res.status(500).send(err);
 			}
 		});
-		console.log("TestTestTestTestTestTest2");
 	},
 	streamFollows: function(twitchID) {
 		request.post({

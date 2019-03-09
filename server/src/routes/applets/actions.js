@@ -4,9 +4,13 @@ module.exports = {
 
   detectTwitterAction: function (webhook, applet, user) {
 		if (webhook["tweet_create_events"] && applet.actionID == 0)
-			this.setServiceAction(applet, user, "", webhook)
+			this.setServiceAction(applet, user, "I tweet", webhook)
 		if (webhook["favorite_events"] && applet.actionID == 1)
 			this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
+		if (webhook["tweet_create_events"] && applet.actionID == 2)
+			this.setServiceAction(applet, user, "I just rt a tweet", webhook);
+		if (webhook["direct_message_events"] && applet.actionID == 3)
+			this.setServiceAction(applet, user, "I just received a private message", webhook);
   },
 
 	detectFacebookAction: function (webhook, applet, user) {
@@ -62,20 +66,20 @@ module.exports = {
 		if (applet.reactionID == 2)
 			reaction.retweetTweet(user, webhook);
 		if (applet.reactionID == 3)
-			console.log(applet, user, message, webhook);
+			reaction.sendPrivateMessage(user, webhook, message);
 		if (applet.reactionID == 4)
 			console.log(applet, user, message, webhook);
 		if (applet.reactionID == 5)
 			console.log(applet, user, message, webhook);
 	},
 
-	googleReaction: function(applet, user, message) {
+	googleReaction: function(applet, user, message, webhook) {
 		if (applet.reactionID == 0)
-			console.log(applet, user, message);
+			reaction.sendEmail(user, webhook, message);
 		if (applet.reactionID == 1)
 			console.log(applet, user, message);
 		if (applet.reactionID == 2)
-			reaction.postTweet(user, message);
+			console.log(applet, user, message);
 		if (applet.reactionID == 3)
 			console.log(applet, user, message);
 		if (applet.reactionID == 4)
