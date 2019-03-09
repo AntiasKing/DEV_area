@@ -3,12 +3,14 @@ const request = require('request');
 module.exports = function (router, usersRef) {
 
 	router.get('/webhooks/twitch/follows', function(req, res) {
-		console.log(req.query['hub.mode']);
 		if (req.query['hub.challenge'] !== undefined) {
-			console.log("TestTestTestTestTestTest3");
-			console.log(req.query['hub.challenge']);
 			return res.status(200).send(req.query['hub.challenge']);
-		} else if (req.body.data !== undefined) {
+		}
+
+	});
+	router.post('/webhooks/twitch/follows', function(req, res) {
+		console.log(req.body);
+		if (req.body.data !== undefined) {
 			usersRef.once('value')
 					.then(function (snapshot) {
 						snapshot.forEach(function (childSnapshot) {
@@ -35,7 +37,6 @@ module.exports = function (router, usersRef) {
 					})
 			return res.status(200).send('OK');
 		}
-
 	});
 
 	router.post('/webhooks/twitch/stream', function(req, res) {
