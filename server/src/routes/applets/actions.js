@@ -67,7 +67,7 @@ module.exports = {
 
 	twitterReaction: function(applet, user, message, webhook) {
 		if (applet.reactionID == 0)
-			reaction.postTweet(user, message);
+			reaction.postTweet(user, applet.message);
 		if (applet.reactionID == 1)
 			reaction.starredTweet(user, webhook);
 		if (applet.reactionID == 2)
