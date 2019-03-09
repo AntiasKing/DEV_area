@@ -3,11 +3,10 @@ const reaction = require('./reactions')
 module.exports = {
 
   detectTwitterAction: function (webhook, applet, user) {
-		if (webhook["favorite_events"] && applet.actionID == 2) {
-			this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
-		} else if (webhook["tweet_create_events"] && applet.actionID == 0) {
+		if (webhook["tweet_create_events"] && applet.actionID == 0)
 			this.setServiceAction(applet, user, "", webhook)
-		}
+		if (webhook["favorite_events"] && applet.actionID == 1)
+			this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
   },
 
 	detectFacebookAction: function (webhook, applet, user) {

@@ -90,22 +90,22 @@ const Config = {
         },{
             id: 1,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User post a new link",
+            name: "User like a tweet",
             description: "..."
         },{
             id: 2,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User like a tweet",
+            name: "User retweet",
             description: "..."
         },{
             id: 3,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User retweet",
+            name: "undefined",
             description: "..."
         },{
             id: 4,
             constructor: function () {}, // function to call at creation of the applet
-            name: "New tweet from a user",
+            name: "undefined",
             description: "..."
         },{
             id: 5,
