@@ -10,6 +10,21 @@ module.exports = {
 		}
   },
 
+	detectFacebookAction: function (webhook, applet, user) {
+		console.log('===============================');
+		console.log(webhook);
+		console.log('-------------------------------');
+		console.log(webhook.entry);
+		console.log('-------------------------------');
+		console.log(webhook.entry[0].changes)
+		console.log('===============================');
+		// if (webhook["favorite_events"] && applet.actionID == 2) {
+		// 	this.setServiceAction(applet, user, "I just starred a new tweet", webhook);
+		// } else if (webhook["tweet_create_events"] && applet.actionID == 0) {
+		// 	this.setServiceAction(applet, user, "", webhook)
+		// }
+	},
+
 	setServiceAction: function(applet, user, message, webhook) {
 		if (applet.serviceName == "facebook")
 			this.facebookAction(applet, user, message, webhook);
