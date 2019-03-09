@@ -11,33 +11,38 @@ const Config = {
         actions: [{
             id: 0,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User like a post",
+            name: "User share a publication",
             description: "..."
         },{
             id: 1,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User like a page",
+            name: "User post a new status",
             description: "..."
         },{
             id: 2,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User modify his profile",
+            name: "User like a post",
             description: "..."
         },{
             id: 3,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User post a new status",
+            name: "User modify his profile",
             description: "..."
         },{
             id: 4,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User post a new photo",
+            name: "User push a new profile picture",
             description: "..."
         },{
             id: 5,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User post a new link",
-            description: "Trigger when you post a new link"
+            name: "User change his friend's list",
+            description: "..."
+        },{
+            id: 6,
+            constructor: function () {}, // function to call at creation of the applet
+            name: "User send a private message",
+            description: "Trigger when you send private message"
         },],
         reactions: [{
             id: 0,

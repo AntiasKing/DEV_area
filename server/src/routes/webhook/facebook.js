@@ -14,27 +14,7 @@ module.exports = function (router, usersRef) {
     });
 
 		router.post('/webhook/facebook', function (req, res) {
-    // router.get('/facebook/test', function (req, res) {
-
-			// req = { body: { entry:
-			// 	[ { time: 1552093188,
-			// 		changes: [ { field: 'status',
-			// 		 id: '106761673768691_122698442175014',
-			// 		 value: 'retest post' } ],
-			// 		id: '106761673768691',
-			// 		uid: '106761673768691' } ],
-			// 		object: 'user' }
-			// 	}
-
-				console.log('===============================');
-				console.log(req.body);
-				console.log('-------------------------------');
-				console.log(req.body.entry);
-				console.log('-------------------------------');
-				console.log(req.body.entry[0].changes[0])
-				console.log('===============================');
-
-				// searchApplet(req.body);
+				searchApplet(req.body);
         return res.status(200).send();
     })
 
