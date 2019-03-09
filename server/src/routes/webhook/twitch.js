@@ -3,7 +3,8 @@ const request = require('request');
 module.exports = function (router, usersRef) {
 
 	router.get('/webhooks/twitch/follows', function(req, res) {
-		console.log(req);
+		console.log(req.query['hub.mode']);
+		console.log(req.query['hub.challenge']);
 		console.log("TestTestTestTestTestTest3");
 		if (req.hub.challenge !== undefined) {
 			request.post({
