@@ -1,6 +1,7 @@
 const request = require('request');
 
 const action = require('../applets/actions')
+const reaction = require('../applets/reactions')
 
 module.exports = function (router, usersRef) {
 
