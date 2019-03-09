@@ -88,25 +88,25 @@ const Config = {
             constructor: function() {}, // function to call at creation of the applet
             name: "User post tweet",
             description: "...",
-						needMessage: true;
+						needMessage: true
         },{
             id: 1,
             constructor: function() {}, // function to call at creation of the applet
             name: "User starred a tweet",
-            description: "..."
-						needMessage: false;
+            description: "...",
+						needMessage: false
         },{
             id: 2,
             constructor: function() {}, // function to call at creation of the applet
             name: "User retweet tweet",
-            description: "..."
-						needMessage: false;
+            description: "...",
+						needMessage: false
         },{
             id: 3,
             constructor: function() {}, // function to call at creation of the applet
             name: "User send private message",
-            description: "..."
-						needMessage: true;
+            description: "...",
+						needMessage: true
         },],
 
 
@@ -121,7 +121,7 @@ const Config = {
             constructor: function() {}, // function to call at creation of the applet
             name: "USer send email",
             description: "...",
-						needMessage: true;
+						needMessage: true
         },],
 
 
