@@ -132,15 +132,6 @@ class SignIn extends React.Component {
     };
 
 	onSpotifySuccess = (document) => {
-<<<<<<< HEAD
-		localStorage.setItem("userRef", response.data)
-    	window.location = './dashboard';
-	}
-
-    onTwitchSucess = (document) => {
-		localStorage.setItem("userRef", response.data)
-      	window.location = './dashboard';
-=======
 		// localStorage.setItem("userRef", response.data)
     window.location = './dashboard';
 	}
@@ -149,7 +140,6 @@ class SignIn extends React.Component {
 			// localStorage.setItem("userRef", response.data)
 			console.log(user, refKey);
       // window.location = './dashboard';
->>>>>>> 24d3ed82d9b738a97542bf7e6fe1324383a27f89
     }
 
     onFailed = (error) => {
