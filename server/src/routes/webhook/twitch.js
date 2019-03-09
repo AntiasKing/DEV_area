@@ -22,7 +22,7 @@ module.exports = function (router, usersRef) {
 								if (childSnapshot.val().twitch.id === req.body.data[0].from_id) {
 									if (childSnapshot.val().applets) {
 										childSnapshot.val().applets.forEach(function (appletsnap) {
-											if (appletsnap.val().serviceID === 3 && appletsnap.val().actionID === 0 && appletsnap.val().on) {
+											if (appletsnap.serviceID === 3 && appletsnap.actionID === 0 && appletsnap.on) {
 												action.detectTwitchAction(req.body, appletsnap, childSnapshot.val());
 											}
 										})
