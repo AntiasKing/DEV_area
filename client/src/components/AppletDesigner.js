@@ -204,9 +204,10 @@ class AppletDesigner extends React.Component {
                             } else if (activeStep === 4) { // Get Message
                                 servicesArray.push(
                                     <Grid>
+                                        <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
                                         <TextField
                                             label="Get a message to send"
-                                            style={{ margin: "30px" }}
+                                                style={{ margin: "auto", marginLeft: "25%", width: "50%" }}
                                             placeholder="Type a message"
                                             variant="outlined"
                                             value={this.state.message}
@@ -215,9 +216,16 @@ class AppletDesigner extends React.Component {
                                                 shrink: true,
                                             }}
                                         />
-                                        <Button variant="contained" color="primary" onClick={this.handleNextStep.bind(this)}>
+                                        </div>
+                                        <div style={{ margin: "auto", marginTop: "30px", width: "100%" }}>
+                                        <Button
+                                        variant="contained"
+                                        color="primary"
+                                                style={{ margin: "auto", marginLeft: "37%", width: "25%" }}
+                                        onClick={this.handleNextStep.bind(this)}>
                                             Send Text
                                         </Button>
+                                        </div>
                                     </Grid>
                                 );
                                 return (
