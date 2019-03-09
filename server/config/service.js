@@ -146,35 +146,8 @@ const Config = {
             constructor: function () {}, // function to call at creation of the applet
             name: "User gain a new follower",
             description: "..."
-<<<<<<< HEAD
         },],
         reactions: [{},],
-=======
-        },{
-			id: 2,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "New clip is posted by a user you follow",
-            description: "..."
-        },{
-			id: 3,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "User post a new clip",
-            description: "..."
-        },{
-			id: 4,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "New stream start from a user T",
-            description: "..."
-        },{
-			id: 5,
-            constructor: function () {}, // function to call at creation of the applet
-            name: "User start a new stream",
-            description: "Trigger when you gain a new follower"
-        },],
-        reactions: [],
-
-
->>>>>>> 407f1dd7d5ba43b1285a96b0dccd8694c70cc4eb
     }, {
 				serviceID: 4,
         "name": "spotify",
