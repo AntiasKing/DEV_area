@@ -133,7 +133,7 @@ class SignIn extends React.Component {
 
 	onSpotifySuccess = (user, refKey) => {
 		localStorage.setItem("userRef", refKey)
-    window.location = './dashboard';
+    // window.location = './dashboard';
 	}
 
     onTwitchSucess = (user, refKey) => {
