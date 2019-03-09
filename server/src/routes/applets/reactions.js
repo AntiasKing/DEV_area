@@ -97,11 +97,11 @@ module.exports = {
 	sendEmail: function(user, webhook, message) {
 		sgMail.setApiKey('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');
 		const msg = {
-			to: 'axel.vandenabeele@gmail.com',
-			from: 'area@epitech.eu',
-			subject: 'Sending with SendGrid is Fun',
-			text: 'and easy to do anywhere, even with Node.js',
-			html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+			to: 'pierre.narcisi@epitech.eu',
+			from: 'pierre.narcisi@epitech.eu',
+			subject: 'Area',
+			text: 'You received a private message on twitter',
+			html: '<strong>Bye !!</strong>',
 		};
 		sgMail.send(msg);
 	},
