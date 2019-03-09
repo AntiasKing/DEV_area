@@ -9,8 +9,8 @@ module.exports = function (router, usersRef) {
 
 	});
 	router.post('/webhooks/twitch/follows', function(req, res) {
-		console.log(req.body);
 		if (req.body.data !== undefined) {
+			console.log(req.body);
 			usersRef.once('value')
 					.then(function (snapshot) {
 						snapshot.forEach(function (childSnapshot) {
