@@ -15,7 +15,7 @@ const styles = theme => ({
         },
         marginTop: theme.spacing.unit * 8,
         flexDirection: 'column',
-        padding: '0', //${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+        padding: '0',
     },
     icon: {
         overflow: 'visible'
@@ -49,7 +49,7 @@ class Applet extends React.Component {
             <Card className={classes.Card} color="primary" style={{ background: this.props.color }}>
                 <CardActionArea>
                     <CardContent>
-                        <Typography variant="h4" paragraph>{this.props.actionName} when you {this.props.reactionName}</Typography>
+                        <Typography variant="h4" paragraph>When {this.props.actionName}: {this.props.reactionName}</Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions style={{ background: "rgba(0, 0, 0, 0.3)", padding: "0px 20px 0px 20px" }}>
