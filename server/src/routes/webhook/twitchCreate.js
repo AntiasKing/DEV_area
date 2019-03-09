@@ -9,8 +9,9 @@ module.exports = {
 		} else {
 			user = 'from_id='+twitchID;
 		}
+		console.log(user);
 		request.post({
-			url: 'https://api.twitch.tv/helix/webhook/hub',
+			url: 'https://api.twitch.tv/helix/webhooks/hub',
 			headers: {
 				'Client-ID': 'gh2sbdqqplvq5qa89ze2h6e6zb4tur'
 			},
