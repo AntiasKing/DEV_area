@@ -204,7 +204,6 @@ module.exports = function (router, usersRef, db) {
 									return res.status(500).send(err);
 							}
 							let user = JSON.parse(body);
-							console.log(user);
 							user.access_token = access_token;
 							user.refresh_token = refresh_token;
 							let newUsersRef = usersRef.push();
