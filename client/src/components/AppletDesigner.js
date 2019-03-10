@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, CardActions } from '@material-ui/core';
+import { AppBar, Typography, Toolbar, IconButton, Stepper, Step, StepLabel, Grid, Button, CardActions, TextField } from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Service from './Service';
@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-    return ['Select a service', 'Select an action', 'Select a reaction Service', 'Select a reaction', 'Good Job'];
+    return ['Service Action', 'Action', 'Extra', 'Service Reaction', 'Reaction', 'Extra', 'Good Job'];
 }
 
 class AppletDesigner extends React.Component {
@@ -39,9 +39,12 @@ class AppletDesigner extends React.Component {
             reactionServicesID: 0,
             actionsID: 0,
             reactionsID: 0,
-
-            reactionID: 0,
+            message: "",
             login: [false, false, false, false, false, true],
+            to: "",
+            object: "",
+            email: "",
+            interval: 0,
         }
         this.CheckLogin();
         this.getServices();
@@ -69,11 +72,31 @@ class AppletDesigner extends React.Component {
     }
 
     handleClickAction(actionID) {
-        this.setState({ activeStep: this.state.activeStep + 1, actionsID: actionID });
+        if (this.state.servicesID === 4 || this.state.servicesID === 5) {
+           this.setState({ activeStep: this.state.activeStep + 1, actionsID: actionID });
+        } else {
+            this.setState({ activeStep: this.state.activeStep + 2, actionsID: actionID });
+        }
     }
 
-    handleClickReaction(reactionID) {
-        this.setState({ activeStep: this.state.activeStep + 1, reactionsID: reactionID })
+    handleClickReaction(reactionID, needMessage) {
+        if (needMessage === true || this.state.reactionServicesID === 2) {
+            this.setState({ activeStep: this.state.activeStep + 1, reactionsID: reactionID })
+        } else {
+            this.setState({ activeStep: this.state.activeStep + 2, reactionsID: reactionID })
+        }
+    }
+
+    handleMessage = message => event => {
+        this.setState({ [message]: event.target.value });
+    };
+
+    handleInterval = message => event => {
+        this.setState({ [message]: event.target.value });
+    };
+
+    handleNextStep() {
+        this.setState({ activeStep: this.state.activeStep + 1 })
     }
 
     CheckLogin(response) {
@@ -97,14 +120,20 @@ class AppletDesigner extends React.Component {
                 "serviceID": this.state.servicesID,
                 "actionID": this.state.actionsID,
                 "reactionID": this.state.reactionsID,
+                "message": this.state.message,
+                "to": this.state.to,
+                "object": this.state.object,
+                "email": this.state.email,
+                "interval": this.state.interval,
             }
         });
+        console.log(data);
         Axios.post("https://staging-area-epitech.herokuapp.com/applets/" + localStorage.getItem('userRef'),
             data,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    console.log("An Applet has been create");
+                    console.log("An Applet has been created");
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -167,7 +196,37 @@ class AppletDesigner extends React.Component {
                                 return (
                                     <Grid className={classes.grid} container>{servicesArray}</Grid>
                                 )
-                            } else if (activeStep === 2) { // Reactions Services
+                            } else if (activeStep === 2) { // Extra Actions
+                                servicesArray.push(
+                                    <Grid>
+                                        <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
+                                            <TextField
+                                                label="Get an interval (min)"
+                                                style={{ margin: "auto", marginLeft: "25%", width: "50%" }}
+                                                placeholder="Type an interval in minutes"
+                                                variant="outlined"
+                                                value={this.state.interval}
+                                                onChange={this.handleMessage('interval')}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </div>
+                                        <div style={{ margin: "auto", marginTop: "30px", width: "100%" }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                style={{ margin: "auto", marginLeft: "37%", width: "25%" }}
+                                                onClick={this.handleNextStep.bind(this)}>
+                                                Set Interval
+                                            </Button>
+                                        </div>
+                                    </Grid>
+                                );
+                                return (
+                                    <div>{<Grid>{servicesArray}</Grid>}</div>
+                                )
+                            } else if (activeStep === 3) { // Reactions Services
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.login[i] === true) {
                                         servicesArray.push(<Service {...services[i]} key={services[i].name} onClick={() => (this.handleClickReactionService(services[i].serviceID))} />);
@@ -176,16 +235,99 @@ class AppletDesigner extends React.Component {
                                 return (
                                     <div>{<Grid container className={classes.grid}>{servicesArray}</Grid>}</div>
                                 )
-                            } else if (activeStep === 3) { // Reactions
+                            } else if (activeStep === 4) { // Reactions
                                 for (let i = 0; i < services.length; i++) {
                                     if (this.state.reactionServicesID === services[i].serviceID) {
                                         for (let j = 0; services[i].reactions[j]; j++) {
-                                            servicesArray.push(<Grid onClick={() => (this.handleClickReaction(services[i].reactions[j].id))}><SelectApplet {...services[i].reactions[j]} /></Grid>);
+                                            servicesArray.push(<Grid onClick={() => (this.handleClickReaction(services[i].reactions[j].id, services[i].reactions[j].needMessage))}><SelectApplet {...services[i].reactions[j]} /></Grid>);
                                         }
                                     }
                                 }
                                 return (
                                     <Grid className={classes.grid} container>{servicesArray}</Grid>
+                                )
+                            } else if (activeStep === 5) { // Extra Reaction
+                                if (this.state.reactionServicesID === 2) {
+                                    servicesArray.push(
+                                        <Grid>
+                                            <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
+                                                <TextField
+                                                    label="to:"
+                                                    style={{ margin: "auto", marginLeft: "25%", width: "20%" }}
+                                                    placeholder="Type a email"
+                                                    variant="outlined"
+                                                    value={this.state.to}
+                                                    onChange={this.handleMessage('to')}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                                <TextField
+                                                    label="Object"
+                                                    style={{ margin: "auto", marginLeft: "3%", width: "27%" }}
+                                                    placeholder="Type an object"
+                                                    variant="outlined"
+                                                    value={this.state.object}
+                                                    onChange={this.handleMessage('object')}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                            </div>
+                                            <div style={{ margin: "auto", marginTop: "70px", width: "100%" }}>
+                                                <TextField
+                                                    label="Content"
+                                                    style={{ margin: "auto", marginLeft: "25%", width: "50%" }}
+                                                    placeholder="Type the content of your email"
+                                                    variant="outlined"
+                                                    value={this.state.email}
+                                                    onChange={this.handleMessage('email')}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                            </div>
+                                            <div style={{ margin: "auto", marginTop: "30px", width: "100%" }}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    style={{ margin: "auto", marginLeft: "37%", width: "25%" }}
+                                                    onClick={this.handleNextStep.bind(this)}>
+                                                    Send Email
+                                            </Button>
+                                            </div>
+                                        </Grid>
+                                    );
+                                } else {
+                                    servicesArray.push(
+                                        <Grid>
+                                            <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
+                                            <TextField
+                                                label="Get a message to send"
+                                                style={{ margin: "auto", marginLeft: "25%", width: "50%" }}
+                                                placeholder="Type a message"
+                                                variant="outlined"
+                                                value={this.state.message}
+                                                onChange={this.handleMessage('message')}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                            </div>
+                                            <div style={{ margin: "auto", marginTop: "30px", width: "100%" }}>
+                                            <Button
+                                            variant="contained"
+                                            color="primary"
+                                                    style={{ margin: "auto", marginLeft: "37%", width: "25%" }}
+                                            onClick={this.handleNextStep.bind(this)}>
+                                                Send Text
+                                            </Button>
+                                            </div>
+                                        </Grid>
+                                    );
+                                }
+                                return (
+                                    <div>{<Grid>{servicesArray}</Grid>}</div>
                                 )
                             } else { // Bien Joue
                                 this.SendApplets();

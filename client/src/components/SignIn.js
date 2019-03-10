@@ -120,7 +120,6 @@ class SignIn extends React.Component {
             data,
             { headers: { "Content-Type": "application/json" } })
             .then(function (response) {
-                console.log(response);
 								localStorage.setItem("userRef", response.data)
                 window.location = "./dashboard";
             }).catch(function (error) {
@@ -129,20 +128,16 @@ class SignIn extends React.Component {
     }
 
     handleTwitter = (response) => {
-      console.log("Twitter handled !!");
-			console.log(response.headers)
       window.location = './dashboard';
     };
 
-	onSpotifySuccess = (document) => {
-		console.log(document);
-		// localStorage.setItem("userRef", response.data)
+	onSpotifySuccess = (user, refKey) => {
+		localStorage.setItem("userRef", refKey)
     window.location = './dashboard';
 	}
 
-    onTwitchSucess = (document) => {
-      console.log(document);
-			// localStorage.setItem("userRef", response.data)
+    onTwitchSucess = (user, refKey) => {
+			localStorage.setItem("userRef", refKey)
       window.location = './dashboard';
     }
 

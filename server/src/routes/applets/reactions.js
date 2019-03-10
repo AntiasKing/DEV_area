@@ -27,6 +27,8 @@ module.exports = {
 	},
 
 	starredTweet: function(user, webhook) {
+		if (!webhook)
+			return;
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/favorites/create.json',
 			qs: { id: webhook["tweet_create_events"][0].id_str },
@@ -48,6 +50,8 @@ module.exports = {
 	},
 
 	retweetTweet: function(user, webhook) {
+		if (!webhook)
+			return;
 		var options = { method: 'POST',
 			url: 'https://api.twitter.com/1.1/statuses/retweet/' + webhook["tweet_create_events"][0].id_str + '.json',
 			headers:
@@ -67,7 +71,7 @@ module.exports = {
 		});
 	},
 
-	sendPrivateMessage: function(user, webhook, message) {
+	sendPrivateMessage: function(user, message) {
 		var options = { method: 'POST',
 	  url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
 	  headers: {'Content-Type': 'application/json'},

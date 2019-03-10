@@ -1,8 +1,10 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch } from '@material-ui/core';
+import { Card, CardHeader, CardContent, CardActionArea, CardActions, Icon, Typography, Switch, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import classNames from 'classnames';
+import Axios from 'axios';
 
 const styles = theme => ({
     Card: {
@@ -39,7 +41,27 @@ class Applet extends React.Component {
         );
     }
 
-    handleSwitchChange = name => event => {
+    ChangeStatus() {
+        Axios.put("https://staging-area-epitech.herokuapp.com/applet/" + localStorage.getItem('userRef') + "/" + this.props.id + "/toggle")
+            .then((response) => {
+                console.log("The status of the applet has been edited");
+                this.setState({ on: !this.state.on });
+            }).catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    DeleteApplets() {
+        Axios.delete("https://staging-area-epitech.herokuapp.com/applet/" + localStorage.getItem('userRef') + "/" + this.props.id)
+            .then((response) => {
+                console.log("An applet has been deleted");
+                window.location = './dashboard';
+            }).catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    handleSwitchChange = event => {
         this.setState({ on: event.target.checked });
     }
 
@@ -64,9 +86,12 @@ class Applet extends React.Component {
                     />
                     <Switch
                         color="secondary"
-                        checked={this.state.on}
-                        onChange={this.handleSwitchChange("on")}
+                        checked={this.props.on}
+                        onClick={this.ChangeStatus.bind(this)}
                     />
+                    <IconButton aria-label="Delete" onClick={this.DeleteApplets.bind(this)}>
+                        <DeleteIcon />
+                    </IconButton>
                 </CardActions>
             </Card >);
     }

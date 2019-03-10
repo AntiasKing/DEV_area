@@ -19,12 +19,6 @@ module.exports = function (router, usersRef) {
         if (newApplet.reactionID === undefined || newApplet.reactionID === null || newApplet.reactionID > Config.services[newApplet.serviceToID].reactions.length - 1 || newApplet.reactionID < 0)
             return res.status(400).send('No reactionID submited or reactionID out of bounds');
 
-        if (Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor)
-            Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor();
-
-        if (Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor)
-            Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor();
-
         usersRef.child(req.params.userID).once('value').then(snap => {
             if (snap.val()) {
                 let user = snap.val();
@@ -37,9 +31,18 @@ module.exports = function (router, usersRef) {
 								newApplet.icon = Config.services[newApplet.serviceID].icon;
 								newApplet.actionName = Config.services[newApplet.serviceID].actions[newApplet.actionID].name;
 								newApplet.reactionName = Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].name;
+								if (newApplet.message)
+									newApplet.message = newApplet.message;
                 applets.push(newApplet);
                 user.applets = applets;
                 snap.ref.update(user);
+
+								if (Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor && newApplet.serviceID == 5)
+										Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor(newApplet, user);
+
+								if (Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor)
+										Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor();
+
                 return res.status(200).send(user.applets);
             }
             return res.status(400).send(`No user ${req.params.userID} found`);
