@@ -159,7 +159,7 @@ const Config = {
         actions: [{
             id: 0,
             constructor: function () {}, // function to call at creation of the applet
-            name: "User like a new track",
+            name: "Track added to playlist",
             description: "..."
         },{
             id: 1,
