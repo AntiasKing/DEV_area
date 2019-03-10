@@ -1,6 +1,6 @@
 const weather = require('../src/routes/actions/weather')
 const action = require('../src/routes/applets/actions')
-const playlist = require('../src/webhook/spotify')
+const playlist = require('../src/routes/webhook/spotify')
 
 const Config = {
     // Example
