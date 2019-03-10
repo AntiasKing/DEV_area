@@ -13,8 +13,7 @@ module.exports = {
 						console.log(err);
 						return res.status(500).send(err);
 					}
-					console.log(body);
-					console.log(JSON.parse(body).id);
+					object = JSON.parse(body);
 					let present = 0;
 					usersRef.once('value')
 						.then(function (snapshot) {
@@ -26,16 +25,16 @@ module.exports = {
 											spotify.playlist = [];
 										}
 										spotify.playlist.forEach(function (playlist) {
-											if (playlist.id === body.id) {
+											if (playlist.id === object.id) {
 												present = 1;
-												if (playlist.snapshot_id !== body.snapshot_id) {
-													handlePlaylist(playlist, body, childSnapshot);
-													playlist = body;
+												if (playlist.snapshot_id !== object.snapshot_id) {
+													handlePlaylist(playlist, object, childSnapshot);
+													playlist = object;
 												}
 											}
 										})
 										if (present === 0) {
-											spotify.playlist.push(body);	
+											spotify.playlist.push(object);	
 										}
 										childSnapshot.child("spotify").ref.update(spotify);
 									}
