@@ -1,5 +1,6 @@
 import React from 'react'
 import { TextInput, Text, View, Alert, TouchableHighlight, Image, ScrollView } from 'react-native'
+import { Button } from 'react-native-elements';
 import Global from '../Global'
 import Axios from 'axios';
 
@@ -10,7 +11,7 @@ export default class Page2 extends React.Component {
             actionSN: {},
             action: {},
 
-            Interval: ""
+            Interval: []
         }
     }
 
@@ -28,6 +29,9 @@ export default class Page2 extends React.Component {
                 this.setState({actionSN: response.data[4]})
             else if (Global.SN1 === "weather")
                 this.setState({actionSN: response.data[5]})
+            else if (Global.SN1 == "timer")
+                this.setState({actionSN: response.data[6]})
+
             this.setState({action: this.state.actionSN.actions});
             //console.error(this.state.action);
         })
@@ -66,7 +70,7 @@ export default class Page2 extends React.Component {
 //                Global.actionName = name;
 //                this.props.navigation.navigate('Page3')
 //            }}>
-            <View style={{ marginVertical: 10, backgroundColor: "white", alignItems: "center", width: 300, height: 200 }}>
+            <View style={{ marginVertical: 10, backgroundColor: "white", alignItems: "center", width: 300, height: 250 }}>
                 <View style={{ flexDirection: "row", margin: 10, backgroundColor: "white", alignItems: "center", width: 300, height: 100 }}>
                     <View style={{ flex: 0.35, alignItems: "center" }}>
                         <Image
@@ -85,16 +89,18 @@ export default class Page2 extends React.Component {
                 </View>
                 <View style={{ alignItems: "center" }}>
                     <TextInput style={{ marginvertical: 15, height: 40, width: 250, borderColor: 'black', borderBottomWidth: 1 }}
-                        placeholder="Set interval (min)"
+                        placeholder="Set interval"
                         autoCapitalize="none"
-                        value={this.state.Interval}
-                        onChangeText={(text) => this.setState({ Interval: text })}>
+                        value={this.state.Interval[id]}
+                        onChangeText={(text) => {let yo = this.state.Interval;
+                                                yo[id] = text;
+                                                this.setState({ Interval: yo })}}>
                     </TextInput>
                     <Button
                         onPress={() => {
-                            Global.interval = this.state.Interval;
-                            Global.reactionID = id;
-                            Global.reactionName = name;
+                            Global.interval = this.state.Interval[id];
+                            Global.actionID = id;
+                            Global.actionName = name;
                             this.props.navigation.navigate('Page3')
                         }}
                         title="Validate"
@@ -124,6 +130,8 @@ export default class Page2 extends React.Component {
             else if (Global.SN1 === "spotify")
                 res.push(this.ButtonCreateInterval(this.state.action[property].name, this.state.action[property].id, this.state.action[property].description, require('../../assets/SN/spotify.png')));
             else if (Global.SN1 === "weather")
+                res.push(this.ButtonCreateInterval(this.state.action[property].name, this.state.action[property].id, this.state.action[property].description, require('../../assets/SN/weather.png')));
+            else if (Global.SN1 === "timer")
                 res.push(this.ButtonCreateInterval(this.state.action[property].name, this.state.action[property].id, this.state.action[property].description, require('../../assets/SN/weather.png')));
         }
         return res;

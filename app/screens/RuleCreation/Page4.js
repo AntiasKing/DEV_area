@@ -12,7 +12,10 @@ export default class Page4 extends React.Component {
             reactionSN: {},
             reaction: {},
 
-            message: '',
+            message: [],
+            to:[],
+            object: [],
+            email: [],
         }
     }
 
@@ -86,10 +89,78 @@ export default class Page4 extends React.Component {
                             placeholder="Parameter"
                             autoCapitalize="none"
                             value={this.state.message}
-                            onChangeText={(text) => this.setState({message: text})}>
+                            onChangeText={(text) => {let yo = this.state.message;
+                                yo[id] = text;
+                                this.setState({ message: yo })}}>
                     </TextInput>
                     <Button
                             onPress={() => { Global.message = this.state.message;
+                                Global.reactionID = id;
+                                Global.reactionName = name;
+                                this.props.navigation.navigate('Page5')}}
+                            title="Validate"
+                            color="#32d7fb"
+                            buttonStyle={{marginTop: 15, height:40, width:150}}>
+                    </Button>
+                </View>
+            </View>
+            // </TouchableHighlight>
+        )
+    }
+
+    ButtonCreateGoogle()
+    {
+        return(
+            // <TouchableHighlight style={{ marginVertical: 10 }} onPress={() => {
+            //     Global.reactionID = id;
+            //     Global.reactionName = name;
+            //     this.props.navigation.navigate('Page5')}}>
+            <View style={{marginVertical: 10, backgroundColor: "white", alignItems:"center", width: 300, height: 350}}>
+                <View style={{flexDirection: "row", margin: 10, alignItems:"center"}}>
+                        <View style={{flex: 0.35, alignItems:"center"}}>
+                            <Image
+                            style={{height: 70, width: 70}}
+                            source={image}
+                            />
+                        </View>
+                        <View style={{flex: 0.65, alignItems:"center"}}>
+                            <Text style={{fontSize: 16, marginVertical: 5 , textAlign:"center"}} >
+                                {name}
+                            </Text>
+                            <Text style={{ textAlign:"center"}}>
+                                {description}
+                            </Text>
+                        </View>
+                </View>
+                <View style={{alignItems:"center"}}>
+                    <TextInput style={{marginvertical: 15, height:40, width:250, borderColor: 'black', borderBottomWidth: 1}} 
+                            placeholder="To"
+                            autoCapitalize="none"
+                            value={this.state.to[id]}
+                            onChangeText={(text) => {let yo = this.state.to;
+                                yo[id] = text;
+                                this.setState({ to: yo })}}>
+                    </TextInput>
+                    <TextInput style={{marginvertical: 15, height:40, width:250, borderColor: 'black', borderBottomWidth: 1}} 
+                            placeholder="Object"
+                            autoCapitalize="none"
+                            value={this.state.object[id]}
+                            onChangeText={(text) => {let yo = this.state.object;
+                                yo[id] = text;
+                                this.setState({ object: yo })}}>
+                    </TextInput>
+                    <TextInput style={{marginvertical: 15, height:40, width:250, borderColor: 'black', borderBottomWidth: 1}} 
+                            placeholder="Email"
+                            autoCapitalize="none"
+                            value={this.state.email[id]}
+                            onChangeText={(text) => {let yo = this.state.email;
+                                yo[id] = text;
+                                this.setState({ email: yo })}}>
+                    </TextInput>
+                    <Button
+                            onPress={() => { Global.email = this.state.email[id];
+                                Global.to = this.state.to[id];
+                                Global.object = this.state.object[id];
                                 Global.reactionID = id;
                                 Global.reactionName = name;
                                 this.props.navigation.navigate('Page5')}}
@@ -114,21 +185,21 @@ export default class Page4 extends React.Component {
                     res.push(this.ButtonCreate(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/facebook.png')));
                 else if (Global.SN2 === "twitter")
                     res.push(this.ButtonCreate(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/twitter.png')));
-                else if (Global.SN2 === "google")
-                    res.push(this.ButtonCreate(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/google.png')));
                 else if (Global.SN2 === "twitch")
                     res.push(this.ButtonCreate(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/twitch.png')));
                 else if (Global.SN2 === "spotify")
                     res.push(this.ButtonCreate(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/spotify.png')));
             }
+            else if (Global.SN2 === "google")
+                    res.push(this.ButtonCreateGoogle(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/google.png')));
             else
             {
                 if (Global.SN2 === "facebook")
                     res.push(this.ButtonCreateWithMessage(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/facebook.png')));
                 else if (Global.SN2 === "twitter")
                     res.push(this.ButtonCreateWithMessage(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/twitter.png')));
-                else if (Global.SN2 === "google")
-                    res.push(this.ButtonCreateWithMessage(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/google.png')));
+                //else if (Global.SN2 === "google")
+                //    res.push(this.ButtonCreateWithMessage(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/google.png')));
                 else if (Global.SN2 === "twitch")
                     res.push(this.ButtonCreateWithMessage(this.state.reaction[property].name, this.state.reaction[property].id, this.state.reaction[property].description, require('../../assets/SN/twitch.png')));
                 else if (Global.SN2 === "spotify")
