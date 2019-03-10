@@ -52,7 +52,7 @@ module.exports = {
 					if (appletsnap.playlistID) {
 						if (oldPlaylist.id === appletsnap.playlistID) {
 							if (appletsnap.actionID === 0) {
-
+								console.log(testtest);
 							}
 						}
 					}
