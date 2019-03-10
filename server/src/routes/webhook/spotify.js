@@ -1,7 +1,7 @@
 const request = require('request');
 
-module.exports = function () {
-		function FollowPlaylist(playlistID, spotifyID, interval) {
+module.exports = {
+		FollowPlaylist: function(playlistID, spotifyID, interval) {
 			let polling = setInterval(() => {
 				request.get({
 					url: 'https://api.spotify.com/v1/playlists/'+playlistID,
@@ -13,6 +13,7 @@ module.exports = function () {
 						console.log(err);
 						return res.status(500).send(err);
 					}
+					console.log(body);
 					let present = 0;
 					usersRef.once('value')
 						.then(function (snapshot) {
@@ -25,16 +26,16 @@ module.exports = function () {
 										}
 										spotify.playlist.push();
 										spotify.playlist.forEach(function (list) {
-											if (playlist.id === response.body.id) {
+											if (playlist.id === body.id) {
 												present = 1;
-												if (playlist.snapshot_id !== response.body.snapshot_id) {
-													handlePlaylist(playlist, response.body, childSnapshot);
-													playlist = response.body;
+												if (playlist.snapshot_id !== body.snapshot_id) {
+													handlePlaylist(playlist, body, childSnapshot);
+													playlist = body;
 												}
 											}
 										})
 										if (present === 0) {
-											spotify.playlist.push(response.body);	
+											spotify.playlist.push(body);	
 										}
 										childSnapshot.child("spotify").ref.update(spotify);
 									}
@@ -44,15 +45,15 @@ module.exports = function () {
 					}
 				)
 			}, interval*1000);
-		}
+		},
 
-		function handlePlaylist(oldPlaylist, newPlaylist, user) {
+		handlePlaylist: function(oldPlaylist, newPlaylist, user) {
 			if (user.val().applets) {
 				user.val().applets.forEach(function(appletsnap) {
 					if (appletsnap.playlistID) {
 						if (oldPlaylist.id === appletsnap.playlistID) {
 							if (appletsnap.actionID === 0) {
-								
+
 							}
 						}
 					}

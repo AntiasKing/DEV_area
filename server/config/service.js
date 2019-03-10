@@ -1,5 +1,6 @@
 const weather = require('../src/routes/actions/weather')
 const action = require('../src/routes/applets/actions')
+const playlist = require('../src/webhook/spotify')
 
 const Config = {
     // Example
@@ -148,7 +149,7 @@ const Config = {
         "icon": "fab fa-spotify",
         actions: [{
             id: 0,
-            constructor: function () {}, // function to call at creation of the applet
+            constructor: function (applet, user) {playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval)}, // function to call at creation of the applet
             name: "Track added to playlist",
             description: "..."
         },{

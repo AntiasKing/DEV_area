@@ -94,7 +94,7 @@ class AppletDesigner extends React.Component {
 
     handleInterval = message => event => {
         this.setState({ [message]: event.target.value });
-    };
+	};
 
     handleNextStep() {
         this.setState({ activeStep: this.state.activeStep + 1 })
@@ -125,7 +125,8 @@ class AppletDesigner extends React.Component {
                 "to": this.state.to,
                 "object": this.state.object,
                 "email": this.state.email,
-                "interval": this.state.interval,
+				"interval": this.state.interval,
+				"playlistID": this.state.playlistID,
             }
         });
         console.log(data);
@@ -198,8 +199,47 @@ class AppletDesigner extends React.Component {
                                     <Grid className={classes.grid} container>{servicesArray}</Grid>
                                 )
                             } else if (activeStep === 2) { // Extra Actions
+								if (this.state.servicesID === 4) {
                                 servicesArray.push(
                                     <Grid>
+                                        <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
+                                            <TextField
+                                                label="Get an interval (min)"
+                                                style={{ margin: "auto", marginLeft: "25%", width: "50%", border-bottom: }}
+                                                placeholder="Type an interval in minutes"
+                                                variant="outlined"
+                                                value={this.state.interval}
+                                                onChange={this.handleMessage('interval')}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                            <TextField
+                                                label="Get a playlist id"
+                                                style={{ margin: "auto", marginLeft: "25%", width: "50%" }}
+                                                placeholder="Playlist id"
+                                                variant="outlined"
+                                                value={this.state.playlistID}
+                                                onChange={this.handleMessage('playlistID')}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </div>
+                                        <div style={{ margin: "auto", marginTop: "30px", width: "100%" }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                style={{ margin: "auto", marginLeft: "37%", width: "25%" }}
+                                                onClick={this.handleNextStep.bind(this)}>
+                                                Next
+                                            </Button>
+                                        </div>
+                                    </Grid>
+                                );
+								} else {
+									servicesArray.push(
+									<Grid>
                                         <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
                                             <TextField
                                                 label="Get an interval (min)"
@@ -223,7 +263,8 @@ class AppletDesigner extends React.Component {
                                             </Button>
                                         </div>
                                     </Grid>
-                                );
+									);
+								}
                                 return (
                                     <div>{<Grid>{servicesArray}</Grid>}</div>
                                 )
