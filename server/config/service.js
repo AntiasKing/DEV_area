@@ -149,11 +149,7 @@ const Config = {
         "icon": "fab fa-spotify",
         actions: [{
             id: 0,
-<<<<<<< HEAD
-            constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef) }, // function to call at creation of the applet
-=======
-            constructor: function (applet, user, usersRef) {playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token)}, // function to call at creation of the applet
->>>>>>> 1a8e3b17dd6b6063a74045da9843c854abdcd31d
+            constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token) }, // function to call at creation of the applet
             name: "Track added to playlist",
             description: "..."
         }, {
