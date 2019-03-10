@@ -9,34 +9,32 @@ module.exports = {
 						'Authorization': 'Bearer '+access_token
 					}
 				}, function (err, response, body) {
-					console.log("userID: "+spotifyID);
 					if (err) {
 						console.log(err);
 						return res.status(500).send(err);
 					}
-					console.log(body);
+					object = JSON.parse(body);
 					let present = 0;
 					usersRef.once('value')
 						.then(function (snapshot) {
 							snapshot.forEach(function (childSnapshot) {
 								if (childSnapshot.val().spotify) {
 									let spotify = childSnapshot.val().spotify;
-									if (spotify.spotify.id === spotifyID) {
+									if (spotify.id === spotifyID) {
 										if (!spotify.playlist) {
 											spotify.playlist = [];
 										}
-										spotify.playlist.push();
-										spotify.playlist.forEach(function (list) {
-											if (playlist.id === body.id) {
+										spotify.playlist.forEach(function (playlist) {
+											if (playlist.id === object.id) {
 												present = 1;
-												if (playlist.snapshot_id !== body.snapshot_id) {
-													handlePlaylist(playlist, body, childSnapshot);
-													playlist = body;
+												if (playlist.snapshot_id !== object.snapshot_id) {
+													handlePlaylist(playlist, object, childSnapshot);
+													playlist = object;
 												}
 											}
 										})
 										if (present === 0) {
-											spotify.playlist.push(body);	
+											spotify.playlist.push(object);	
 										}
 										childSnapshot.child("spotify").ref.update(spotify);
 									}
@@ -54,7 +52,7 @@ module.exports = {
 					if (appletsnap.playlistID) {
 						if (oldPlaylist.id === appletsnap.playlistID) {
 							if (appletsnap.actionID === 0) {
-
+								console.log(testtest);
 							}
 						}
 					}
