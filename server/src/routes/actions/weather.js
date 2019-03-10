@@ -24,8 +24,9 @@ module.exports = {
 								action.setServiceAction(applet, user, null)
 							}
 	        });
+					console.log("new loop !!!!");
 	    this.getWeather(applet);
-		}, (applet.interval * 60000))
+		}, (applet.interval * 10000))
 	}
 
 }
