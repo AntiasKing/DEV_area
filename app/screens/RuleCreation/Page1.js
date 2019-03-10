@@ -110,7 +110,7 @@ export default class Page1 extends React.Component {
                     this.props.navigation.navigate('Page2')}}>
                     <Image
                         style={{height: 70, width: 70}}
-                        source={require('../../assets/SN/weather.png')}
+                        source={require('../../assets/SN/time.png')}
                         />
                 </TouchableHighlight>
             )

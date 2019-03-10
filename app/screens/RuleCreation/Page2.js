@@ -193,7 +193,7 @@ export default class Page2 extends React.Component {
             else if (Global.SN1 === "weather")
                 res.push(this.ButtonCreateInterval(this.state.action[property].name, this.state.action[property].id, this.state.action[property].description, require('../../assets/SN/weather.png')));
             else if (Global.SN1 === "timer")
-                res.push(this.ButtonCreateInterval(this.state.action[property].name, this.state.action[property].id, this.state.action[property].description, require('../../assets/SN/weather.png')));
+                res.push(this.ButtonCreateInterval(this.state.action[property].name, this.state.action[property].id, this.state.action[property].description, require('../../assets/SN/time.png')));
         }
         return res;
     }
