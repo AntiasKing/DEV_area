@@ -12,15 +12,28 @@ module.exports = {
 	        request(options, function (error, response, body) {
 	            if (error) throw new Error(error);
 	            let Val = JSON.parse(body);
-	            let res = Val.forecast.forecastday[1].day.condition.text;
+							let cond = Val.forecast.forecastday[1].day.condition.text;
+							let events = Val.forecast.forecastday[1].day;
 							const action = require("../applets/actions");
-	            if ((res.indexOf("rain") > -1 || res.indexOf("Rain") > -1) && id == 0) {
+	            if ((cond.indexOf("rain") > -1 || cond.indexOf("Rain") > -1) && id == 0) {
 								action.setServiceAction(applet, user, null)
-	            } else if ((res.indexOf("sunny") > -1 || res.indexOf("Sunny") > -1) && id == 1) {
+	            }
+							if ((cond.indexOf("sunny") > -1 || cond.indexOf("Sunny") > -1) && id == 1) {
 								action.setServiceAction(applet, user, null)
-							} else if ((res.indexOf("snow") > -1 || res.indexOf("Snow") > -1) && id == 2) {
+							}
+							if ((cond.indexOf("snow") > -1 || cond.indexOf("Snow") > -1) && id == 2) {
 								action.setServiceAction(applet, user, null)
-							} else if ((res.indexOf("cloudy") > -1 || res.indexOf("Cloudy") > -1) && id == 3) {
+							}
+							if ((cond.indexOf("cloudy") > -1 || cond.indexOf("Cloudy") > -1) && id == 3) {
+								action.setServiceAction(applet, user, null)
+							}
+							if (events.maxwind_kph >= 50 && id == 4) {
+								action.setServiceAction(applet, user, null)
+							}
+							if (events.max_temp_c >= 20 && id == 5) {
+								action.setServiceAction(applet, user, null)
+							}
+							if (events.min_temp_c < 10 && id == 6) {
 								action.setServiceAction(applet, user, null)
 							}
 	        });
@@ -31,7 +44,7 @@ module.exports = {
 	timer: function(applet, user) {
 		setTimeout(() => {
 						const action = require("../applets/actions");
-							action.setServiceAction(applet, user, null)
+						action.setServiceAction(applet, user, null)
 	}, (applet.interval * 60000))
 	}
 
