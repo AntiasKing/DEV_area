@@ -205,7 +205,7 @@ class AppletDesigner extends React.Component {
                                         <div style={{ margin: "auto", marginTop: "100px", width: "100%" }}>
                                             <TextField
                                                 label="Get an interval (min)"
-                                                style={{ margin: "auto", marginLeft: "25%", width: "50%", border-bottom: }}
+                                                style={{ margin: "auto", marginLeft: "25%", width: "50%"}}
                                                 placeholder="Type an interval in minutes"
                                                 variant="outlined"
                                                 value={this.state.interval}
