@@ -141,7 +141,6 @@ const Config = {
             name: "User gain a new follower",
             description: "Trigger when people follow user"
         },],
-        reactions: [{},],
     }, {
         serviceID: 4,
         "name": "spotify",
@@ -149,7 +148,7 @@ const Config = {
         "icon": "fab fa-spotify",
         actions: [{
             id: 0,
-            constructor: function (applet, user) {playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval)}, // function to call at creation of the applet
+            constructor: function (applet, user, usersRef) {playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef)}, // function to call at creation of the applet
             name: "Track added to playlist",
             description: "..."
         },{

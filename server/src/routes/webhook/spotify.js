@@ -1,7 +1,8 @@
 const request = require('request');
 
 module.exports = {
-		FollowPlaylist: function(playlistID, spotifyID, interval) {
+		FollowPlaylist: function(playlistID, spotifyID, interval, usersRef) {
+			console.log("userID: "+spotifyID);
 			let polling = setInterval(() => {
 				request.get({
 					url: 'https://api.spotify.com/v1/playlists/'+playlistID,
