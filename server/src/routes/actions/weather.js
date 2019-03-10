@@ -12,7 +12,10 @@ module.exports = {
 	        request(options, function (error, response, body) {
 	            if (error) throw new Error(error);
 	            let Val = JSON.parse(body);
+							console.log(Val)
+							console.log(Val.forecast)
 	            let res = Val.forecast.forecastday[1].day.condition.text;
+							console.log("debug")
 							const action = require("../applets/actions");
 	            if ((res.indexOf("rain") > -1 || res.indexOf("Rain") > -1) && id == 0) {
 								action.setServiceAction(applet, user, null)
@@ -21,11 +24,11 @@ module.exports = {
 							} else if ((res.indexOf("snow") > -1 || res.indexOf("Snow") > -1) && id == 2) {
 								action.setServiceAction(applet, user, null)
 							} else if ((res.indexOf("cloudy") > -1 || res.indexOf("Cloudy") > -1) && id == 3) {
+								console.log("okokok");
 								action.setServiceAction(applet, user, null)
 							}
 	        });
-					console.log("new loop !!!!");
-	    this.getWeather(applet);
+	    this.getWeather(applet, user, id);
 		}, (applet.interval * 10000))
 	}
 
