@@ -1,7 +1,8 @@
 import React from 'react'
-import { TextInput, Text, View, Image, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { TextInput, Text, View, Image, KeyboardAvoidingView, TouchableHighlight, AsyncStorage } from 'react-native'
 import { Button } from 'react-native-elements';
 import Axios from 'axios';
+import Global from './Global'
 import queryString from 'query-string';
 
 //import Expo from "expo";
@@ -37,16 +38,35 @@ export default class SignIn extends React.Component {
                 "password": this.state.password,
             }
         });
-            Axios.post("https://staging-area-epitech.herokuapp.com/user/local/login",
+            Axios.post(Global.IPServer + "/user/local/login",
             data,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
-                //console.error(response);
-                if (response.status == 200 || response.status == 201)
+                if (response.status == 200 || response.status == 201) {
+                    this._storeData("userRef", response.data);
                     this.props.navigation.navigate('Home');
+                }
             }).catch(function (error) {
-                console.error(error);
+                // console.error(error);
             })
+        }
+        
+    _storeData = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, value)
+        } catch {
+            console.error(error)
+        }
+    }
+
+    _retrieveData = async (key) => {
+        try {
+            const value = await AsyncStorage.getItem(key)
+            if (value !== null)
+                console.error(value);
+        } catch {
+            console.error(error)
+        }
     }
 
     loginSpotify = async() => {
@@ -65,7 +85,6 @@ export default class SignIn extends React.Component {
 
         if (result.type === 'success')
         {
-            console.log({'Authorization': "Bearer " + result.params.access_token});
             Axios.get("https://api.spotify.com/v1/me", {headers:{ Accept: "application/json", 'Content-Type': "application/json", 'Authorization': "Bearer " + result.params.access_token }}).then((response) => {
                 if (response.status == 200 || response.status == 201)
                 {
@@ -75,14 +94,16 @@ export default class SignIn extends React.Component {
                             "data": response.data
                         }
                     });
-                    Axios.post("https://staging-area-epitech.herokuapp.com/spotify",
+                    Axios.post(Global.IPServer + "/spotify",
                     data,
                     { headers: { "Content-Type": "application/json" } })
                     .then((response2) => {
-                        if (response2.status == 200 || response2.status == 201)
-                        this.props.navigation.navigate('Home');
+                        if (response2.status == 200 || response2.status == 201) {
+                            this._storeData("userRef", response2.data);
+                            this.props.navigation.navigate('Home');
+                        }
                     }).catch(function (error)
-                    {})
+                    { console.error(error)})
                 }
             })
         }
@@ -116,12 +137,14 @@ export default class SignIn extends React.Component {
                             "data": response.data.data[0]
                         }
                     });
-                    Axios.post("https://staging-area-epitech.herokuapp.com/twitch",
+                    Axios.post(Global.IPServer + "/twitch",
                     data,
                     { headers: { "Content-Type": "application/json" } })
                     .then((response2) => {
-                        if (response2.status == 200 || response2.status == 201)
-                        this.props.navigation.navigate('Home');
+                        if (response2.status == 200 || response2.status == 201) {
+                            this._storeData("userRef", response2.data);
+                            this.props.navigation.navigate('Home');
+                        }
                     }).catch(function (error)
                     {})
                 }
@@ -136,33 +159,37 @@ export default class SignIn extends React.Component {
             expires,
             permissions,
             declinedPermissions,
-        } = await Expo.Facebook.logInWithReadPermissionsAsync('410435456195867', {permissions: ['public_profile'],});
+        } = await Expo.Facebook.logInWithReadPermissionsAsync('410435456195867', {permissions: ['public_profile', 'email'],});
 
         if (type === 'success') {
-            const json = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-            let data = JSON.stringify({
-                user: {
-                    userID: JSON.parse(json._bodyText).id,
-                    token: token,
-                    name: JSON.parse(json._bodyText).name
-                }
+            Axios.get(`https://graph.facebook.com/me?fields=id,name,email&access_token=${token}`, { headers: { "Content-Type": "application/json" } }).then((response) => {
+                let data = JSON.stringify({
+                    user: {
+                        userID: response.data.id,
+                        token: token,
+                        name: response.data.name,
+                        email: response.data.email
+                    }
+                });
+                Axios.post(Global.IPServer + "/facebook/",
+                data, { headers: { "Content-Type": "application/json" } })
+                .then((response2) => {
+                    if (response2.status == 200 || response2.status == 201) {
+                        this._storeData("userRef", response2.data);
+                        this.props.navigation.navigate('Home');
+                    }
+                }).catch(function (e) {console.log(e)});
             });
-            console.log(data, json._bodyText);
-            Axios.post("https://staging-area-epitech.herokuapp.com/facebook/",
-            data, { headers: { "Content-Type": "application/json" } })
-            .then((response) => {
-                if (response.status === 200 || response.status === 201)
-                    this.props.navigation.navigate('Home');
-            }).catch(function (e) {console.log(e)});
-        }
-        else {
         }
     }
 
     loginTwitter = async() => {
-
+        this.props.navigation.navigate('Home');
     }
-      
+
+    loginGoogle = async() => {
+        this.props.navigation.navigate('Home');
+    }
 
     render () {
         return (
@@ -197,10 +224,16 @@ export default class SignIn extends React.Component {
                                     source={require('../assets/SN/facebook.png')}
                                 />
                             </TouchableHighlight>
-                            <TouchableHighlight style={{marginHorizontal: 5}} onPress={this._onPressButton}>
+                            <TouchableHighlight style={{marginHorizontal: 5}} onPress={this.loginTwitter}>
                                 <Image
                                     style={{height: 50, width: 50}}
                                     source={require('../assets/SN/twitter.png')}
+                                />
+                            </TouchableHighlight>
+                            <TouchableHighlight style={{marginHorizontal: 5}} onPress={this.loginGoogle}>
+                                <Image
+                                    style={{height: 50, width: 50}}
+                                    source={require('../assets/SN/google.png')}
                                 />
                             </TouchableHighlight>
                             <TouchableHighlight style={{marginHorizontal: 5}} onPress={this.loginSpotify}>
