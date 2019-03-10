@@ -197,7 +197,21 @@ const Config = {
             description: "Trigger if the weather is cloudy tomorrow"
         },],
         reactions: []
-    },]
+    },
+
+		{
+ 			serviceID: 6,
+ 			"name": "timer",
+ 			"color": "#333",
+ 			"icon": "fas fa-cloud-sun",
+ 			actions: [{
+ 					id: 0,
+ 					constructor: function (applet, user) { weather.timer(applet, user) }, // function to call at creation of the applet
+ 					name: "program actions",
+ 					description: "Trigger when it's time to make action"
+ 			},],
+ 			reactions: []
+ 	},]
 }
 
 module.exports = {

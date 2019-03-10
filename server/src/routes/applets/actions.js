@@ -67,7 +67,7 @@ module.exports = {
 
 	googleReaction: function(applet, user, webhook) {
 		if (applet.reactionID == 0)
-			reaction.sendEmail(user, webhook, applet.message);
+			reaction.sendEmail(user, applet);
 	},
 
 	twitchReaction: function(applet, user, message) {

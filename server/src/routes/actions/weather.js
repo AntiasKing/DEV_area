@@ -25,7 +25,14 @@ module.exports = {
 							}
 	        });
 	    this.getWeather(applet, user, id);
-		}, (applet.interval * 60000))
+		}, (applet.interval * 10000))
+	},
+
+	timer: function(applet, user) {
+		setTimeout(() => {
+						const action = require("../applets/actions");
+							action.setServiceAction(applet, user, null)
+	}, (applet.interval * 60000))
 	}
 
 }
