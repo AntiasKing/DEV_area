@@ -40,11 +40,12 @@ class AppletDesigner extends React.Component {
             actionsID: 0,
             reactionsID: 0,
             message: "",
-            login: [false, false, false, false, false, true],
+            login: [false, false, false, false, false, true, true],
             to: "",
             object: "",
             email: "",
-            interval: 0,
+			interval: 0,
+			playlistID: 0,
         }
         this.CheckLogin();
         this.getServices();
@@ -72,7 +73,7 @@ class AppletDesigner extends React.Component {
     }
 
     handleClickAction(actionID) {
-        if (this.state.servicesID === 4 || this.state.servicesID === 5) {
+        if (this.state.servicesID === 4 || this.state.servicesID === 5 || this.state.servicesID === 6) {
            this.setState({ activeStep: this.state.activeStep + 1, actionsID: actionID });
         } else {
             this.setState({ activeStep: this.state.activeStep + 2, actionsID: actionID });
@@ -105,7 +106,7 @@ class AppletDesigner extends React.Component {
         Axios.get("https://staging-area-epitech.herokuapp.com/social?userRef=" + GetUserRef,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
-                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true];
+                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true, true];
                 this.setState({ 'login': arrtmp });
             })
             .catch(function (error) {

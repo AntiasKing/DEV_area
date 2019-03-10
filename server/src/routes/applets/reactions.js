@@ -98,14 +98,13 @@ module.exports = {
 
 	/* Gmail */
 
-	sendEmail: function(user, webhook, message) {
+	sendEmail: function(user, applet) {
 		sgMail.setApiKey('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');
 		const msg = {
-			to: 'pierre.narcisi@epitech.eu',
-			from: 'pierre.narcisi@epitech.eu',
-			subject: 'Area',
-			text: 'You received a private message on twitter',
-			html: '<strong>Bye !!</strong>',
+			to: applet.to,
+			from: user.google.profileObj.email,
+			subject: applet.object,
+			text: applet.email
 		};
 		sgMail.send(msg);
 	},
