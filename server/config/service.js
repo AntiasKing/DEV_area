@@ -140,7 +140,7 @@ const Config = {
             name: "User gain a new follower",
             description: "Trigger when people follow user"
         },],
-        reactions: [{},],
+        reactions: [],
     }, {
         serviceID: 4,
         "name": "spotify",

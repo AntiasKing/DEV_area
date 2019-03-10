@@ -43,8 +43,8 @@ module.exports = {
 
 	timer: function(applet, user) {
 		setTimeout(() => {
-						const action = require("../applets/actions");
-						action.setServiceAction(applet, user, null)
+			const action = require("../applets/actions");
+			action.setServiceAction(applet, user, null)
 	}, (applet.interval * 60000))
 	}
 
