@@ -28,7 +28,7 @@ module.exports = {
 			this.setServiceAction(applet, user, webhook)
 		if (webhook.entry[0].changes[0].field == "likes" && applet.actionID == 2)
 			this.setServiceAction(applet, user, webhook)
-		if (webhook.entry[0].changes[0].field == "name" && applet.actionID == 3)
+		if (webhook.entry[0].changes[0].field == "about" && applet.actionID == 3)
 			this.setServiceAction(applet, user, webhook)
 		if (webhook.entry[0].changes[0].field == "photos" && applet.actionID == 4)
 			this.setServiceAction(applet, user, webhook)

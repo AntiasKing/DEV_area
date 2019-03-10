@@ -81,11 +81,6 @@ const Config = {
             constructor: function () { }, // function to call at creation of the applet
             name: "User receive new private message",
             description: "Trigger when user received a new private message"
-        }, {
-            id: 4,
-            constructor: function () { }, // function to call at creation of the applet
-            name: "User is mentioned in a tweet",
-            description: "Trigger when you are mentioned in a tweet"
         },],
         reactions: [{
             id: 0,
