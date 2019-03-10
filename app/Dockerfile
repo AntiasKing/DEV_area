@@ -1,8 +1,7 @@
-FROM node:8.15.0-alpine
+FROM node:latest
 ENV NODE_ENV dev
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --dev --silent && mv node_modules ../
 COPY . .
-EXPOSE 3000
-CMD npm start
+CMD npm i -g expo-cli && expo login -u antiaskid -p Antoine2896 && expo build:android

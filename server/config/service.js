@@ -141,6 +141,7 @@ const Config = {
             name: "User gain a new follower",
             description: "Trigger when people follow user"
         },],
+        reactions: []
     }, {
         serviceID: 4,
         "name": "spotify",
@@ -148,10 +149,10 @@ const Config = {
         "icon": "fab fa-spotify",
         actions: [{
             id: 0,
-            constructor: function (applet, user, usersRef) {playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token)}, // function to call at creation of the applet
+            constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token) }, // function to call at creation of the applet
             name: "Track added to playlist",
             description: "..."
-        },{
+        }, {
             id: 1,
             constructor: function () { }, // function to call at creation of the applet
             name: "User add a track to a playlist",
@@ -186,37 +187,37 @@ const Config = {
             name: "It's cloudy tomorrow",
             description: "Trigger if the weather is cloudy tomorrow"
         }, {
- 					id: 4,
- 					constructor: function (applet, user) { weather.getWeather(applet, user, 4) }, // function to call at creation of the applet
- 					name: "It's windy tomorrow",
- 					description: "Trigger if the weather is windy tomorrow"
-	 			}, {
- 					id: 5,
- 					constructor: function (applet, user) { weather.getWeather(applet, user, 5) }, // function to call at creation of the applet
- 					name: "It's hot tomorrow",
- 					description: "Trigger if the temp is hot (>= 20°C) tomorrow"
-	 			}, {
- 					id: 6,
- 					constructor: function (applet, user) { weather.getWeather(applet, user, 6) }, // function to call at creation of the applet
- 					name: "It's cold tomorrow",
- 					description: "Trigger if the temp is cold (< 10°C) tomorrow"
-	 			},],
+            id: 4,
+            constructor: function (applet, user) { weather.getWeather(applet, user, 4) }, // function to call at creation of the applet
+            name: "It's windy tomorrow",
+            description: "Trigger if the weather is windy tomorrow"
+        }, {
+            id: 5,
+            constructor: function (applet, user) { weather.getWeather(applet, user, 5) }, // function to call at creation of the applet
+            name: "It's hot tomorrow",
+            description: "Trigger if the temp is hot (>= 20°C) tomorrow"
+        }, {
+            id: 6,
+            constructor: function (applet, user) { weather.getWeather(applet, user, 6) }, // function to call at creation of the applet
+            name: "It's cold tomorrow",
+            description: "Trigger if the temp is cold (< 10°C) tomorrow"
+        },],
         reactions: []
     },
 
-		{
- 			serviceID: 6,
- 			"name": "timer",
- 			"color": "#333",
- 			"icon": "fas fa-clock",
- 			actions: [{
- 					id: 0,
- 					constructor: function (applet, user) { weather.timer(applet, user) }, // function to call at creation of the applet
- 					name: "program actions",
- 					description: "Trigger when it's time to make action"
- 			},],
- 			reactions: []
- 	},]
+    {
+        serviceID: 6,
+        "name": "timer",
+        "color": "#333",
+        "icon": "fas fa-clock",
+        actions: [{
+            id: 0,
+            constructor: function (applet, user) { weather.timer(applet, user) }, // function to call at creation of the applet
+            name: "program actions",
+            description: "Trigger when it's time to make action"
+        },],
+        reactions: []
+    },]
 }
 
 module.exports = {
