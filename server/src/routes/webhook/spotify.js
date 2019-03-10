@@ -1,6 +1,21 @@
 const request = require('request');
 
 module.exports = {
+	handlePlaylist: function(oldPlaylist, newPlaylist, user) {
+		if (user.val().applets) {
+			user.val().applets.forEach(function(appletsnap) {
+				if (appletsnap.playlistID) {
+					if (oldPlaylist.id === appletsnap.playlistID) {
+						if (appletsnap.actionID === 0) {
+							if (oldPlaylist.tracks.length < newPlaylist.tracks.length) {
+								const action = require('../applets/actions');
+							}
+						}
+					}
+				}
+			});
+		}
+	},
 		FollowPlaylist: function(playlistID, spotifyID, interval, usersRef, access_token) {
 			let polling = setInterval(() => {
 				request.get({
@@ -44,21 +59,6 @@ module.exports = {
 					}
 				)
 			}, interval*1000);
-		},
-
-		handlePlaylist: function(oldPlaylist, newPlaylist, user) {
-			if (user.val().applets) {
-				user.val().applets.forEach(function(appletsnap) {
-					if (appletsnap.playlistID) {
-						if (oldPlaylist.id === appletsnap.playlistID) {
-							if (appletsnap.actionID === 0) {
-								if (oldPlaylist.tracks.length < newPlaylist.tracks.length) {
-									const action = require('../applets/actions');
-								}
-							}
-						}
-					}
-				});
-			}
 		}
+
 	};
