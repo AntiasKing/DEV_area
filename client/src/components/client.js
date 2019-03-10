@@ -10,11 +10,11 @@ class clientAPK extends React.Component {
 
         return (
             <div style={{ margin: "auto", width: "100%" }}>
-                <Button 
-                variant="contained"
-                color="primary"
-                href="https://exp.host/@antiaskid/app/builds"
-                style={{ marginTop: "300px", marginLeft: "37%", width: "25%", height: "60px" }}
+                <Button
+                    variant="contained"
+                    color="primary"
+                    href="https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40antiaskid/app-cce8cca416fe423da5934233b26ec105-signed.apk"
+                    style={{ marginTop: "300px", marginLeft: "37%", width: "25%", height: "60px" }}
                 >Download APK</Button>
             </div>
         );
