@@ -20,7 +20,7 @@ module.exports = {
 							snapshot.forEach(function (childSnapshot) {
 								if (childSnapshot.val().spotify) {
 									let spotify = childSnapshot.val().spotify;
-									if (spotify.spotify.id === spotifyID) {
+									if (spotify.id === spotifyID) {
 										if (!spotify.playlist) {
 											spotify.playlist = [];
 										}
