@@ -148,17 +148,10 @@ const Config = {
         "icon": "fab fa-spotify",
         actions: [{
             id: 0,
-<<<<<<< HEAD
             constructor: function () {}, // function to call at creation of the applet
             name: "Track added to playlist",
             description: "..."
         },{
-=======
-            constructor: function () { }, // function to call at creation of the applet
-            name: "User like a new track",
-            description: "Trigger when user like a new track"
-        }, {
->>>>>>> 5ba2e91798d0bbac88fbd75a8f5e1ccd74756cbf
             id: 1,
             constructor: function () { }, // function to call at creation of the applet
             name: "User add a track to a playlist",
