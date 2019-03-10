@@ -14,7 +14,7 @@ module.exports = {
 						return res.status(500).send(err);
 					}
 					console.log(body);
-					console.log(body.id);
+					console.log(JSON.parse(body).id);
 					let present = 0;
 					usersRef.once('value')
 						.then(function (snapshot) {
