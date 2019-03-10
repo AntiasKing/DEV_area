@@ -30,6 +30,7 @@ export default class Page5 extends React.Component {
                 "to": Global.to,
                 "email": Global.email,
                 "object": Global.object,
+                "playlistID" : Global.playlistID,
 
 
             }
