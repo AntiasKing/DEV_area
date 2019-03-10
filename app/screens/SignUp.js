@@ -2,6 +2,7 @@ import React from 'react'
 import { TextInput, Text, View, KeyboardAvoidingView, Image } from 'react-native'
 import { Button } from 'react-native-elements';
 import Axios from 'axios';
+import Global from "./Global";
 
 export default class SignUp extends React.Component {
 
@@ -42,11 +43,12 @@ export default class SignUp extends React.Component {
                 "password": this.state.password,
             }
         });
-            Axios.post("https://staging-area-epitech.herokuapp.com/signup",
+            Axios.post(Global.IPServer + "/signup",
                 data,
                 { headers: { "Content-Type": "application/json" } })
                 .then((response) => {
                     //console.error(response);
+                    this._storeData("userRef", response2.data);
                     this.props.navigation.navigate('Home');
                 }).catch(function (error) {
                     console.error(error);
