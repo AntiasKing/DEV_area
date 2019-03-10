@@ -1,12 +1,12 @@
 const request = require('request');
 
 module.exports = {
-		FollowPlaylist: function(playlistID, spotifyID, interval, usersRef) {
+		FollowPlaylist: function(playlistID, spotifyID, interval, usersRef, access_token) {
 			let polling = setInterval(() => {
 				request.get({
 					url: 'https://api.spotify.com/v1/playlists/'+playlistID,
 					headers: {
-						'Authorization': 'Bearer '+spotifyID
+						'Authorization': 'Bearer '+access_token
 					}
 				}, function (err, response, body) {
 					console.log("userID: "+spotifyID);
