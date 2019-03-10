@@ -25,13 +25,19 @@ module.exports = {
 									if (!spotify.playlist) {
 										spotify.playlist = [];
 									}
+									console.log("test");
 									spotify.playlist.forEach(function (playlist) {
 										if (playlist.id === object.id) {
+											console.log("test2");
 											present = 1;
 											if (playlist.snapshot_id !== object.snapshot_id) {
+												console.log("test3");
 												(playlist, object, childSnapshot);
+												console.log("test4");
 												if (childSnapshot.val().applets) {
+													console.log("test5");
 													childSnapshot.val().applets.forEach(function(appletsnap) {
+														console.log("test6");
 														if (appletsnap.playlistID) {
 															if (playlist.id === appletsnap.playlistID) {
 																if (appletsnap.actionID === 0) {
