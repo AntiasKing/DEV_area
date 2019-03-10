@@ -16,9 +16,9 @@ module.exports = {
 
 	detectTwitchAction: function (webhook, applet, user) {
 		if (applet.actionID === 0)
-			this.setserviceAction(applet, user, webhook);
+			this.setServiceAction(applet, user, webhook);
 		if (applet.actionID === 1)
-			this.setserviceAction(applet, user, webhook);
+			this.setServiceAction(applet, user, webhook);
 	},
 
 	detectFacebookAction: function (webhook, applet, user) {
