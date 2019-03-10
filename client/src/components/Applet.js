@@ -70,9 +70,6 @@ class Applet extends React.Component {
         return (
             <Card className={classes.Card} color="primary" style={{ background: this.props.color }}>
                 <CardActionArea>
-                    <IconButton aria-label="Delete" onClick={this.DeleteApplets.bind(this)}>
-                        <DeleteIcon />
-                    </IconButton>
                     <CardContent>
                         <Typography variant="h4" paragraph>When {this.props.actionName}: {this.props.reactionName}</Typography>
                     </CardContent>
@@ -92,6 +89,9 @@ class Applet extends React.Component {
                         checked={this.props.on}
                         onClick={this.ChangeStatus.bind(this)}
                     />
+                    <IconButton aria-label="Delete" onClick={this.DeleteApplets.bind(this)}>
+                        <DeleteIcon />
+                    </IconButton>
                 </CardActions>
             </Card >);
     }
