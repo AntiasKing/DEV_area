@@ -9,5 +9,6 @@ module.exports = function (admin) {
   require('./webhook')(router, usersRef);
   require('./applets')(router, usersRef);
   require('./services')(router, usersRef);
+  require('./about')(router, usersRef);
   return router;
 };
