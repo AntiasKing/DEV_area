@@ -9,12 +9,12 @@ module.exports = {
 						'Authorization': 'Bearer '+access_token
 					}
 				}, function (err, response, body) {
-					console.log("userID: "+spotifyID);
 					if (err) {
 						console.log(err);
 						return res.status(500).send(err);
 					}
-					console.log(body);
+					console.log(body.id);
+					console.log(body.id);
 					let present = 0;
 					usersRef.once('value')
 						.then(function (snapshot) {
@@ -25,8 +25,7 @@ module.exports = {
 										if (!spotify.playlist) {
 											spotify.playlist = [];
 										}
-										spotify.playlist.push();
-										spotify.playlist.forEach(function (list) {
+										spotify.playlist.forEach(function (playlist) {
 											if (playlist.id === body.id) {
 												present = 1;
 												if (playlist.snapshot_id !== body.snapshot_id) {
