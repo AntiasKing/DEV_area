@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
         this.state = {
             applets: [],
             services: [],
-            login: [false, false, false, false, false, true],
+            login: [false, false, false, false, false, true, true],
             tab: 0,
         }
         this.CheckLogin();
@@ -136,7 +136,7 @@ class Dashboard extends React.Component {
         Axios.get("https://staging-area-epitech.herokuapp.com/social?userRef=" + GetUserRef,
             { headers: { "Content-Type": "application/json" } })
             .then((response) => {
-                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true];
+                let arrtmp = [response.data.facebook, response.data.twitter, response.data.google, response.data.twitch, response.data.spotify, true, true];
                 this.setState({ 'login': arrtmp });
             })
             .catch(function (error) {
