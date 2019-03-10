@@ -38,7 +38,7 @@ module.exports = {
 							}
 	        });
 	    this.getWeather(applet, user, id);
-		}, (applet.interval * 10000))
+		}, (applet.interval * 60000))
 	},
 
 	timer: function(applet, user) {

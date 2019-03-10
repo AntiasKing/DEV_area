@@ -123,7 +123,7 @@ const Config = {
         reactions: [{
             id: 0,
             constructor: function () { }, // function to call at creation of the applet
-            name: "USer send email",
+            name: "User send email",
             description: "User send email to a custom user with custom body too",
             needMessage: true
         },],
