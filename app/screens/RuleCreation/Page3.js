@@ -88,12 +88,30 @@ export default class Page3 extends React.Component {
                 )
         }
     }
+
+    Google () {
+        if (this.state.service.google == true)
+        {
+            return(
+                    <TouchableHighlight style={{ marginVertical: 10 }} onPress={() => {
+                        Global.SN2 = "google";
+                        Global.SN2ID = 4;
+                        this.props.navigation.navigate('Page4')}}>
+                        <Image
+                            style={{height: 70, width: 70}}
+                            source={require('../../assets/SN/google.png')}
+                            />
+                    </TouchableHighlight>
+                )
+        }
+    }
         
     render () {
         return (
             <View style={{flex:1, paddingTop: 20, backgroundColor: "#2f4159", alignItems:"center"}}>
                 {this.Facebook()}
                 {this.Twitter()}
+                {this.Google()}
                 {this.Twitch()}
                 {this.Spotify()}
             </View>

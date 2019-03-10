@@ -101,6 +101,20 @@ export default class Page1 extends React.Component {
                     </TouchableHighlight>
                 )
     }
+
+    Timer () {
+        return(
+                <TouchableHighlight style={{ marginVertical: 10 }} onPress={() => {
+                    Global.SN1 = "timer";
+                    Global.SN1ID = 6;
+                    this.props.navigation.navigate('Page2')}}>
+                    <Image
+                        style={{height: 70, width: 70}}
+                        source={require('../../assets/SN/weather.png')}
+                        />
+                </TouchableHighlight>
+            )
+}
         
     render () {
         return (
@@ -110,6 +124,7 @@ export default class Page1 extends React.Component {
                 {this.Twitch()}
                 {this.Spotify()}
                 {this.Weather()}
+                {this.Timer()}
             </View>
         )
     }

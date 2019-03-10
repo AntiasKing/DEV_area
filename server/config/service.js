@@ -1,5 +1,6 @@
 const weather = require('../src/routes/actions/weather')
 const action = require('../src/routes/applets/actions')
+const playlist = require('../src/routes/webhook/spotify')
 
 const Config = {
     // Example
@@ -140,7 +141,6 @@ const Config = {
             name: "User gain a new follower",
             description: "Trigger when people follow user"
         },],
-        reactions: [{},],
     }, {
         serviceID: 4,
         "name": "spotify",
@@ -148,10 +148,10 @@ const Config = {
         "icon": "fab fa-spotify",
         actions: [{
             id: 0,
-            constructor: function () { }, // function to call at creation of the applet
-            name: "User like a new track",
-            description: "Trigger when user like a new track"
-        }, {
+            constructor: function (applet, user, usersRef) {playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef)}, // function to call at creation of the applet
+            name: "Track added to playlist",
+            description: "..."
+        },{
             id: 1,
             constructor: function () { }, // function to call at creation of the applet
             name: "User add a track to a playlist",

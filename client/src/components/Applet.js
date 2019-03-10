@@ -86,7 +86,7 @@ class Applet extends React.Component {
                     />
                     <Switch
                         color="secondary"
-                        checked={this.props.on}
+                        checked={this.state.on}
                         onClick={this.ChangeStatus.bind(this)}
                     />
                     <IconButton aria-label="Delete" onClick={this.DeleteApplets.bind(this)}>

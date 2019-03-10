@@ -12,3 +12,4 @@ let reactionID = 0;
 let reactionName = "none";
 
 let message = "none";
+let interval = "";

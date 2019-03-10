@@ -25,7 +25,13 @@ export default class Page5 extends React.Component {
                 "serviceID": Global.SN1ID,
                 "actionID": Global.actionID,
                 "reactionID": Global.reactionID,
-                "message": Global.message
+                "message": Global.message,
+                "interval": Global.interval,
+                "to": Global.to,
+                "email": Global.email,
+                "object": Global.object,
+
+
             }
         });
 
