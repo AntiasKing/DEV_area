@@ -1,3 +1,6 @@
+const weather = require('../src/routes/actions/weather')
+const action = require('../src/routes/applets/actions')
+
 const Config = {
     // Example
     // Maybe more keys should be added
@@ -174,14 +177,24 @@ const Config = {
         "icon": "fas fa-cloud-sun",
         actions: [{
             id: 0,
-            constructor: function () {}, // function to call at creation of the applet
+            constructor: function (applet, user) { weather.getWeather(applet, user, 0) }, // function to call at creation of the applet
             name: "it's rainy tomorrow",
             description: "Trigger if it's rainning tomorrow"
         },{
             id: 1,
-            constructor: function () {}, // function to call at creation of the applet
+            constructor: function (applet, user) { weather.getWeather(applet, user, 1) }, // function to call at creation of the applet
             name: "It's sunny tomorrow",
             description: "Trigger if the weather is sunny tomorrow"
+        },{
+            id: 2,
+            constructor: function (applet, user) { weather.getWeather(applet, user, 1) }, // function to call at creation of the applet
+            name: "Snow tomorrow",
+            description: "Trigger if snow tomorrow"
+        },{
+            id: 3,
+            constructor: function (applet, user) { weather.getWeather(applet, user, 1) }, // function to call at creation of the applet
+            name: "It's cloudy tomorrow",
+            description: "Trigger if the weather is cloudy tomorrow"
         },],
         reactions: []
     },]
