@@ -187,12 +187,12 @@ const Config = {
             description: "Trigger if the weather is sunny tomorrow"
         },{
             id: 2,
-            constructor: function (applet, user) { weather.getWeather(applet, user, 1) }, // function to call at creation of the applet
+            constructor: function (applet, user) { weather.getWeather(applet, user, 2) }, // function to call at creation of the applet
             name: "Snow tomorrow",
             description: "Trigger if snow tomorrow"
         },{
             id: 3,
-            constructor: function (applet, user) { weather.getWeather(applet, user, 1) }, // function to call at creation of the applet
+            constructor: function (applet, user) { weather.getWeather(applet, user, 3) }, // function to call at creation of the applet
             name: "It's cloudy tomorrow",
             description: "Trigger if the weather is cloudy tomorrow"
         },],

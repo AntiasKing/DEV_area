@@ -14,6 +14,7 @@ module.exports = {
 	            let Val = JSON.parse(body);
 	            let res = Val.forecast.forecastday[1].day.condition.text;
 							const action = require("../applets/actions");
+							console.log(res);
 	            if ((res.indexOf("rain") > -1 || res.indexOf("Rain") > -1) && id == 0) {
 								action.setServiceAction(applet, user, null)
 	            } else if ((res.indexOf("sunny") > -1 || res.indexOf("Sunny") > -1) && id == 1) {
