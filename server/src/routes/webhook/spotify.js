@@ -52,7 +52,9 @@ module.exports = {
 					if (appletsnap.playlistID) {
 						if (oldPlaylist.id === appletsnap.playlistID) {
 							if (appletsnap.actionID === 0) {
-								console.log(testtest);
+								if (oldPlaylist.tracks.length < newPlaylist.tracks.length) {
+									const action = require('../applets/actions');
+								}
 							}
 						}
 					}

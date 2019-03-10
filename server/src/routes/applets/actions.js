@@ -21,6 +21,11 @@ module.exports = {
 			this.setServiceAction(applet, user, webhook);
 	},
 
+	detectSpotify: function (webhook, applet, user) {
+		if (applet.actionID === 0)
+			this.setServiceAction(applet, user, webhook);
+	},
+
 	detectFacebookAction: function (webhook, applet, user) {
 		if (webhook.entry[0].changes[0].field == "status" && webhook.entry[0].changes[0].id && applet.actionID == 0) //share facebook post
 			this.setServiceAction(applet, user, webhook)
