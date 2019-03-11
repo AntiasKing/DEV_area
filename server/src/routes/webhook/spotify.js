@@ -25,6 +25,7 @@ module.exports = {
 									if (!spotify.playlist) {
 										spotify.playlist = [];
 									}
+									let index = 0;
 									spotify.playlist.forEach(function (playlist) {
 										if (playlist.id === object.id) {
 											present = 1;
@@ -47,7 +48,8 @@ module.exports = {
 														}
 													});
 												}
-												spotify.playlist = object;
+												spotify.playlist[index] = object;
+												index++;
 											}
 										}
 									})
