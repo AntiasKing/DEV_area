@@ -28,8 +28,9 @@ module.exports = {
 									spotify.playlist.forEach(function (playlist) {
 										if (playlist.id === object.id) {
 											present = 1;
-											if (playlist.snapshot_id !== object.snapshot_id) {
-												(playlist, object, childSnapshot);
+											console.log(test1);
+											if (playlist.snapshot_id != object.snapshot_id) {
+												console.log(test2);
 												if (childSnapshot.val().applets) {
 													childSnapshot.val().applets.forEach(function(appletsnap) {
 														if (appletsnap.playlistID) {
