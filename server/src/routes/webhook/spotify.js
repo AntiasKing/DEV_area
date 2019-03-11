@@ -40,7 +40,7 @@ module.exports = {
 															if (playlist.id === appletsnap.playlistID) {
 																if (appletsnap.actionID === 0) {
 																	console.log(playlist.tracks);
-																	console.log(playlist.tracks.length);
+																	console.log(playlist.tracks.items.length);
 																	console.log(object.tracks);
 																	console.log(object.tracks.length);
 																	if (playlist.tracks.length < object.tracks.length) {
