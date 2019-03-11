@@ -22,7 +22,7 @@ module.exports = {
 							if (childSnapshot.val().spotify) {
 								let spotify = childSnapshot.val().spotify;
 								if (spotify.id === spotifyID) {
-									if (!spotify.playlist) {
+									if (spotify.playlist) {
 										spotify.playlist = [];
 									}
 									let index = 0;
