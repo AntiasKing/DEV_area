@@ -39,6 +39,8 @@ module.exports = {
 														if (appletsnap.playlistID) {
 															if (playlist.id === appletsnap.playlistID) {
 																if (appletsnap.actionID === 0) {
+																	console.log(playlist.tracks.length);
+																	console.log(object.tracks.length);
 																	if (playlist.tracks.length < object.tracks.length) {
 																		console.log("test3");
 																		action.detectSpotify(object, appletsnap, childSnapshot);
