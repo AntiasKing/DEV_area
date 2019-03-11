@@ -30,6 +30,8 @@ module.exports = {
 											present = 1;
 											console.log("test1");
 											if (playlist.snapshot_id != object.snapshot_id) {
+												console.log("id1: "+playlist.snapshot_id);
+												console.log("id2: "+playlist.snapshot_id);
 												console.log("test2");
 												if (childSnapshot.val().applets) {
 													childSnapshot.val().applets.forEach(function(appletsnap) {
