@@ -31,7 +31,7 @@ module.exports = {
 											console.log("test1");
 											console.log("id1: "+playlist.snapshot_id);
 											console.log("id2: "+object.snapshot_id);
-												if (!playlist.snapshot_id === object.snapshot_id) {
+												if (playlist.snapshot_id !== object.snapshot_id) {
 												console.log("test2");
 												if (childSnapshot.val().applets) {
 													childSnapshot.val().applets.forEach(function(appletsnap) {
@@ -47,7 +47,7 @@ module.exports = {
 														}
 													});
 												}
-												playlist = object;
+												spotify.playlist = object;
 											}
 										}
 									})
