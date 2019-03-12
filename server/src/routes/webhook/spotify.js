@@ -29,22 +29,28 @@ module.exports = {
 									spotify.playlist.forEach(function (playlist) {
 										if (playlist.id === object.id) {
 											present = 1;
-											console.log("test1");
-											console.log("id1: "+playlist.snapshot_id);
-											console.log("id2: "+object.snapshot_id);
 												if (playlist.snapshot_id !== object.snapshot_id) {
-												console.log("test2");
 												if (childSnapshot.val().applets) {
 													childSnapshot.val().applets.forEach(function(appletsnap) {
 														if (appletsnap.playlistID) {
 															if (playlist.id === appletsnap.playlistID) {
 																if (appletsnap.actionID === 0) {
-																	console.log(playlist.tracks);
-																	console.log(playlist.tracks.items.length);
-																	console.log(object.tracks);
-																	console.log(object.tracks.length);
 																	if (playlist.tracks.items.length < object.tracks.items.length) {
-																		console.log("test3");
+																		action.detectSpotify(object, appletsnap, childSnapshot.val());
+																	}
+																}
+																if (appletsnap.actionID === 1) {
+																	if (playlist.tracks.items.length > object.tracks.items.length) {
+																		action.detectSpotify(object, appletsnap, childSnapshot.val());
+																	}
+																}
+																if (appletsnap.actionID === 2) {
+																	if (playlist.followers.total < object.followers.total) {
+																		action.detectSpotify(object, appletsnap, childSnapshot.val());
+																	}
+																}
+																if (appletsnap.actionID === 3) {
+																	if (playlist.followers.total < object.followers.total) {
 																		action.detectSpotify(object, appletsnap, childSnapshot.val());
 																	}
 																}
