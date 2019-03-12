@@ -151,13 +151,23 @@ const Config = {
             id: 0,
             constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token) }, // function to call at creation of the applet
             name: "Track added to playlist",
-            description: "..."
+            description: "Trigger when a track is added to the playlist"
         }, {
             id: 1,
-            constructor: function () { }, // function to call at creation of the applet
-            name: "User add a track to a playlist",
-            description: "Trigger when user add a track to a playlist"
-        },],
+            constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token) }, // function to call at creation of the applet
+            name: "Track removed from playlist",
+            description: "Trigger when a track is removed from the playlist"
+        }, {
+			id: 2,
+            constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token) }, // function to call at creation of the applet
+            name: "Someone followed the playlist",
+            description: "Trigger when someone followed the playlist"
+		}, {
+			id: 3,
+            constructor: function (applet, user, usersRef) { playlist.FollowPlaylist(applet.playlistID, user.spotify.id, applet.interval, usersRef, user.spotify.access_token) }, // function to call at creation of the applet
+            name: "Someone unfollowed the playlist",
+            description: "Trigger when someone unfollowed the playlist"
+		},],
         reactions: [],
 
 

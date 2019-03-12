@@ -3,7 +3,7 @@ const Config = C.Config;
 
 module.exports = function (router, usersRef) {
     router.post("/applets/:userID", function (req, res) {
-        let newApplet = req.body.applet;
+		let newApplet = req.body.applet;
         if (!newApplet)
             return res.status(400).send(`No applet submited`);
 
