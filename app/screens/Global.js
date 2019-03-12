@@ -12,3 +12,8 @@ let reactionID = 0;
 let reactionName = "none";
 
 let message = "none";
+let interval = "none";
+let to = "none";
+let object = "none";
+let email = "none";
+let playlistID = "none";

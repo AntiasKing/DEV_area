@@ -40,6 +40,9 @@ module.exports = function (router, usersRef) {
 								if (Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor && (newApplet.serviceID == 5 || newApplet.serviceID == 6))
 										Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor(newApplet, user);
 
+								if (Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor && newApplet.serviceID == 4)
+										Config.services[newApplet.serviceID].actions[newApplet.actionID].constructor(newApplet, user, usersRef);
+
 								if (Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor)
 										Config.services[newApplet.serviceToID].reactions[newApplet.reactionID].constructor();
 

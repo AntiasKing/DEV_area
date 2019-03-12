@@ -5,6 +5,7 @@ import SignIn from './components/SignIn';
 import Register from './components/Register';
 import Dashboard from "./components/Dashboard";
 import AppletDesigner from "./components/AppletDesigner";
+import clientAPK from "./components/client";
 
 const AppRouter = () => (
     <Router>
@@ -14,6 +15,7 @@ const AppRouter = () => (
             <Route path='/register' exact component={Register} />
             <Route path='/dashboard' exact component={Dashboard} />
             <Route path='/createApplet' exact component={AppletDesigner} />
+            <Route path='/client.apk' exact component={clientAPK} />
         </div>
     </Router>
 );
