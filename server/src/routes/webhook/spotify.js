@@ -45,7 +45,7 @@ module.exports = {
 																	console.log(object.tracks.length);
 																	if (playlist.tracks.items.length < object.tracks.items.length) {
 																		console.log("test3");
-																		action.detectSpotify(object, appletsnap, childSnapshot);
+																		action.detectSpotify(object, appletsnap, childSnapshot.val());
 																	}
 																}
 															}
