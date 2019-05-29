@@ -99,11 +99,10 @@ module.exports = {
 	/* Gmail */
 
 	sendEmail: function(user, applet) {
-		console.log("okok");
 		sgMail.setApiKey('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');
 		const msg = {
 			to: applet.to,
-			from: 'ok@ok.com',
+			from: 'sara@b-wii.com',
 			subject: applet.object,
 			text: applet.email
 		};
