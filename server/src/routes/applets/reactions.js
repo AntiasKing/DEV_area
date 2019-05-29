@@ -100,7 +100,7 @@ module.exports = {
 
 	sendEmail: function(user, applet) {
 		console.log("okok");
-		sgMail.setApiKey('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');
+		sgMail.setApiKey('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');
 		const msg = {
 			to: applet.to,
 			from: 'ok@ok.com',
