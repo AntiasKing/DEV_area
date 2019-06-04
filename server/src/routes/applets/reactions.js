@@ -102,7 +102,7 @@ module.exports = {
 		sgMail.setApiKey('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');
 		const msg = {
 			to: applet.to,
-			from: 'aliciacln567@gmail.com',
+			from: 'support@area.com',
 			subject: applet.object,
 			text: applet.email
 		};
