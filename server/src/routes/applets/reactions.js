@@ -12,8 +12,8 @@ module.exports = {
 			headers:
 			 { 'Content-Type': 'application/x-www-form-urlencoded' },
 			 oauth: {
-					 consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
-					 consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
+					 consumer_key: 'bla',
+					 consumer_secret: 'bla',
 					 token: user.twitter.token,
 					 token_secret: user.twitter.refreshToken
 			 },
@@ -35,8 +35,8 @@ module.exports = {
 			headers:
 			 { 'Content-Type': 'application/json' },
 			 oauth: {
-					 consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
-					 consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
+					 consumer_key: 'bla',
+					 consumer_secret: 'bla',
 					 token: user.twitter.token,
 					 token_secret: user.twitter.refreshToken
 			 },
@@ -57,8 +57,8 @@ module.exports = {
 			headers:
 			 { 'Content-Type': 'application/json' },
 			 oauth: {
-					 consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
-					 consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
+					 consumer_key: 'bla',
+					 consumer_secret: 'bla',
 					 token: user.twitter.token,
 					 token_secret: user.twitter.refreshToken
 			 },
@@ -76,8 +76,8 @@ module.exports = {
 	  url: 'https://api.twitter.com/1.1/direct_messages/events/new.json',
 	  headers: {'Content-Type': 'application/json'},
 		oauth: {
-				consumer_key: 'BUai9dWTe9p2DDxhulZx6yoXq',
-				consumer_secret: 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey',
+				consumer_key: 'bla',
+				consumer_secret: 'bla',
 				token: user.twitter.token,
 				token_secret: user.twitter.refreshToken
 		},
@@ -99,7 +99,7 @@ module.exports = {
 	/* Gmail */
 
 	sendEmail: function(user, applet) {
-		sgMail.setApiKey('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');
+		sgMail.setApiKey('bla');
 		const msg = {
 			to: applet.to,
 			from: 'support@area.com',
