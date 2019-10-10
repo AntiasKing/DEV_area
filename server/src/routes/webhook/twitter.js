@@ -8,7 +8,7 @@ module.exports = function (router, usersRef) {
 	router.get('/webhooks/twitter', function(req, res) {
 		var crc_token = req.query.crc_token
 		if (crc_token) {
-			var hash = crypto.createHmac('sha256', 'P4kwpMLWumpxlzlAMtMFRtTBh25VVyjGElHoJrjBkNQgUDFHey').update(crc_token).digest('base64')
+			var hash = crypto.createHmac('sha256', 'bla').update(crc_token).digest('base64')
 			res.status(200);
 			res.send({
 				response_token: 'sha256=' + hash
